@@ -1,0 +1,143 @@
+@media only screen and (min-width: 580px) {
+.nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 50px;
+    z-index: 9999;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links li {
+    margin-right: 100px;
+  }
+
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 50px;
+  }
+}
+
+@media only screen and (min-width: 412px) {
+  .nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+	 z-index: 9999;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links li {
+    margin-right: 60px;
+  }
+
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+
+@media only screen and (min-width: 279px) {
+.nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+    z-index: 9999;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links li {
+    margin-right: -10px;
+  }
+
+  .nav-links li:last-child {
+    margin-right: -5px;
+  }
+
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 0px;
+  }
+}
+
+@media only screen and (min-width: 355px) {
+  .nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+    z-index: 9999;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links li {
+    margin-right: 7px;
+  }
+
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+  }
+}
