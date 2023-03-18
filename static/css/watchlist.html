@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/x-icon"
- href="https://animixplay.to/icon.png">
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-   <title>My Watchlist</title>
-   <link href="./home.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="https://animixplay.to/icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Watchlist</title>
+ <link href="./watchlist.css" rel="stylesheet">
+  <link href="./home.css" rel="stylesheet">
 </head>
 <body>
-<header id="head-div">
-        <div id="title1">
-            <a href="https://animixplay-to.vercel.app/"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"
-                    alt="Animiplay"></a>
-        </div>
- 
-<h1>My Watchlist</h1>
+  <header id="head-div">
+    <div id="title1">
+      <a href="https://animixplay-to.vercel.app/">
+        <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animiplay">
+      </a>
+    </div>
+    <h1>My Watchlist</h1>
     <ul id="watchlist">
       <!-- Watchlist items will be added dynamically with JavaScript -->
     </ul>
@@ -32,7 +31,11 @@
         img.alt = anime.title;
         const a = document.createElement("a");
         a.href = anime.link;
-        a.textContent = anime.title;
+        a.innerHTML = `
+          <div class="overlay">
+            <h2>${anime.title}</h2>
+          </div>
+        `;
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
         removeBtn.onclick = () => {
@@ -54,5 +57,6 @@
         document.getElementById("watchlist").appendChild(li);
       });
     </script>
-  </body>
+  </header>
+</body>
 </html>
