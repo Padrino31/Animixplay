@@ -79,7 +79,7 @@
             <div class="poster col-3">
                 <img src="{{ IMG }}">
             </div>
-            <div class="details col-6">
+      <div class="details col-6">
                 <h1>{{ TITLE }}</h1>
                 <div class="mid" style="margin: 20px 0px;">
                     <span class="cbox">HD</span>
@@ -91,10 +91,8 @@
                     <a href="{{ WATCHNOW }}" class="watch-btn">
                         <i class="fa fa-play"></i> Watch Now
                     </a>
+		<button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Add to my list</button>
                 </div>
-		    <div id="add-to-list" class="mid">
-    <button onclick="addToWatchlist('{{ TITLE }}', '{{ IMG }}')" style="background-color: #2596be">Add to my List</button>
-     </div>
 
                 <div id="overview3" class="synopsis">
                     SYNOPSIS
