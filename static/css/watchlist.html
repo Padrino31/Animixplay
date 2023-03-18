@@ -1,62 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="https://animixplay.to/icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Watchlist</title>
- <link href="./watchlist.css" rel="stylesheet">
-  <link href="./home.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://animixplay.to/icon.png">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   <title>My Watchlist</title>
+   <link href="./home.css" rel="stylesheet">
+   
+   <style>
+     #watchlist {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+       gap: 20px;
+     }
+     #watchlist li {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+     }
+     #watchlist li img {
+       max-width: 100%;
+     }
+     #watchlist li a {
+       margin-top: 10px;
+       text-align: center;
+     }
+     #watchlist li button {
+       margin-top: 10px;
+     }
+   </style>
 </head>
 <body>
-  <header id="head-div">
-    <div id="title1">
-      <a href="https://animixplay-to.vercel.app/">
-        <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animiplay">
-      </a>
-    </div>
-    <h1>My Watchlist</h1>
-    <ul id="watchlist">
-      <!-- Watchlist items will be added dynamically with JavaScript -->
-    </ul>
-    <script>
-      // Get the watchlist from local storage
-      const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+<header id="head-div">
+  <div id="title1">
+    <a href="https://animixplay-to.vercel.app/">
+      <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animixplay">
+    </a>
+  </div>
+ 
+  <h1>My Watchlist</h1>
+  
+  <ul id="watchlist">
+    <!-- Watchlist items will be added dynamically with JavaScript -->
+  </ul>
+  
+  <script>
+    // Get the watchlist from local storage
+    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-      // Add each anime in the watchlist to the HTML file
-      watchlist.forEach((anime, index) => {
-        const li = document.createElement("li");
-        const img = document.createElement("img");
-        img.src = anime.img;
-        img.alt = anime.title;
-        const a = document.createElement("a");
-        a.href = anime.link;
-        a.innerHTML = `
-          <div class="overlay">
-            <h2>${anime.title}</h2>
-          </div>
-        `;
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.onclick = () => {
-          // Remove the anime from the watchlist
-          watchlist.splice(index, 1);
+    // Add each anime in the watchlist to the HTML file
+    watchlist.forEach((anime, index) => {
+      const li = document.createElement("li");
+      const img = document.createElement("img");
+      img.src = anime.img;
+      img.alt = anime.title;
+      const a = document.createElement("a");
+      a.href = anime.link;
+      a.textContent = anime.title;
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.onclick = () => {
+        // Remove the anime from the watchlist
+        watchlist.splice(index, 1);
 
-          // Update the watchlist in local storage
-          localStorage.setItem("watchlist", JSON.stringify(watchlist));
+        // Update the watchlist in local storage
+        localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-          // Remove the HTML element for the anime
-          li.remove();
+        // Remove the HTML element for the anime
+        li.remove();
 
-          // Show an alert to confirm the anime was removed
-          alert(`${anime.title} has been removed from your watchlist.`);
-        };
-        li.appendChild(img);
-        li.appendChild(a);
-        li.appendChild(removeBtn);
-        document.getElementById("watchlist").appendChild(li);
-      });
-    </script>
-  </header>
+        // Show an alert to confirm the anime was removed
+        alert(`${anime.title} has been removed from your watchlist.`);
+      };
+      li.appendChild(img);
+      li.appendChild(a);
+      li.appendChild(removeBtn);
+      document.getElementById("watchlist").appendChild(li);
+    });
+  </script>
 </body>
 </html>
