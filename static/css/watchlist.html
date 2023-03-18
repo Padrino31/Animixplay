@@ -6,7 +6,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-   <title>My List</title>
+   <title>My Watchlist</title>
    <link href="./home.css" rel="stylesheet">
 </head>
 <body>
@@ -15,24 +15,23 @@
             <a href="https://animixplay-to.vercel.app/"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"
                     alt="Animiplay"></a>
         </div>
-   <h1 style="text-align: center;">My List</h1>
-   <ul id="list"></ul>
-
- <script>
-  // get the watchlist from localStorage
-  let watchlist = localStorage.getItem("watchlist");
-  if (watchlist) {
-    watchlist = JSON.parse(watchlist);
-    
-    // display each anime title in a list
-    let list = document.getElementById("watchlist");
-    for (let i = 0; i < watchlist.length; i++) {
-      let item = document.createElement("li");
-      item.textContent = watchlist[i];
-      list.appendChild(item);
-    }
-  }
-</script>
+  <h1>My Watchlist</h1>
+	<ul id="watchlist"></ul>
+	<script>
+		const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+		const list = document.getElementById('watchlist');
+		watchlist.forEach((anime) => {
+			const item = document.createElement('li');
+			const img = document.createElement('img');
+			img.src = anime.image;
+			img.alt = anime.title;
+			item.appendChild(img);
+			item.appendChild(document.createTextNode(anime.title));
+			list.appendChild(item);
+		});
+	</script>
+</body>
+</html>
 
 </body>
 </html>
