@@ -11,7 +11,7 @@
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
 - Can Be Deployed To Vercel.com And Repl.it OR Any Other Hosting Service
-> Website : https://animedex.live
+> Website : https://animixplay-to.vercel.app/
 
 > Powered By TechZApi
 
