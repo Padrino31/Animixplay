@@ -15,23 +15,44 @@
             <a href="https://animixplay-to.vercel.app/"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"
                     alt="Animiplay"></a>
         </div>
-  <h1>My Watchlist</h1>
-	<ul id="watchlist"></ul>
-	<script>
-		const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
-		const list = document.getElementById('watchlist');
-		watchlist.forEach((anime) => {
-			const item = document.createElement('li');
-			const img = document.createElement('img');
-			img.src = anime.image;
-			img.alt = anime.title;
-			item.appendChild(img);
-			item.appendChild(document.createTextNode(anime.title));
-			list.appendChild(item);
-		});
-	</script>
-</body>
-</html>
+ 
+<h1>My Watchlist</h1>
+    <ul id="watchlist">
+      <!-- Watchlist items will be added dynamically with JavaScript -->
+    </ul>
+    <script>
+      // Get the watchlist from local storage
+      const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-</body>
+      // Add each anime in the watchlist to the HTML file
+      watchlist.forEach((anime, index) => {
+        const li = document.createElement("li");
+        const img = document.createElement("img");
+        img.src = anime.img;
+        img.alt = anime.title;
+        const a = document.createElement("a");
+        a.href = anime.link;
+        a.textContent = anime.title;
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.onclick = () => {
+          // Remove the anime from the watchlist
+          watchlist.splice(index, 1);
+
+          // Update the watchlist in local storage
+          localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+          // Remove the HTML element for the anime
+          li.remove();
+
+          // Show an alert to confirm the anime was removed
+          alert(`${anime.title} has been removed from your watchlist.`);
+        };
+        li.appendChild(img);
+        li.appendChild(a);
+        li.appendChild(removeBtn);
+        document.getElementById("watchlist").appendChild(li);
+      });
+    </script>
+  </body>
 </html>
