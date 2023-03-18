@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon"
+ href="https://animixplay.to/icon.png">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   <title>My List</title>
+   <link href="./css/home.css" rel="stylesheet">
+</head>
+<body>
+<header id="head-div">
+        <div id="title1">
+            <a href="https://animixplay-to.vercel.app/"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"
+                    alt="Animiplay"></a>
+        </div>
+   <h1 style="text-align: center;">My List</h1>
+   <ul id="list"></ul>
+
+   <script>
+      const myList = JSON.parse(localStorage.getItem('MyList')) || [];
+
+      const list = document.getElementById('list');
+      myList.forEach(anime => {
+         const li = document.createElement('li');
+         const a = document.createElement('a');
+         a.textContent = anime.title;
+         a.href = anime.iframeSrc;
+         li.appendChild(a);
+         list.appendChild(li);
+      });
+   </script>
+</body>
+</html>
