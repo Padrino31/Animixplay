@@ -18,18 +18,21 @@
    <h1 style="text-align: center;">My List</h1>
    <ul id="list"></ul>
 
-   <script>
-      const myList = JSON.parse(localStorage.getItem('MyList')) || [];
+ <script>
+  // get the watchlist from localStorage
+  let watchlist = localStorage.getItem("watchlist");
+  if (watchlist) {
+    watchlist = JSON.parse(watchlist);
+    
+    // display each anime title in a list
+    let list = document.getElementById("watchlist");
+    for (let i = 0; i < watchlist.length; i++) {
+      let item = document.createElement("li");
+      item.textContent = watchlist[i];
+      list.appendChild(item);
+    }
+  }
+</script>
 
-      const list = document.getElementById('list');
-      myList.forEach(anime => {
-         const li = document.createElement('li');
-         const a = document.createElement('a');
-         a.textContent = anime.title;
-         a.href = anime.iframeSrc;
-         li.appendChild(a);
-         list.appendChild(li);
-      });
-   </script>
 </body>
 </html>
