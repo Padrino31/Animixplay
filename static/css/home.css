@@ -83,7 +83,7 @@ h2{font-family:'Montserrat', sans-serif;color:#2596be;font-weight:500;width:100%
 @media only screen and (min-width: 420px){
 .shadow{height:240px;}
 }
-@media only screen and (min-width: 412px){
+@media only screen and (min-width: 400px){
 #head-div{background: linear-gradient(to right, rgba(37, 150, 190, 0) 100%, #2596be);text-align:center;padding-top:25px;height:135px;margin:auto;font-family:'Roboto', sans-serif;font-weight:500;font-size:x-large;color:white;}
 #search-div input{width:calc(100% - 60px); color:white;}
 .la-anime{max-width:220px;}
