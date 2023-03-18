@@ -79,25 +79,27 @@
             <div class="poster col-3">
                 <img src="{{ IMG }}">
             </div>
-      <div class="details col-6">
-                <h1>{{ TITLE }}</h1>
-                <div class="mid" style="margin: 20px 0px;">
-                    <span class="cbox">HD</span>
-                    <span class="cbox">{{ LANG }}</span>
-                    <span class="dot"></span>
-                    <span class="year">{{ TYPE }}</span>
-                </div>
-                <div id="watchh" class="mid">
-                    <a href="{{ WATCHNOW }}" class="watch-btn">
-                        <i class="fa fa-play"></i> Watch Now
-                    </a>
-		<button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Add to my list</button>
-                </div>
+<div class="details col-6">
+    <h1>{{ TITLE }}</h1>
+    <div class="mid" style="margin: 20px 0px;">
+        <span class="cbox">HD</span>
+        <span class="cbox">{{ LANG }}</span>
+        <span class="dot"></span>
+        <span class="year">{{ TYPE }}</span>
+    </div>
+    <div id="watchh" class="mid">
+        <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; margin-right: 10px;">
+            <i class="fa fa-play"></i> Watch Now
+        </a>
+        <button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block;">
+            Add to my list
+        </button>
+    </div>
+    <div id="overview3" class="synopsis">
+        SYNOPSIS
+    </div>
+</div>
 
-                <div id="overview3" class="synopsis">
-                    SYNOPSIS
-                </div>
-            </div>
             <div id="info" class="col-3">
                 <div class="info-items overview">
                     <span id="overview2" class="item-head">Overview:</span>
