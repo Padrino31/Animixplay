@@ -94,6 +94,9 @@
                 </div>
                 <div id="overview3" class="synopsis">
                     SYNOPSIS
+			</div>
+		    <button onclick="addToWatchlist('{{ TITLE }}')" style="background-color: #2596be">Add to My List</button>
+                 </div>
                 </div>
             </div>
             <div id="info" class="col-3">
@@ -157,6 +160,26 @@
     </section>
 
     <script>
+	    
+	    function addToWatchlist(title) {
+  // get the current watchlist from localStorage, or create a new one if it doesn't exist
+  let watchlist = localStorage.getItem("watchlist");
+  if (!watchlist) {
+    watchlist = [];
+  } else {
+    watchlist = JSON.parse(watchlist);
+  }
+  
+  // add the title to the watchlist array
+  watchlist.push(title);
+  
+  // save the updated watchlist to localStorage
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  
+  // notify the user that the anime has been added to the watchlist
+  alert(title + " has been added to your watchlist!");
+}
+
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
