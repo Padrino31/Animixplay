@@ -50,7 +50,7 @@
     </div>
     <nav>
       <ul class="menu">
-        <li><a href="/home">Home</a></li>
+        <li><a href="https://animixplay-to.vercel.app/">Home</a></li>
         <li><a href="#">Upcoming</a></li>
         <li><a href="../static/css/watchlist.html">Watchlist</a></li>
       </ul>
@@ -80,18 +80,7 @@
     </footer>
     <hr>
     <script>
-        // Add active class to the current link
-var header = document.getElementById("header");
-var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
-for (var i = 0; i < links.length; i++) {
-  links[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    if (current.length > 0) {
-      current[0].className = current[0].className.replace(" active", "");
-    }
-    this.className += " active";
-  });
-}
+    
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
@@ -106,6 +95,18 @@ for (var i = 0; i < links.length; i++) {
                 imageObserver.observe(v);
             });
         });
+            // Add active class to the current link
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+  links[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    if (current.length > 0) {
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    this.className += " active";
+  });
+}
     </script>
 </body>
 
