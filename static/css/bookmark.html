@@ -54,25 +54,17 @@
       </ul>
     </nav>
     <div id="search-container">
-            <form action="/search" method='GET'>
-                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-                <button type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
+      <form action="/search" method='GET'>
+        <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
   </div>
 </header>
-	 <h1 style="text-align: center;">Bookmarks</h1>
 
-  <table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>URL</th>
-      <th>Date</th>
-      <th>Time</th>
-    </tr>
-  </thead>
+<h1 style="text-align: center;">Bookmarks</h1>
+
+<table>
   <tbody>
     <!-- table body goes here -->
   </tbody>
@@ -81,41 +73,36 @@
 <style>
   th {
     color: white;
-    border: 1px solid white; /* add a border to the table header */
   }
-  td {
-    border: 1px solid #ddd; /* add a border to the table data cells */
-    padding: 8px; /* add some padding to the cells */
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2; /* add alternate row colors */
+  .bookmark-row {
+    border: 1px solid black;
   }
 </style>
 
- <tbody style="color: white;">
+<tbody style="color: white;">
   <script>
-  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-  bookmarks.forEach((bookmark, index) => {
-    document.write(`
-      <tr>
-        <td style="color: white;">${bookmark.title}</td>
-        <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
-        <td style="color: white;">${bookmark.date}</td>
-        <td style="color: white;">${bookmark.time}</td>
-        <td style="color: white;"><button onclick="removeBookmark(${index})">Remove</button></td>
-      </tr>
-    `);
-  });
-
-  function removeBookmark(index) {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-    bookmarks.splice(index, 1);
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    location.reload(); // reload the page to reflect the changes
-  }
+    bookmarks.forEach(bookmark => {
+      document.write(`
+        <tr class="bookmark-row">
+          <td style="color: white;">${bookmark.title}</td>
+          <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
+          <td style="color: white;">${bookmark.date}</td>
+          <td style="color: white;">${bookmark.time}</td>
+          <td><button onclick="removeBookmark('${bookmark.url}')">Remove</button></td>
+        </tr>
+      `);
+    });
+
+    function removeBookmark(url) {
+      const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
+      localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
+      location.reload();
+    }
   </script>
 </tbody>
+</table>
 
-  </table>
 </body>
 </html>
