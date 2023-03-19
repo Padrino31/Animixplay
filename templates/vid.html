@@ -33,17 +33,16 @@
 
 <body>
 <div class="container">
-  <video controls crossorigin playsinline autoplay>
+  <video id="video" controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
 
 <script>
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-
+  const video = document.getElementById('video');
+  
   document.addEventListener("DOMContentLoaded", () => {
-    const video = document.querySelector("video");
-
     const defaultOptions = {
       title: '{{ title }}'
     };
@@ -60,7 +59,6 @@
     });
     video.addEventListener('ended', () => {
       localStorage.removeItem('{{ title }}');
-      exitFullscreen();
     });
 
     if (Hls.isSupported()) {
@@ -96,41 +94,25 @@
         }
       });
     }
-
-    // Enter full screen mode on smartphones and tablets
-    if (isMobileDevice()) {
-      video.addEventListener("click", enterFullscreen);
-      video.addEventListener("touchend", enterFullscreen);
+    
+    // Auto-rotate to landscape mode on smartphones and tablets
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    
+    if (isMobile && isPortrait) {
+      video.requestFullscreen().then(() => {
+        screen.orientation.lock('landscape');
+      });
     }
-
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    function enterFullscreen() {
-      if (video.requestFullscreen) {
-        if (screen.orientation.type.startsWith("portrait")) {
-          screen.orientation.lock("landscape").then(() => {
-            video.requestFullscreen();
-          });
-        } else {
-          video.requestFullscreen();
-        }
-      }
-    }
-
-    function exitFullscreen() {
-      if (document.exitFullscreen) {
+    
+    // Exit video player when the episode finishes
+    video.addEventListener('ended', () => {
+      if (document.fullscreenElement) {
         document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
       }
-    }
+    });
   });
 </script>
+
 </body>
 </html>
