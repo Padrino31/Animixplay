@@ -50,27 +50,26 @@
 </head>
 
 <body>
-       <header class="header" id="header">
-  <div id="head-div">
-    <div id="title1">
-      <a href="#" class="logo"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
     </div>
-	<div class="nav-container">
-  <ul class="nav-links">
-    <li><a href="https://animixplay-to.vercel.app/">Home</a></li>
-    <li><a href="#">Upcoming</a></li>
-    <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-  </ul>
-</div>
+    <nav>
+      <ul class="menu">
+        <li><a href="/home">Home</a></li>
+        <li><a href="#">Upcoming</a></li>
+        <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+      </ul>
+    </nav>
+    <div class="search-container">
+      <form action="/search" method="get">
+        <input type="text" placeholder="Search Anime...">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
   </div>
-        <div id="search-div">
-            <form action="/search" method='GET'>
-                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-                <button type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
-    </header>
+</header>
     <section>
         <div id="background">
             <div id="cover"></div>
@@ -181,7 +180,18 @@
   alert(`${title} has been added to your watchlist.`);
 }
 
-
+// Add active class to the current link
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+  links[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    if (current.length > 0) {
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    this.className += " active";
+  });
+}
 
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
