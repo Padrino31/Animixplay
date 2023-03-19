@@ -50,19 +50,19 @@
     </div>
     <nav>
       <ul class="menu">
-        <li><a href="/home.html">Home</a></li>
+        <li><a href="/home">Home</a></li>
         <li><a href="#">Upcoming</a></li>
         <li><a href="../static/css/watchlist.html">Watchlist</a></li>
       </ul>
     </nav>
-    <div class="search-container">
-      <form action="/search.html" method="get">
-        <input type="text" placeholder="Search Anime...">
-        <button type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
+    <div id="search-container">
+            <form action="/search" method='GET'>
+                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+                <button type="submit"><i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
   </div>
-</header>
 </header>
     <section>
         <div class="divox">
