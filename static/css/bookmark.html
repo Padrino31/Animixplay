@@ -81,23 +81,41 @@
 <style>
   th {
     color: white;
+    border: 1px solid white; /* add a border to the table header */
+  }
+  td {
+    border: 1px solid #ddd; /* add a border to the table data cells */
+    padding: 8px; /* add some padding to the cells */
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2; /* add alternate row colors */
   }
 </style>
+
  <tbody style="color: white;">
   <script>
   const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-  bookmarks.forEach(bookmark => {
+  bookmarks.forEach((bookmark, index) => {
     document.write(`
       <tr>
         <td style="color: white;">${bookmark.title}</td>
         <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
         <td style="color: white;">${bookmark.date}</td>
         <td style="color: white;">${bookmark.time}</td>
+        <td style="color: white;"><button onclick="removeBookmark(${index})">Remove</button></td>
       </tr>
     `);
   });
+
+  function removeBookmark(index) {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    bookmarks.splice(index, 1);
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    location.reload(); // reload the page to reflect the changes
+  }
   </script>
 </tbody>
+
   </table>
 </body>
 </html>
