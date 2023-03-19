@@ -50,33 +50,15 @@
             alt="Animiplay"></a>
     </div>
 </header>
-
-
-
-
     <section id="vid-sec">
         <div id="vid-div">
 
             <div id="video">
                 <iframe id="AnimeDexFrame" src="{{ iframe }}" style="border:0px #ffffff none;" scrolling="no"
                     frameborder="0" marginheight="0px" marginwidth="0px" allowfullscreen></iframe>
-
             </div>
-
         </div>
-
-        <div id="server_main">
-            <div class="status">
-                <div class="scontent">
-                    You are watching <b>Episode {{ title }}</b>If current server doesn't work please try other servers
-                    beside.
-                </div>
-            </div>
-
-            SERVER
-        </div>
-    </section>
-    <section id="watch">
+<section id="watch">
         <div class="divo">
             <h2>List Of Episodes:</h2>
             <div class="divo2">
@@ -85,11 +67,22 @@
         </div>
        <div class="selector link-data">
             <div>       
-  <button id="addToListBtn" onclick="addToWatchList('{{ iframe }}', '{{ img }}', '{{ title }}')" style="color: black;">Add to my list</button>
-    </div>
             PROSLO
         </div>
+      <div>       
+    <button id="addToListBtn" onclick="addToWatchList('{{ iframe }}', '{{ img }}', '{{ title }}')" style="color: black;">Add to my list</button>
+    </div>
     </section>
+        <div id="server_main">
+            <div class="status">
+                <div class="scontent">
+                    You are watching <b>Episode {{ title }}</b>If current server doesn't work please try other servers
+                    beside.
+                </div>
+            </div>
+            SERVER
+        </div>
+    </section>   
     <hr>
   <footer style="background-color:#2596be;">
     <div>
@@ -97,7 +90,6 @@
     </div>
 </footer>
 <hr>
-
     <script>
      function addToWatchList(link, img, title) {
         // Create an object with the anime data
