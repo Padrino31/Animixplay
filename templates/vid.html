@@ -33,51 +33,57 @@
 
 <body>
 <div class="container">
-    <video controls crossorigin playsinline>
+    <video controls crossorigin playsinline autoplay>
         <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
     </video>
 </div>
+
 <script>
     const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-    const nextEpisodeSource = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
     document.addEventListener("DOMContentLoaded", () => {
         const video = document.querySelector("video");
+
         const defaultOptions = {
             title: '{{ title }}'
         };
+
         if (Hls.isSupported()) {
             const hls = new Hls();
             hls.loadSource(source);
             hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
                 const availableQualities = hls.levels.map((l) => l.height);
 
-            defaultOptions.quality = {
-                default: availableQualities[0],
-                options: availableQualities,
-                forced: true,
-                onChange: (e) => updateQuality(e),
-            };
+                defaultOptions.quality = {
+                    default: availableQualities[0],
+                    options: availableQualities,
+                    forced: true,
+                    onChange: (e) => updateQuality(e),
+                };
+                const player = new Plyr(video, defaultOptions);
+            });
+            hls.attachMedia(video);
+            window.hls = hls;
+        } else {
             const player = new Plyr(video, defaultOptions);
-        });
-        hls.attachMedia(video);
-        window.hls = hls;
-    } else {
-        const player = new Plyr(video, defaultOptions);
-    };
-    function updateQuality(newQuality) {
-        window.hls.levels.forEach((level, levelIndex) => {
-            if (level.height === newQuality) {
-                window.hls.currentLevel = levelIndex;
-            }
-        });
-    }
-    video.addEventListener('ended', () => {
-        video.src = nextEpisodeSource;
-        video.load();
-        video.play();
-    });
-});
+        };
 
+        function updateQuality(newQuality) {
+            window.hls.levels.forEach((level, levelIndex) => {
+                if (level.height === newQuality) {
+                    window.hls.currentLevel = levelIndex;
+                }
+            });
+        }
+
+        const episode = localStorage.getItem('episode');
+        if (episode) {
+            video.currentTime = episode;
+        }
+
+        video.addEventListener('timeupdate', () => {
+            localStorage.setItem('episode', video.currentTime);
+        });
+    });
 </script>
 </body>
 
