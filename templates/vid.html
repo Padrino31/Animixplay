@@ -37,8 +37,10 @@
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
+
 <script>
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+  const episodeKey = '{{ title }}_time'; // unique key for the current episode
 
   document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector("video");
@@ -67,17 +69,20 @@
         };
         const player = new Plyr(video, defaultOptions);
 
-        const savedTime = localStorage.getItem('currentEpisodeTime');
+        // load saved time for the current episode from localStorage, if available
+        const savedTime = localStorage.getItem(episodeKey);
         if (savedTime) {
-          video.currentTime = savedTime;
+          player.currentTime = savedTime;
         }
 
-        video.addEventListener('timeupdate', () => {
-          localStorage.setItem('currentEpisodeTime', video.currentTime);
+        // save the current time to localStorage when the user navigates away from the page
+        window.addEventListener('beforeunload', () => {
+          localStorage.setItem(episodeKey, player.currentTime);
         });
 
-        window.addEventListener('beforeunload', () => {
-          localStorage.setItem('currentEpisodeTime', video.currentTime);
+        // clear the saved time for this episode when it finishes playing
+        player.on('ended', () => {
+          localStorage.removeItem(episodeKey);
         });
       });
       hls.attachMedia(video);
@@ -93,14 +98,7 @@
         }
       });
     }
-
-    const selector = document.querySelector('.selector.link-data');
-    if (selector) {
-      selector.addEventListener('click', () => {
-        localStorage.setItem('currentEpisodeTime', 0);
-      });
-    }
   });
-</script> 
+</script>
 </body>
 </html>
