@@ -40,7 +40,6 @@
 
 <script>
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-  const episodeKey = '{{ title }}_time'; // unique key for the current episode
 
   document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector("video");
@@ -48,6 +47,20 @@
     const defaultOptions = {
       title: '{{ title }}'
     };
+
+    // Check if there is saved current time for this episode
+    const savedTime = localStorage.getItem('{{ title }}');
+    if (savedTime !== null) {
+      video.currentTime = parseFloat(savedTime);
+    }
+
+    // Save current time when the video is paused or ended
+    video.addEventListener('pause', () => {
+      localStorage.setItem('{{ title }}', video.currentTime.toString());
+    });
+    video.addEventListener('ended', () => {
+      localStorage.removeItem('{{ title }}');
+    });
 
     if (Hls.isSupported()) {
       const hls = new Hls({
@@ -68,22 +81,6 @@
           onChange: (e) => updateQuality(e),
         };
         const player = new Plyr(video, defaultOptions);
-
-        // load saved time for the current episode from localStorage, if available
-        const savedTime = localStorage.getItem(episodeKey);
-        if (savedTime) {
-          player.currentTime = savedTime;
-        }
-
-        // save the current time to localStorage when the user navigates away from the page
-        window.addEventListener('beforeunload', () => {
-          localStorage.setItem(episodeKey, player.currentTime);
-        });
-
-        // clear the saved time for this episode when it finishes playing
-        player.on('ended', () => {
-          localStorage.removeItem(episodeKey);
-        });
       });
       hls.attachMedia(video);
       window.hls = hls;
@@ -100,5 +97,6 @@
     }
   });
 </script>
+
 </body>
 </html>
