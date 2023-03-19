@@ -37,24 +37,25 @@
     <meta property="twitter:url" content="">
     <meta property="twitter:card" content="summary">
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
+     <link href="../static/css/styles.css" rel="stylesheet">
     <link href="../static/css/search.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 
 <body>
-    <header id="head-div">
-        <div id="title1">
-            <a href="https://animixplay-to.vercel.app/"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"
-                    alt="Animiplay"></a>
-        </div>
-        <div id="search-div">
-            <form action="/search" method='GET'>
-                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-                <button type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
-    </header>
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
+    </div>
+    <div class="search-container">
+      <form action="/search" method="get">
+        <input type="text" placeholder="Search Anime...">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+  </div>
+</header>
     <section>
         <div class="divox">
             <h2 id="latest">Search Results: {{ aid }}</h2>
@@ -71,6 +72,18 @@
     </footer>
     <hr>
     <script>
+        // Add active class to the current link
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+  links[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    if (current.length > 0) {
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    this.className += " active";
+  });
+}
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
