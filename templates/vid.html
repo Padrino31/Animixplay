@@ -60,6 +60,7 @@
     });
     video.addEventListener('ended', () => {
       localStorage.removeItem('{{ title }}');
+      exitFullscreen();
     });
 
     if (Hls.isSupported()) {
@@ -95,8 +96,41 @@
         }
       });
     }
+
+    // Enter full screen mode on smartphones and tablets
+    if (isMobileDevice()) {
+      video.addEventListener("click", enterFullscreen);
+      video.addEventListener("touchend", enterFullscreen);
+    }
+
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    function enterFullscreen() {
+      if (video.requestFullscreen) {
+        if (screen.orientation.type.startsWith("portrait")) {
+          screen.orientation.lock("landscape").then(() => {
+            video.requestFullscreen();
+          });
+        } else {
+          video.requestFullscreen();
+        }
+      }
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
   });
 </script>
-
 </body>
 </html>
