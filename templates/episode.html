@@ -85,7 +85,7 @@
         </div>
        <div class="selector link-data">
             <div>       
-  <button id="addToListBtn" onclick="addToWatchList('{{ iframe }}', '{{ title }}')" style="color: black;">Add to my list</button>
+  <button id="addToListBtn" onclick="addToWatchList('{{ iframe }}', '{{ img }}', '{{ title }}')" style="color: black;">Add to my list</button>
     </div>
             PROSLO
         </div>
@@ -101,7 +101,7 @@
     <script>
      function addToWatchList(link, img, title) {
         // Create an object with the anime data
-        const anime = { link, img, title };
+        const anime = { link, title };
 
         // Get the current watchlist from local storage or create an empty array
         let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
