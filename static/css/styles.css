@@ -87,7 +87,7 @@ button[type="submit"]:hover {
   background-color: #455a6b;
 }
 
-@media screen and (min-width: 200px) {
+@media screen and (min-width: 285px) {
   .menu li {
     margin-right: 40px;
   }
