@@ -26,7 +26,8 @@
         </div>
   </div>
 </header>
- <table>
+	 <h1>Bookmarks</h1>
+  <table>
   <thead>
     <tr>
       <th>Title</th>
@@ -35,33 +36,31 @@
       <th>Time</th>
     </tr>
   </thead>
-  <tbody id="bookmarks-table">
+  <tbody>
+    <!-- table body goes here -->
   </tbody>
 </table>
 
-<script>
-// Get the list of bookmarks from localStorage
-const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-
-// Render the bookmarks in the table
-const table = document.getElementById('bookmarks-table');
-bookmarks.forEach(bookmark => {
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td>${bookmark.title}</td>
-    <td><a href="${bookmark.url}" target="_blank">${bookmark.url}</a></td>
-    <td>${bookmark.date}</td>
-    <td>${bookmark.time}</td>
-  `;
-  table.appendChild(row);
-});
-</script>
-
-    <hr>
-    <footer style="background-color:#2596be;">
-        <div>
-            <p style="color:white;">Animixplay All rights reserved © Animixplay</p>
-        </div>
-    </footer>
+<style>
+  th {
+    color: white;
+  }
+</style>
+    <tbody>
+      <script>
+      const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      bookmarks.forEach(bookmark => {
+        document.write(`
+          <tr>
+            <td>${bookmark.title}</td>
+            <td><a href="${bookmark.url}">${bookmark.url}</a></td>
+            <td>${bookmark.date}</td>
+            <td>${bookmark.time}</td>
+          </tr>
+        `);
+      });
+      </script>
+    </tbody>
+  </table>
 </body>
 </html>
