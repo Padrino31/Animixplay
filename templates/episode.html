@@ -89,52 +89,47 @@
 </footer>
 <hr>
     <script>
-    function bookmark() {
-  // Get the current time and date
-  const now = new Date();
-  const timestamp = now.toLocaleString();
-
-  // Get the title and URL of the current page
-  const title = document.title;
+  unction bookmark() {
+  // Get the current video title and URL
+  const title = document.querySelector('#watch .scontent b').textContent;
   const url = window.location.href;
 
+  // Generate the bookmark data
+  const bookmarkData = {
+    title,
+    url,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+  };
+
   // Check if the bookmark already exists
-  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-  const exists = bookmarks.some((bookmark) => bookmark.url === url);
-  if (exists) {
-    alert("This episode is already bookmarked.");
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+  if (bookmarks.some(b => b.url === bookmarkData.url)) {
+    alert('This episode is already bookmarked.');
     return;
   }
 
-  // Add the bookmark to the bookmarks array
-  bookmarks.push({
-    title,
-    url,
-    timestamp,
-  });
+  // Add the bookmark to the list
+  bookmarks.push(bookmarkData);
 
-  // Save the bookmarks array to local storage
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  // Save the bookmarks to localStorage
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
-  // Show an alert message
-  alert("This episode has been bookmarked.");
+  // Display a confirmation message
+  alert(`Episode "${title}" bookmarked.`);
+
+  // Refresh the page to show the updated bookmarks
+  location.reload();
 }
-
        function selectServer(btn) {
-  const buttons = document.getElementsByClassName("sobtn");
-  const url = btn.getAttribute("data-value");
-
-  // Open the link in a new window or tab
-  window.open(url, "_blank");
-
-  // Deselect all buttons
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].className = "sobtn";
-  }
-
-  // Select the clicked button
-  btn.className = "sobtn sactive";
-}
+            const buttons = document.getElementsByClassName('sobtn');
+            const iframe = document.getElementById('AnimeDexFrame');
+            iframe.src = btn.getAttribute('data-value');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = "sobtn";
+            }
+            btn.className = "sobtn sactive";
+        };
 
         function showDownload() {
         document.getElementById('showdl').style.display = "none";
