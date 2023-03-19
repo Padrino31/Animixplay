@@ -49,26 +49,41 @@ nav {
   color: #2596be;
 }
 
-.search-container {
-  flex: 1;
-  text-align: right;
+#search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
 }
 
-.search-container input[type=text] {
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="text"] {
+  width: 300px;
   padding: 10px;
   border: none;
   border-radius: 50px;
-  margin-right: 10px;
+  font-size: 16px;
 }
 
-.search-container button {
+button[type="submit"] {
   background-color: #2596be;
-  border: none;
   color: #fff;
-  padding: 10px;
+  border: none;
   border-radius: 50px;
+  padding: 10px;
+  margin-left: 10px;
   cursor: pointer;
 }
+
+button[type="submit"]:hover {
+  background-color: #455a6b;
+}
+
 
 
 @media screen and (max-width: 1200px) {
