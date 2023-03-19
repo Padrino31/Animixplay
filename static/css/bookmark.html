@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookmarks</title>
+	
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
+    </div>
+    <nav>
+      <ul class="menu">
+        <li><a href="/home">Home</a></li>
+        <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+      </ul>
+    </nav>
+    <div id="search-container">
+            <form action="/search" method='GET'>
+                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+                <button type="submit"><i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+  </div>
+</header>
+ <table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>URL</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody id="bookmarks-table">
+  </tbody>
+</table>
+
+<script>
+// Get the list of bookmarks from localStorage
+const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+
+// Render the bookmarks in the table
+const table = document.getElementById('bookmarks-table');
+bookmarks.forEach(bookmark => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${bookmark.title}</td>
+    <td><a href="${bookmark.url}" target="_blank">${bookmark.url}</a></td>
+    <td>${bookmark.date}</td>
+    <td>${bookmark.time}</td>
+  `;
+  table.appendChild(row);
+});
+</script>
+
+    <hr>
+    <footer style="background-color:#2596be;">
+        <div>
+            <p style="color:white;">Animixplay All rights reserved © Animixplay</p>
+        </div>
+    </footer>
+</body>
+</html>
