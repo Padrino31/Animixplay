@@ -81,11 +81,14 @@
       const a = document.createElement("a");
       a.href = anime.link;
       a.textContent = anime.title;
-      const removeBtn = document.createElement("button");
-      removeBtn.textContent = "Remove";
-      removeBtn.onclick = () => {
-        // Remove the anime from the watchlist
-        watchlist.splice(index, 1);
+    const removeBtn = document.createElement("button");
+removeBtn.textContent = "Remove";
+removeBtn.style.backgroundColor = "#2596be";
+removeBtn.style.fontSize = "16px";
+removeBtn.style.padding = "10px 20px";
+removeBtn.onclick = () => {
+  // Remove the anime from the watchlist
+  watchlist.splice(index, 1);
 
         // Update the watchlist in local storage
         localStorage.setItem("watchlist", JSON.stringify(watchlist));
