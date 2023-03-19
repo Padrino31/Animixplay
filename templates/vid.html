@@ -47,16 +47,6 @@
       title: '{{ title }}'
     };
 
-    // Load saved episode from localStorage if available
-    const savedEpisode = localStorage.getItem('episode');
-    if (savedEpisode) {
-      const episodeData = JSON.parse(savedEpisode);
-      if (episodeData.source === source) {
-        video.currentTime = episodeData.currentTime;
-        defaultOptions.quality = episodeData.quality;
-      }
-    }
-
     if (Hls.isSupported()) {
       const hls = new Hls({
         autoStartLoad: true, // enable automatic start of video download
@@ -69,27 +59,27 @@
       hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
         const availableQualities = hls.levels.map((l) => l.height);
 
-        if (!defaultOptions.quality) {
-          defaultOptions.quality = {
-            default: availableQualities[0],
-            options: availableQualities,
-            forced: true,
-            onChange: (e) => updateQuality(e),
-          };
-        }
-
+        defaultOptions.quality = {
+          default: availableQualities[0],
+          options: availableQualities,
+          forced: true,
+          onChange: (e) => updateQuality(e),
+        };
         const player = new Plyr(video, defaultOptions);
 
-        // Save episode to localStorage when user exits the page
+        const savedTime = localStorage.getItem('currentEpisodeTime');
+        if (savedTime) {
+          video.currentTime = savedTime;
+        }
+
+        video.addEventListener('timeupdate', () => {
+          localStorage.setItem('currentEpisodeTime', video.currentTime);
+        });
+
         window.addEventListener('beforeunload', () => {
-          localStorage.setItem('episode', JSON.stringify({
-            source: source,
-            currentTime: video.currentTime,
-            quality: player.getQuality()
-          }));
+          localStorage.setItem('currentEpisodeTime', video.currentTime);
         });
       });
-
       hls.attachMedia(video);
       window.hls = hls;
     } else {
@@ -104,14 +94,13 @@
       });
     }
 
-    // Delete saved episode from localStorage when user clicks next button
-    const nextButton = document.querySelector('#next-button');
-    if (nextButton) {
-      nextButton.addEventListener('click', () => {
-        localStorage.removeItem('episode');
+    const selector = document.querySelector('.selector.link-data');
+    if (selector) {
+      selector.addEventListener('click', () => {
+        localStorage.setItem('currentEpisodeTime', 0);
       });
     }
   });
-</script>
+</script> 
 </body>
 </html>
