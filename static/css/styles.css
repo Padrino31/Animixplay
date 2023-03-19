@@ -10,19 +10,21 @@
   padding: 15px;
 }
 
-
 .container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo {
   flex: 1;
+  text-align: center;
 }
 
 nav {
   flex: 2;
+  text-align: center;
 }
 
 .menu {
@@ -31,7 +33,7 @@ nav {
 }
 
 .menu li {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .menu li:last-child {
@@ -63,7 +65,8 @@ form {
 }
 
 input[type="text"] {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   padding: 10px;
   border: none;
   border-radius: 50px;
@@ -84,24 +87,44 @@ button[type="submit"]:hover {
   background-color: #455a6b;
 }
 
-
-
-@media screen and (max-width: 1200px) {
-  .container {
-    flex-wrap: wrap;
+@media screen and (min-width: 355px) {
+  .menu li {
+    margin-right: 40px;
   }
-  
-  .logo, nav, .search-container {
+  .menu li:last-child {
+    margin-right: 0px;
+  }
+  .menu li:nth-child(1) a {
+    margin-right: 20px;
+  }
+  .menu li:nth-child(2) a {
+    margin-right: 20px;
+  }
+}
+
+
+
+@media screen and (max-width: 991px) {
+  .menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .menu li {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .logo, nav, #search-container {
     flex: 1 1 100%;
     text-align: center;
     margin-bottom: 10px;
   }
-  
   nav {
     order: 3;
   }
-  
-  .search-container {
+  #search-container {
     order: 2;
   }
 }
