@@ -1,36 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/x-icon" href="https://animixplay.to/icon.png">
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-   <title>My Watchlist</title>
-   <link href="./home.css" rel="stylesheet">
-   
-   <style>
-     #watchlist {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-       gap: 20px;
-     }
-     #watchlist li {
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-     }
-     #watchlist li img {
-       max-width: 100%;
-     }
-     #watchlist li a {
-       margin-top: 10px;
-       text-align: center;
-     }
-     #watchlist li button {
-       margin-top: 10px;
-     }
-   </style>
+  <link rel="icon" type="image/x-icon" href="https://animixplay.to/icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>My Watchlist</title>
+  <link href="./home.css" rel="stylesheet">
+  
+  <style>
+    #watchlist {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    #watchlist li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #watchlist li img {
+      max-width: 100%;
+    }
+    #watchlist li a {
+      margin-top: 10px;
+      text-align: center;
+    }
+    #watchlist li button {
+      margin-top: 10px;
+    }
+
+    /* Media queries */
+    @media only screen and (max-width: 768px) {
+      #watchlist {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+      }
+      #watchlist li a {
+        font-size: 14px;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      #watchlist {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 5px;
+      }
+      #watchlist li a {
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 <header id="head-div">
   <div id="title1">
