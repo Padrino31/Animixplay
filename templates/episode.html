@@ -46,20 +46,8 @@
 <header class="header" style="box-sizing: border-box; margin: 0; padding: 0; background-color: rgba(255, 0, 0, 0); color: #fff; padding: 15px;">
   <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
     <div class="logo" style="flex: 1;">
-      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
+      <a href="https://animixplay-to.vercel.app/"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
     </div>
-    <nav style="flex: 2;">
-      <ul class="menu" style="display: flex; list-style: none;">
-        <li style="margin-right: 40px;"><a href="https://animixplay-to.vercel.app/" style="color: #fff; text-decoration: none; font-weight: bold; transition: color 0.2s ease-in-out;">Home</a></li>
-        <li style="margin-right: 40px;"><a href="#" style="color: #fff; text-decoration: none; font-weight: bold; transition: color 0.2s ease-in-out;">Upcoming</a></li>
-        <li style="margin-right: 0px;"><a href="../static/css/watchlist.html" style="color: #fff; text-decoration: none; font-weight: bold; transition: color 0.2s ease-in-out;">Watchlist</a></li>
-      </ul>
-    </nav>
-    <div id="search-container" style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-      <form action="/search" method='GET' style="display: flex; justify-content: center; align-items: center;">
-        <input type="text" name="query" id="query" placeholder="Search Anime..." required style="width: 300px; padding: 10px; border: none; border-radius: 50px; font-size: 16px;">
-        <button type="submit" style="background-color: #2596be; color: #fff; border: none; border-radius: 50px; padding: 10px; margin-left: 10px; cursor: pointer;"> <i class="fa fa-search"></i> </button>
-      </form>
     </div>
   </div>
 </header>
@@ -133,18 +121,6 @@
         document.getElementById('showdl').style.display = "none";
         document.getElementById('dldiv').classList.toggle('show');
     }
-            // Add active class to the current link
-var header = document.getElementById("header");
-var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
-for (var i = 0; i < links.length; i++) {
-  links[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    if (current.length > 0) {
-      current[0].className = current[0].className.replace(" active", "");
-    }
-    this.className += " active";
-  });
-}
     </script>
 </body>
 </html>
