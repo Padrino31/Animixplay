@@ -66,7 +66,7 @@
     </div>
     <div class="selector link-data">
         PROSLO
-        <button id="bookmark-button" onclick="bookmark()"style="color: black;">Bookmark</button>
+        <button onclick="saveBookmark()">Bookmark</button>
     </div>
     <div id="server_main">
         <div class="status">
@@ -89,37 +89,50 @@
 </footer>
 <hr>
     <script>
-  unction bookmark() {
-  // Get the current video title and URL
-  const title = document.querySelector('#watch .scontent b').textContent;
-  const url = window.location.href;
+ function saveBookmark() {
+  // get current time and date
+  const now = new Date();
+  const time = now.toLocaleTimeString();
+  const date = now.toLocaleDateString();
 
-  // Generate the bookmark data
-  const bookmarkData = {
+  // get the video title and URL
+  const title = document.querySelector('#watch .scontent b').textContent;
+  const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
+
+  // create the bookmark object
+  const bookmark = {
     title,
     url,
-    date: new Date().toLocaleDateString(),
-    time: new Date().toLocaleTimeString(),
+    date,
+    time
   };
 
-  // Check if the bookmark already exists
-  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-  if (bookmarks.some(b => b.url === bookmarkData.url)) {
-    alert('This episode is already bookmarked.');
+  // check if the bookmark already exists
+  const bookmarks = getBookmarks();
+  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.url === bookmark.url);
+  if (isDuplicate) {
+    alert('This video is already bookmarked.');
     return;
   }
 
-  // Add the bookmark to the list
-  bookmarks.push(bookmarkData);
+  // save the bookmark to the bookmarks array
+  bookmarks.push(bookmark);
 
-  // Save the bookmarks to localStorage
+  // save the updated bookmarks array to local storage
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
-  // Display a confirmation message
-  alert(`Episode "${title}" bookmarked.`);
+  alert('Bookmark saved!');
+}
 
-  // Refresh the page to show the updated bookmarks
-  location.reload();
+function getBookmarks() {
+  // get existing bookmarks from local storage or create empty array
+  let bookmarks = localStorage.getItem('bookmarks');
+  if (!bookmarks) {
+    bookmarks = [];
+  } else {
+    bookmarks = JSON.parse(bookmarks);
+  }
+  return bookmarks;
 }
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
