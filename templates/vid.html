@@ -33,7 +33,7 @@
 
 <body>
 <div class="container">
-  <video id="myVideo" controls crossorigin playsinline autoplay>
+  <video controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
@@ -42,7 +42,7 @@
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
   document.addEventListener("DOMContentLoaded", () => {
-    const video = document.getElementById("myVideo");
+    const video = document.querySelector("video");
 
     const defaultOptions = {
       title: '{{ title }}'
@@ -60,22 +60,7 @@
     });
     video.addEventListener('ended', () => {
       localStorage.removeItem('{{ title }}');
-      exitFullscreen();
     });
-
-    // Enter fullscreen on smartphones and tablets
-    const enterFullscreen = () => {
-      if (window.innerWidth <= 768 && !document.fullscreenElement) {
-        video.requestFullscreen({orientation: 'landscape'});
-      }
-    };
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        // Exit fullscreen when video finishes playing
-        exitFullscreen();
-      }
-    });
-    video.addEventListener('play', enterFullscreen);
 
     if (Hls.isSupported()) {
       const hls = new Hls({
@@ -95,12 +80,44 @@
           forced: true,
           onChange: (e) => updateQuality(e),
         };
+
         const player = new Plyr(video, defaultOptions);
+
+        // Rotate to landscape mode when entering fullscreen on smartphones and tablets
+        player.on('enterfullscreen', () => {
+          if (/Mobi|Android/i.test(navigator.userAgent)) {
+            screen.orientation.lock('landscape');
+          }
+        });
+
+        // Exit out of the video player when the episode finishes
+        player.on('ended', () => {
+          if (/Mobi|Android/i.test(navigator.userAgent)) {
+            screen.orientation.unlock();
+          }
+          localStorage.removeItem('{{ title }}');
+        });
       });
+
       hls.attachMedia(video);
       window.hls = hls;
     } else {
       const player = new Plyr(video, defaultOptions);
+
+      // Rotate to landscape mode when entering fullscreen on smartphones and tablets
+      player.on('enterfullscreen', () => {
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+          screen.orientation.lock('landscape');
+        }
+      });
+
+      // Exit out of the video player when the episode finishes
+      player.on('ended', () => {
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+          screen.orientation.unlock();
+        }
+        localStorage.removeItem('{{ title }}');
+      });
     }
 
     function updateQuality(newQuality) {
@@ -110,13 +127,6 @@
         }
       });
     }
-
-    // Exit fullscreen
-    const exitFullscreen = () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    };
   });
 </script>
 </body>
