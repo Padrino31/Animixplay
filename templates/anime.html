@@ -170,10 +170,9 @@
     <hr>
 
     <script>
-	    
-function addToWatchList(link, img, title) {
+function addToWatchList(link, img, title, episode) {
   // Create an object with the anime data
-  const anime = { link, img, title };
+  const anime = { link, img, title, episode };
 
   // Get the current watchlist from local storage or create an empty array
   let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
@@ -197,22 +196,25 @@ function addToWatchList(link, img, title) {
   alert(`${title} has been added to your watchlist.`);
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  // Clear the watchlist from local storage
+  localStorage.removeItem("watchlist");
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                    }
-                })
-            });
-            const arr = document.querySelectorAll('img.lzy_img');
-            arr.forEach((v) => {
-                imageObserver.observe(v);
-            });
-        })
-	    // Add active class to the current link
+  const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const lazyImage = entry.target;
+        lazyImage.src = lazyImage.dataset.src;
+      }
+    })
+  });
+  const arr = document.querySelectorAll('img.lzy_img');
+  arr.forEach((v) => {
+    imageObserver.observe(v);
+  });
+})
+
+// Add active class to the current link
 var header = document.getElementById("header");
 var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
 for (var i = 0; i < links.length; i++) {
@@ -224,7 +226,20 @@ for (var i = 0; i < links.length; i++) {
     this.className += " active";
   });
 }
-    </script>
+
+// Restore last watched episode
+const watchBtn = document.getElementById("watch_btn");
+watchBtn.addEventListener("click", function() {
+  const link = watchBtn.getAttribute("href");
+  const episode = JSON.parse(localStorage.getItem("watchlist")).find((item) => item.link === link)?.episode;
+  if (episode) {
+    watchBtn.setAttribute("href", `${link}?episode=${episode}`);
+  }
+});
+</script>
+
+	    
+
 </body>
 
 </html>
