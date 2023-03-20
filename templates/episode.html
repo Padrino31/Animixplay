@@ -51,74 +51,74 @@
     </div>
   </div>
 </header>
-   <section id="vid-sec">
-    <div id="vid-div">
-        <div id="video">
-            <iframe id="AnimeDexFrame" src="{{ iframe }}" style="border:0px #ffffff none;" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" allowfullscreen></iframe>
-        </div>
+<section id="vid-sec">
+  <div id="vid-div">
+    <div id="video">
+      <iframe id="AnimeDexFrame" src="{{ iframe }}" style="border:0px #ffffff none;" scrolling="no"
+        frameborder="0" marginheight="0px" marginwidth="0px" allowfullscreen></iframe>
     </div>
-    <section id="watch">
-        <div class="scontent">
-            You are watching <b>Episode <span id="episode-title">{{ title }}</span>.</b> If the current server doesn't work, please try other servers.
-        </div>
-        <div id="server_main">
-            <div class="status"></div>
-            SERVER
-        </div>
-        <div class="divo">
-            <h2>List Of Episodes:</h2>
-            <div class="divo2" id="episodes-list">
-                EPISOS
-            </div>
-        </div>
-    </section>
-    <hr>
-    <footer style="background-color:#2596be;">
-        <div>
-            <p style="color:white;">Animixplay All rights reserved © Animixplay</p>
-        </div>
-    </footer>
-    <hr>
-    <script>
-        // Get the episodes list from the server
-        const episodes = [1, 2, 3, 4, 5, 6]; // Replace with actual episodes list
+  </div>
+  <section id="watch">
+    <div class="scontent">
+      You are watching <b>Episode {{ title }}.</b> If the current server doesn't work, please try other servers.
+    </div>
+    <div class="selector link-data">
+      PROSLO
+      <button onclick="saveLastEpisode()" style="color: black;">Save Last Episode</button>
+    </div>
+    <div id="server_main">
+      <div class="status"></div>
+      SERVER
+    </div>
+    <div class="divo">
+      <h2>List Of Episodes:</h2>
+      <div class="divo2">
+        EPISOS
+      </div>
+    </div>
+  </section>
 
-        // Load the last watched episode from local storage
-        const lastWatchedEpisode = localStorage.getItem('lastWatchedEpisode');
-        if (lastWatchedEpisode) {
-            const episodeTitle = document.getElementById('episode-title');
-            episodeTitle.textContent = lastWatchedEpisode;
-        }
-
-        // Populate the episodes list
-        const episodesList = document.getElementById('episodes-list');
-        episodes.forEach((episode) => {
-            const episodeLink = document.createElement('a');
-            episodeLink.href = '#';
-            episodeLink.textContent = `Episode ${episode}`;
-            episodeLink.addEventListener('click', () => {
-                const episodeTitle = document.getElementById('episode-title');
-                episodeTitle.textContent = `Episode ${episode}`;
-                localStorage.setItem('lastWatchedEpisode', `Episode ${episode}`);
-            });
-            episodesList.appendChild(episodeLink);
-        });
-
-        function selectServer(btn) {
-            const buttons = document.getElementsByClassName('sobtn');
-            const iframe = document.getElementById('AnimeDexFrame');
-            iframe.src = btn.getAttribute('data-value');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].className = "sobtn";
-            }
-            btn.className = "sobtn sactive";
-        };
-
-        function showDownload() {
-            document.getElementById('showdl').style.display = "none";
-            document.getElementById('dldiv').classList.toggle('show');
-        }
-    </script>
+  <hr>
+  <footer style="background-color:#2596be;">
+    <div>
+      <p style="color:white;">Animixplay All rights reserved © Animixplay</p>
+    </div>
+  </footer>
+  <hr>
 </section>
+
+<script>
+  // Retrieve the last watched episode from localStorage and update the UI
+  const lastEpisode = localStorage.getItem('lastEpisode');
+  if (lastEpisode) {
+    document.querySelector('#watch .scontent b').textContent = `Episode ${lastEpisode}`;
+  }
+
+  function saveLastEpisode() {
+    // Get the current episode title
+    const title = document.querySelector('#watch .scontent b').textContent;
+    const episodeNumber = parseInt(title.split(' ')[1]);
+
+    // Save the last watched episode number to localStorage
+    localStorage.setItem('lastEpisode', episodeNumber);
+    alert(`Last watched episode (${title}) saved!`);
+  }
+
+  function selectServer(btn) {
+    const buttons = document.getElementsByClassName('sobtn');
+    const iframe = document.getElementById('AnimeDexFrame');
+    iframe.src = btn.getAttribute('data-value');
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].className = "sobtn";
+    }
+    btn.className = "sobtn sactive";
+  }
+
+  function showDownload() {
+    document.getElementById('showdl').style.display = "none";
+    document.getElementById('dldiv').classList.toggle('show');
+  }
+</script>
+
 </body>
 </html>
