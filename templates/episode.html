@@ -65,8 +65,8 @@
     </div>
     <div class="selector link-data">
         PROSLO
-       <button onclick="saveBookmark()" style="color: black;">Bookmark</button>
-        <a href="./episode.html" target="_blank">Full Web Interface</a>
+      <button onclick="saveBookmark()" style="color: black;">Bookmark</button>
+
 
 
     </div>
@@ -91,29 +91,27 @@
 </footer>
 <hr>
     <script>
-function saveBookmark() {
+ function saveBookmark() {
   // get current time and date
   const now = new Date();
   const time = now.toLocaleTimeString();
   const date = now.toLocaleDateString();
 
-  // get the video title, episode number and server URL
+  // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
-  const episode = document.querySelector('.divo2 .sactive').textContent;
-  const server = document.querySelector('#server_main .sactive').getAttribute('data-value');
+  const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
 
   // create the bookmark object
   const bookmark = {
     title,
-    episode,
-    server,
+    url,
     date,
     time
   };
 
   // check if the bookmark already exists
   const bookmarks = getBookmarks();
-  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.episode === bookmark.episode && b.server === bookmark.server);
+  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.url === bookmark.url);
   if (isDuplicate) {
     alert('This video is already bookmarked.');
     return;
@@ -136,18 +134,22 @@ function getBookmarks() {
   } else {
     bookmarks = JSON.parse(bookmarks);
   }
-
-  // check if saved link matches current episode
-  const currentEpisode = document.querySelector('.divo2 .sactive').textContent;
-  const currentServer = document.querySelector('#server_main .sactive').getAttribute('data-value');
-  const savedBookmark = bookmarks.find(b => b.episode === currentEpisode && b.server === currentServer);
-  if (savedBookmark) {
-    // redirect user to saved episode on saved server
-    window.location.href = "episode.html?episode=" + savedBookmark.episode + "&server=" + encodeURIComponent(savedBookmark.server);
-  }
-
   return bookmarks;
 }
+       function selectServer(btn) {
+            const buttons = document.getElementsByClassName('sobtn');
+            const iframe = document.getElementById('AnimeDexFrame');
+            iframe.src = btn.getAttribute('data-value');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = "sobtn";
+            }
+            btn.className = "sobtn sactive";
+        };
+
+        function showDownload() {
+        document.getElementById('showdl').style.display = "none";
+        document.getElementById('dldiv').classList.toggle('show');
+    }
 
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
