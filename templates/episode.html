@@ -92,6 +92,41 @@
 </footer>
 <hr>
     <script>
+        function addToWatchList(link, img, title) {
+    // Create an object with the anime data
+    const anime = { link, img, title };
+
+    // Get the current watchlist from local storage or create an empty array
+    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+
+    // Check if the anime already exists in the watchlist
+    const exists = watchlist.some((item) => item.link === link);
+
+    // If the anime exists, show an alert and return
+    if (exists) {
+        alert(`${title} is already in your watchlist.`);
+        return;
+    }
+
+    // Add the anime to the watchlist
+    watchlist.push(anime);
+
+    // Store the updated watchlist in local storage
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+    // Show an alert to confirm the anime was added
+    alert(`${title} has been added to your watchlist.`);
+}
+
+// Restore the last episode watched when the "Watch Now" button is clicked
+const watchNowBtn = document.querySelector('.watch-btn');
+watchNowBtn.addEventListener('click', function() {
+    const lastEpisode = localStorage.getItem("lastEpisode");
+    if (lastEpisode) {
+        window.location.href = lastEpisode;
+    }
+});
+
  function saveBookmark() {
   // get current time and date
   const now = new Date();
