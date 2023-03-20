@@ -8,7 +8,7 @@ ANIME_POS = """
                             <div class="dubb dubb2">{}</div>
                         </div>
                         <div id="shadow2" class="shadow">
-                        <img class="lzy_img" src="https://media.tenor.com/2NHYCpcx1yAAAAAM/sharingan.gif" data-src="{}">
+                        <img class="lzy_img" src="https://media.tenor.com/whis5JX19ycAAAAC/loading-load.gif" data-src="{}">
                     </div>
                     <div class="la-details">
                         <h3>{}</h3>
