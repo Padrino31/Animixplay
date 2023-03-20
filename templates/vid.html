@@ -111,14 +111,13 @@
         }
       });
 
-      // Exit out of the video player when the episode finishes
-      player.on('ended', () => {
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-          screen.orientation.unlock();
-        }
-        localStorage.removeItem('{{ title }}');
-      });
-    }
+          
+    // Exit video player when the episode finishes
+    video.addEventListener('ended', () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    });
 
     function updateQuality(newQuality) {
       window.hls.levels.forEach((level, levelIndex) => {
@@ -129,5 +128,6 @@
     }
   });
 </script>
+
 </body>
 </html>
