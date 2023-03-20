@@ -33,16 +33,17 @@
 
 <body>
 <div class="container">
-  <video id="video" controls crossorigin playsinline autoplay>
+  <video id="myVideo" controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
 
 <script>
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-  const video = document.getElementById('video');
-  
+
   document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("myVideo");
+
     const defaultOptions = {
       title: '{{ title }}'
     };
@@ -59,7 +60,22 @@
     });
     video.addEventListener('ended', () => {
       localStorage.removeItem('{{ title }}');
+      exitFullscreen();
     });
+
+    // Enter fullscreen on smartphones and tablets
+    const enterFullscreen = () => {
+      if (window.innerWidth <= 768 && !document.fullscreenElement) {
+        video.requestFullscreen({orientation: 'landscape'});
+      }
+    };
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        // Exit fullscreen when video finishes playing
+        exitFullscreen();
+      }
+    });
+    video.addEventListener('play', enterFullscreen);
 
     if (Hls.isSupported()) {
       const hls = new Hls({
@@ -94,25 +110,14 @@
         }
       });
     }
-    
-    // Auto-rotate to landscape mode on smartphones and tablets
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-    
-    if (isMobile && isPortrait) {
-      video.requestFullscreen().then(() => {
-        screen.orientation.lock('landscape');
-      });
-    }
-    
-    // Exit video player when the episode finishes
-    video.addEventListener('ended', () => {
+
+    // Exit fullscreen
+    const exitFullscreen = () => {
       if (document.fullscreenElement) {
         document.exitFullscreen();
       }
-    });
+    };
   });
 </script>
-
 </body>
 </html>
