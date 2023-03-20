@@ -60,6 +60,9 @@
     });
     video.addEventListener('ended', () => {
       localStorage.removeItem('{{ title }}');
+      if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+        document.exitFullscreen();
+      }
     });
 
     if (Hls.isSupported()) {
@@ -80,44 +83,29 @@
           forced: true,
           onChange: (e) => updateQuality(e),
         };
-
         const player = new Plyr(video, defaultOptions);
 
-        // Rotate to landscape mode when entering fullscreen on smartphones and tablets
-        player.on('enterfullscreen', () => {
-          if (/Mobi|Android/i.test(navigator.userAgent)) {
-            screen.orientation.lock('landscape');
-          }
-        });
-
-        // Exit out of the video player when the episode finishes
-        player.on('ended', () => {
-          if (/Mobi|Android/i.test(navigator.userAgent)) {
-            screen.orientation.unlock();
-          }
-          localStorage.removeItem('{{ title }}');
-        });
+        if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
+          player.on('enterfullscreen', () => {
+            if (screen.orientation.lock) {
+              screen.orientation.lock('landscape');
+            }
+          });
+        }
       });
-	    
-    // Exit video player when the episode finishes
-    video.addEventListener('ended', () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    });
       hls.attachMedia(video);
       window.hls = hls;
     } else {
       const player = new Plyr(video, defaultOptions);
 
-      // Rotate to landscape mode when entering fullscreen on smartphones and tablets
-      player.on('enterfullscreen', () => {
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-          screen.orientation.lock('landscape');
-        }
-      });
-
-      
+      if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
+        player.on('enterfullscreen', () => {
+          if (screen.orientation.lock) {
+            screen.orientation.lock('landscape');
+          }
+        });
+      }
+    }
 
     function updateQuality(newQuality) {
       window.hls.levels.forEach((level, levelIndex) => {
@@ -128,7 +116,5 @@
     }
   });
 </script>
-
-
 </body>
 </html>
