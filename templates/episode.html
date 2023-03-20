@@ -90,65 +90,61 @@
 </footer>
 <hr>
     <script>
- function saveBookmark() {
-  // get current time and date
-  const now = new Date();
-  const time = now.toLocaleTimeString();
-  const date = now.toLocaleDateString();
+function selectServer(btn) {
+const buttons = document.getElementsByClassName('sobtn');
+const iframe = document.getElementById('AnimeDexFrame');
+iframe.src = btn.getAttribute('data-value');
+for (let i = 0; i < buttons.length; i++) {
+buttons[i].className = "sobtn";
+}
+btn.className = "sobtn sactive";
+};
 
-  // get the video title and URL
-  const title = document.querySelector('#watch .scontent b').textContent;
-  const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
-
-  // create the bookmark object
-  const bookmark = {
-    title,
-    url,
-    date,
-    time
-  };
-
-  // check if the bookmark already exists
-  const bookmarks = getBookmarks();
-  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.url === bookmark.url);
-  if (isDuplicate) {
-    alert('This video is already bookmarked.');
-    return;
-  }
-
-  // save the bookmark to the bookmarks array
-  bookmarks.push(bookmark);
-
-  // save the updated bookmarks array to local storage
-  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-
-  alert('Bookmark saved!');
+function showDownload() {
+document.getElementById('showdl').style.display = "none";
+document.getElementById('dldiv').classList.toggle('show');
 }
 
-function getBookmarks() {
-  // get existing bookmarks from local storage or create empty array
-  let bookmarks = localStorage.getItem('bookmarks');
-  if (!bookmarks) {
-    bookmarks = [];
-  } else {
-    bookmarks = JSON.parse(bookmarks);
-  }
-  return bookmarks;
+function saveLastWatchedEpisode() {
+const title = document.querySelector('#watch #episode-title').textContent;
+const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
+localStorage.setItem('lastWatchedEpisode', JSON.stringify({ title, url }));
 }
-       function selectServer(btn) {
-            const buttons = document.getElementsByClassName('sobtn');
-            const iframe = document.getElementById('AnimeDexFrame');
-            iframe.src = btn.getAttribute('data-value');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].className = "sobtn";
-            }
-            btn.className = "sobtn sactive";
-        };
 
-        function showDownload() {
-        document.getElementById('showdl').style.display = "none";
-        document.getElementById('dldiv').classList.toggle('show');
-    }
+function loadLastWatchedEpisode() {
+const lastWatchedEpisode = JSON.parse(localStorage.getItem('lastWatchedEpisode'));
+if (lastWatchedEpisode) {
+const title = lastWatchedEpisode.title;
+const url = lastWatchedEpisode.url;
+document.querySelector('#watch #episode-title').textContent = title;
+const iframe = document.getElementById('AnimeDexFrame');
+iframe.src = url;
+}
+}
+
+function populateEpisodeList() {
+const episodeList = document.getElementById('episode-list');
+// Clear the episode list
+episodeList.innerHTML = '';
+// Get the list of episodes from the server
+const episodes = ['Episode 1', 'Episode 2', 'Episode 3', 'Episode 4', 'Episode 5'];
+// Populate the episode list dynamically
+episodes.forEach(episode => {
+const li = document.createElement('li');
+li.textContent = episode;
+li.addEventListener('click', () => {
+document.querySelector('#watch #episode-title').textContent = episode;
+saveLastWatchedEpisode();
+});
+episodeList.appendChild(li);
+});
+}
+
+// Load the last watched episode when the page is loaded
+loadLastWatchedEpisode();
+
+// Populate the episode list when the page is loaded
+populateEpisodeList();
     </script>
 </body>
 </html>
