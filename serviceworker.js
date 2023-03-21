@@ -2,13 +2,36 @@ const cachea = "HVHCache-v1";
 list = []
 var appshellfiles = [
     // pages can be added here for caching
-    '/index.html',
-    '/home.html',
-    '/counterPage.html',
-    '/github.html',
-    '/info.html',
-    '/tab.min.js', '/save.min.css', '/manifest.json', '/logo.png',
-'fonts/MatSymbolsRounded.woff2', 'fonts/Poppins-Medium.ttf'
+    './templates/home.html',
+    './templates/anime.html',
+    './templates/video.html',
+    './templates/episode.html',
+    './templates/search.html',
+    '/.gitattributes',
+    '/.gitignore',
+    '/.replit',
+      '/vercel.json',
+        '/app.py',
+        '/main.py',
+     '/index.py',
+     '/config.py',
+     '/wsgi.py',
+     './programs/anilist.py',
+     './programs/anime_loader.py',
+     './programs/db.py',
+     './programs/html_gen.py',
+     './programs/others.py',
+     './programs/techzapi.py',
+        '../static/css/anime.css',
+        '../static/css/episode.css',
+        '../static/css/home.css',   
+    '../static/css/search.css',
+        '../static/css/styles.css',
+        '../static/css/video.css',
+        '../static/css/watchlist.html',
+        '../static/css/bookmark.hmtl.css',
+      '/tab.min.js',
+      '/manifest.json'
 
 ]
 appshellfiles = []
