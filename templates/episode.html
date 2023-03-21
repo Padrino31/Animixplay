@@ -114,7 +114,7 @@ function saveBookmark() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(file);
   a.setAttribute('target', '_blank');
-  a.setAttribute('download', '../static/css/bookmark.html');
+  a.setAttribute('../static/css/bookmark.html');
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
