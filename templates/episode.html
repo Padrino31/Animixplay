@@ -100,11 +100,13 @@
   // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
   const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
+  const episodeUrl = document.querySelector('.link-data').textContent;
 
   // create the bookmark object
   const bookmark = {
     title,
     url,
+    episodeUrl,
     date,
     time
   };
@@ -123,19 +125,12 @@
   // save the updated bookmarks array to local storage
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
+  // redirect the user to the web page where the episode link was extracted
+  window.location.href = episodeUrl;
+
   alert('Bookmark saved!');
 }
 
-function getBookmarks() {
-  // get existing bookmarks from local storage or create empty array
-  let bookmarks = localStorage.getItem('bookmarks');
-  if (!bookmarks) {
-    bookmarks = [];
-  } else {
-    bookmarks = JSON.parse(bookmarks);
-  }
-  return bookmarks;
-}
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
             const iframe = document.getElementById('AnimeDexFrame');
