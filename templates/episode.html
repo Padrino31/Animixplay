@@ -100,17 +100,13 @@ function saveBookmark() {
   // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
   const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
-
-  // get the episode link and title
-  const episodeLink = document.querySelector('#vid-sec iframe').src;
-  const episodeTitle = document.querySelector('#vid-sec iframe').title;
+  const episodeLink = window.location.href; // get the current webpage link
 
   // create the bookmark object
   const bookmark = {
-    title: episodeTitle,
-    url: episodeLink,
-    episodeTitle: title,
-    episodeUrl: url,
+    title,
+    url,
+    episodeLink, // add episode webpage link to bookmark
     date,
     time
   };
