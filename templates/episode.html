@@ -91,7 +91,7 @@
 </footer>
 <hr>
     <script>
-function saveBookmark() {
+  function saveBookmark() {
   // get current time and date
   const now = new Date();
   const time = now.toLocaleTimeString();
@@ -100,13 +100,11 @@ function saveBookmark() {
   // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
   const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
-  const episodeLink = window.location.href; // get the current webpage link
 
   // create the bookmark object
   const bookmark = {
     title,
     url,
-    episodeLink, // add episode webpage link to bookmark
     date,
     time
   };
@@ -126,6 +124,17 @@ function saveBookmark() {
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
   alert('Bookmark saved!');
+}
+
+function getBookmarks() {
+  // get existing bookmarks from local storage or create empty array
+  let bookmarks = localStorage.getItem('bookmarks');
+  if (!bookmarks) {
+    bookmarks = [];
+  } else {
+    bookmarks = JSON.parse(bookmarks);
+  }
+  return bookmarks;
 }
 
        function selectServer(btn) {
