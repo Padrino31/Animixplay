@@ -91,26 +91,27 @@
 </footer>
 <hr>
     <script>
-function saveBookmark() {
+  function saveBookmark() {
   // get current time and date
   const now = new Date();
   const time = now.toLocaleTimeString();
   const date = now.toLocaleDateString();
 
-  // get the video title
+  // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
+  const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
 
   // create the bookmark object
   const bookmark = {
     title,
-    page: "Episode " + title,
+    url,
     date,
     time
   };
 
   // check if the bookmark already exists
   const bookmarks = getBookmarks();
-  const isDuplicate = bookmarks.some(b => b.page === bookmark.page);
+  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.url === bookmark.url);
   if (isDuplicate) {
     alert('This video is already bookmarked.');
     return;
@@ -126,9 +127,12 @@ function saveBookmark() {
 }
 
 function getBookmarks() {
-  let bookmarks = [];
-  if (localStorage.getItem('bookmarks') !== null) {
-    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+  // get existing bookmarks from local storage or create empty array
+  let bookmarks = localStorage.getItem('bookmarks');
+  if (!bookmarks) {
+    bookmarks = [];
+  } else {
+    bookmarks = JSON.parse(bookmarks);
   }
   return bookmarks;
 }
