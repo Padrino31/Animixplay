@@ -37,7 +37,7 @@
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
 <head>
     <title>Bookmarks</title>
-	<link href="./styles.css" rel="stylesheet">
+	<link href="./css/styles.css" rel="stylesheet">
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -50,7 +50,7 @@
     <nav>
       <ul class="menu">
         <li><a href="https://animixplay-to.vercel.app/">Home</a></li>
-        <li><a href="./watchlist.html">Watchlist</a></li>
+        <li><a href="../static/css/watchlist.html">Watchlist</a></li>
       </ul>
     </nav>
     <div id="search-container">
@@ -64,8 +64,45 @@
 
 <h1 style="text-align: center;">Bookmarks</h1>
 
+<table>
+  <tbody>
+    <!-- table body goes here -->
+  </tbody>
+</table>
 
+<style>
+  th {
+    color: white;
+  }
+  .bookmark-row {
+    border: 1px solid black;
+  }
+</style>
 
+<tbody style="color: white;">
+  <script>
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    bookmarks.forEach(bookmark => {
+      document.write(`
+        <tr class="bookmark-row">
+          <td style="color: white;">${bookmark.title}</td>
+          <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
+          <td style="color: white;">${bookmark.date}</td>
+          <td style="color: white;">${bookmark.time}</td>
+          <td><button onclick="removeBookmark('${bookmark.url}')">Remove</button></td>
+        </tr>
+      `);
+    });
+
+    function removeBookmark(url) {
+      const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
+      localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
+      location.reload();
+    }
+  </script>
+</tbody>
+</table>
 
 </body>
 </html>
