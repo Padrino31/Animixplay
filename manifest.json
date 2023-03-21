@@ -45,7 +45,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "./templates/home.html",
+    "start_url": "https://animixplay-to.vercel.app",
     "display": "standalone",
     "theme_color": "#5656f6",
     "background_color": "#000000"
