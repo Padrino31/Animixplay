@@ -95,24 +95,32 @@ function saveBookmark() {
   const title = "{{ title }}";
   const url = window.location.href;
   const bookmark = `<a href="${url}">${title}</a><br>`;
-  const existingBookmarks = localStorage.getItem('bookmarks');
-  let bookmarks = existingBookmarks ? JSON.parse(existingBookmarks) : [];
+  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
   
-  // Check if bookmark already exists
-  const bookmarkExists = bookmarks.find(bookmark => bookmark.url === url);
-  if (bookmarkExists) {
-    alert('Bookmark already exists!');
+  // check for duplicate bookmark
+  const isDuplicate = bookmarks.some(b => b.url === url);
+  if (isDuplicate) {
+    alert("This bookmark is already saved.");
     return;
   }
   
   bookmarks.push({ title, url });
-  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-
-  const bookmarkList = document.getElementById('bookmark-list');
-  bookmarkList.innerHTML += bookmark;
-
-  alert('Bookmark added!');
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  
+  // alert when bookmark is added
+  alert("Bookmark added.");
+  
+  const file = new Blob([bookmark], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(file);
+  a.setAttribute('target', '_blank');
+  a.setAttribute('download', '../static/css/bookmark.html');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
+
+
 
 
 
