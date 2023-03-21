@@ -91,7 +91,7 @@
 </footer>
 <hr>
     <script>
- function saveBookmark() {
+function saveBookmark() {
   // get current time and date
   const now = new Date();
   const time = now.toLocaleTimeString();
@@ -100,13 +100,11 @@
   // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
   const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
-  const episodeUrl = document.querySelector('.link-data').textContent;
 
   // create the bookmark object
   const bookmark = {
     title,
     url,
-    episodeUrl,
     date,
     time
   };
@@ -125,11 +123,12 @@
   // save the updated bookmarks array to local storage
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
-  // redirect the user to the web page where the episode link was extracted
-  window.location.href = episodeUrl;
+  // open the extracted link in a new tab
+  window.open(url, '_blank');
 
   alert('Bookmark saved!');
 }
+
 
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
