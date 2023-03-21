@@ -1,6 +1,6 @@
 
 function share() {
-    shareOn('Tabbed Web App', 'Make your app awesome Automatically', 'https://tabbed.web.app')
+    shareOn('Animixplay', 'Watch Aime for free and free of ads', 'https://animixplay-to.vercel.app')
 }
 
 function shareOn(title, alt, link) {
@@ -38,7 +38,7 @@ async function pwainstall() {
     }
 }
 var urls = {
-    "TWA" : "https://tabbed.web.app"
+    "TWA" : "https://animixplay-to.vercel.app"
 }
 
 function goTo(url){
