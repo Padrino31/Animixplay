@@ -97,20 +97,27 @@ function saveBookmark() {
   const time = now.toLocaleTimeString();
   const date = now.toLocaleDateString();
 
-  // get the video title
+  // get the video title and URL
   const title = document.querySelector('#watch .scontent b').textContent;
+  const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
+
+  // get the episode link and title
+  const episodeLink = document.querySelector('#vid-sec iframe').src;
+  const episodeTitle = document.querySelector('#vid-sec iframe').title;
 
   // create the bookmark object
   const bookmark = {
-    title,
-    page: "Episode " + title,
+    title: episodeTitle,
+    url: episodeLink,
+    episodeTitle: title,
+    episodeUrl: url,
     date,
     time
   };
 
   // check if the bookmark already exists
   const bookmarks = getBookmarks();
-  const isDuplicate = bookmarks.some(b => b.page === bookmark.page);
+  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.url === bookmark.url);
   if (isDuplicate) {
     alert('This video is already bookmarked.');
     return;
@@ -123,14 +130,6 @@ function saveBookmark() {
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
   alert('Bookmark saved!');
-}
-
-function getBookmarks() {
-  let bookmarks = [];
-  if (localStorage.getItem('bookmarks') !== null) {
-    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-  }
-  return bookmarks;
 }
 
        function selectServer(btn) {
