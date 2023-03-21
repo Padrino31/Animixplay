@@ -91,7 +91,7 @@
 </footer>
 <hr>
     <script>
- function saveBookmark() {
+function saveBookmark() {
   const title = "{{ title }}";
   const url = window.location.href;
   const bookmark = `<a href="${url}">${title}</a><br>`;
@@ -107,15 +107,13 @@
   
   bookmarks.push({ title, url });
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  
-  const file = new Blob([bookmark], { type: 'text/html' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(file);
-  a.download = '../static/css/bookmark.html';
-  a.click();
-  
+
+  const bookmarkList = document.getElementById('bookmark-list');
+  bookmarkList.innerHTML += bookmark;
+
   alert('Bookmark added!');
 }
+
 
 
        function selectServer(btn) {
