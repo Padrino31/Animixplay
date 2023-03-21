@@ -51,7 +51,7 @@
     </div>
   </div>
 </header>
- <section id="vid-sec">
+<section id="vid-sec">
         <div id="vid-div">
 
             <div id="video">
@@ -97,21 +97,20 @@ function saveBookmark() {
   const time = now.toLocaleTimeString();
   const date = now.toLocaleDateString();
 
-  // get the video title and URL
-  const url = document.querySelector('#server_main .sactive').getAttribute('data-value');
-  const episodeTitle = document.querySelector('#watch .scontent b').textContent;
-  
+  // get the video title
+  const title = document.querySelector('#watch .scontent b').textContent;
+
   // create the bookmark object
   const bookmark = {
-    episodeTitle,
-    url,
+    title,
+    page: "Episode " + title,
     date,
     time
   };
 
   // check if the bookmark already exists
   const bookmarks = getBookmarks();
-  const isDuplicate = bookmarks.some(b => b.title === bookmark.title && b.url === bookmark.url);
+  const isDuplicate = bookmarks.some(b => b.page === bookmark.page);
   if (isDuplicate) {
     alert('This video is already bookmarked.');
     return;
@@ -126,21 +125,13 @@ function saveBookmark() {
   alert('Bookmark saved!');
 }
 
-
-       function selectServer(btn) {
-            const buttons = document.getElementsByClassName('sobtn');
-            const iframe = document.getElementById('AnimeDexFrame');
-            iframe.src = btn.getAttribute('data-value');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].className = "sobtn";
-            }
-            btn.className = "sobtn sactive";
-        };
-
-        function showDownload() {
-        document.getElementById('showdl').style.display = "none";
-        document.getElementById('dldiv').classList.toggle('show');
-    }
+function getBookmarks() {
+  let bookmarks = [];
+  if (localStorage.getItem('bookmarks') !== null) {
+    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+  }
+  return bookmarks;
+}
 
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
@@ -157,5 +148,6 @@ function saveBookmark() {
         document.getElementById('dldiv').classList.toggle('show');
     }
     </script>
+
 </body>
 </html>
