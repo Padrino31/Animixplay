@@ -62,22 +62,93 @@
   </div>
 </header>
 
-<h1 style="text-align: center;">Bookmarks</h1>
-
-<table>
-  <tbody>
-    <!-- table body goes here -->
-  </tbody>
-</table>
-
 <style>
-  th {
-    color: white;
+  /* Set default font size and line height */
+  body {
+    font-size: 16px;
+    line-height: 1.5;
   }
-  .bookmark-row {
+  
+  /* Center the title */
+  h1 {
+    text-align: center;
+    color: white;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Set maximum width and center the table */
+  table {
+    max-width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Add spacing between the table and the frame */
+  table td,
+  table th {
+    padding: 0.5rem;
     border: 1px solid black;
   }
+  
+  /* Style the header row */
+  table th {
+    background-color: #333;
+    color: white;
+    text-align: left;
+  }
+  
+  /* Style the data rows */
+  table td {
+    background-color: #f9f9f9;
+  }
+  
+  /* Add responsive design */
+  @media only screen and (max-width: 768px) {
+    /* Center the table on small screens */
+    table {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Hide the header row on small screens */
+    table th {
+      display: none;
+    }
+    
+    /* Make the data rows block elements */
+    table td {
+      display: block;
+      text-align: right;
+    }
+    
+    /* Add a border to the data rows */
+    table td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-align: left;
+    }
+  }
 </style>
+
+<h1>Bookmarks</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>URL</th>
+    
+    </tr>
+  </thead>
+   <tbody>
+    <tr class="bookmark-row">
+  
+    </tr>
+  </tbody>
+</table>
 
 <tbody style="color: white;">
   <script>
