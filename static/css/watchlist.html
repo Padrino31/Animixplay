@@ -14,78 +14,104 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
   }
-  
-  #watchlist li {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  
   #watchlist li img {
     max-width: 100%;
+    height: auto;
   }
-  
   #watchlist li a {
     margin-top: 10px;
     text-align: center;
-    color: white;
-    font-size: 14px;
+    color: #333;
+    font-size: 16px;
     text-decoration: none;
+    display: block;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
   }
-  
+  #watchlist li a:hover {
+    color: #fff;
+  }
+  #watchlist li a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  #watchlist li a:hover::before {
+    opacity: 1;
+  }
+  #watchlist li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   #watchlist li button {
     margin-top: 10px;
-    background-color: white;
-    font-size: medium;
+    background-color: #fb3640;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
   }
-  
+  #watchlist li button:hover {
+    background-color: #ee1c24;
+  }
   /* Media queries */
   @media only screen and (max-width: 768px) {
     #watchlist {
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
     }
-    
     #watchlist li a {
       font-size: 14px;
     }
   }
-  
   @media only screen and (max-width: 480px) {
     #watchlist {
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       gap: 5px;
     }
-    
     #watchlist li a {
       font-size: 12px;
+      height: 40px;
     }
   }
-  
   header {
     text-align: center;
+    position: relative;
+    padding: 20px 0;
   }
-  
-h1 {
-  color: white;
-  font-size: 24px;
-  margin-top: 20px;
-  margin-bottom: 15px;
-  text-align: center;
-  clear: both;
-}
-
-  
-#title1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#title1 img {
-  max-width: 100%;
-  height: auto;
-}
-
+  /* Add rule to make title white and not overlap with logo */
+  h1 {
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 0;
+  }
+  #title1 {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    padding: 10px;
+  }
+  #title1 img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 </style>
 
 </head>
