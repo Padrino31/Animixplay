@@ -8,117 +8,134 @@
   <title>My Watchlist</title>
   <link href="./home.css" rel="stylesheet">
 <head>
-  <style>
-    /* General styles */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #121212;
-      color: white;
-    }
+<style>
+  /* CSS Reset */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    /* Header styles */
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 20px;
-    }
+  /* Responsive Typography */
+  html {
+    font-size: 16px;
+  }
 
-    #title1 {
-      margin-bottom: 10px;
-      text-align: center;
+  @media only screen and (max-width: 768px) {
+    html {
+      font-size: 14px;
     }
+  }
 
-    #title1 img {
-      max-width: 200px;
-      height: auto;
+  @media only screen and (max-width: 480px) {
+    html {
+      font-size: 12px;
     }
+  }
 
-    h1 {
-      font-size: 32px;
-      margin: 0;
-      text-align: center;
-    }
+  /* Header Styles */
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: black;
+  }
 
-    /* Watchlist styles */
+  #title1 {
+    flex: 1 1 auto;
+    max-width: 200px;
+  }
+
+  #title1 img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    flex: 1 1 100%;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    margin: 15px 0;
+  }
+
+  /* Watchlist Styles */
+  #watchlist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: #141414;
+  }
+
+  #watchlist li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+    background-color: white;
+    padding: 10px;
+  }
+
+  #watchlist li img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #watchlist li a {
+    text-align: center;
+    color: black;
+    font-size: 1rem;
+    margin-top: 10px;
+    text-decoration: none;
+  }
+
+  #watchlist li button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* Media Queries */
+  @media only screen and (max-width: 768px) {
     #watchlist {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      gap: 10px;
     }
 
     #watchlist li {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #1c1c1c;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease-in-out;
+      max-width: 150px;
+      padding: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    #watchlist {
+      gap: 5px;
     }
 
-    #watchlist li:hover {
-      transform: scale(1.05);
-    }
-
-    #watchlist li img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 10px;
+    #watchlist li {
+      max-width: 100px;
+      padding: 5px;
     }
 
     #watchlist li a {
-      text-align: center;
-      color: white;
-      font-size: 14px;
-      margin-bottom: 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-size: 0.8rem;
     }
 
     #watchlist li button {
-      background-color: #e50914;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
+      font-size: 0.8rem;
+      padding: 5px;
     }
+  }
+</style>
 
-    #watchlist li button:hover {
-      background-color: #d30813;
-    }
-
-    /* Media queries */
-    @media only screen and (max-width: 768px) {
-      #watchlist {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        padding: 10px;
-      }
-    }
-
-    @media only screen and (max-width: 480px) {
-      #watchlist {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 5px;
-        padding: 5px;
-      }
-
-      #watchlist li a {
-        font-size: 12px;
-      }
-    }
-  </style>
 </head>
 
 <body>
