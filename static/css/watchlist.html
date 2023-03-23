@@ -14,11 +14,7 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
     }
-    #watchlist li {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+
     #watchlist li img {
       max-width: 100%;
     }
@@ -28,15 +24,30 @@
       color: white;
        font-size: 14px;
     }
+#watchlist li {
+  display: grid; /* Use grid layout for list items */
+  grid-template-columns: 1fr auto; /* Two columns: first takes remaining space, second auto size for button */
+  align-items: center; /* Vertically center content within list items */
+  gap: 10px; /* Add gap between columns */
+}
+
+#watchlist li h2 {
+  margin: 0; /* Remove default margin */
+}
+
 #watchlist li button {
-  margin-top: 10px;
   background-color: white;
   font-size: medium;
+
+  /* Center the button horizontally and vertically */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+
+  /* Match width of largest title */
+  width: max-content;
 }
+
 
 
     /* Media queries */
