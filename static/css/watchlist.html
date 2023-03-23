@@ -30,16 +30,10 @@
 }
 
 #watchlist li button {
-  margin-top: 10px;
-  background-color: white;
-  font-size: medium;
-  flex-grow: 1;
-  width: 100%;
-}
-
-#watchlist li button.large-title {
-  width: auto;
-}
+      margin-top: 10px;
+      background-color: white;
+      font-size: medium;
+    }
 
 
 
@@ -92,19 +86,7 @@
   </ul>
   
   <script>
-    const buttons = document.querySelectorAll('#watchlist li button');
-let largestWidth = 0;
 
-buttons.forEach(button => {
-  const titleWidth = button.previousElementSibling.offsetWidth;
-  largestWidth = Math.max(largestWidth, titleWidth);
-});
-
-buttons.forEach(button => {
-  if (button.previousElementSibling.offsetWidth === largestWidth) {
-    button.classList.add('large-title');
-  }
-});
 
     // Get the watchlist from local storage
     const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
