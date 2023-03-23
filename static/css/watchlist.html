@@ -92,23 +92,20 @@
       color: #000000;
     }
 
-    /* Media queries */
-    @media only screen and (max-width: 768px) {
-      #watchlist {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-      }
-    }
+@media only screen and (max-width: 768px) {
+  #watchlist {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+}
 
-    @media only screen and (max-width: 480px) {
-      #watchlist {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 5px;
-      }
-      #watchlist li a {
-        font-size: 14px;
-      }
-    }
+@media only screen and (max-width: 480px) {
+  #watchlist {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+}
+
   </style>
 
 
