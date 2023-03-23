@@ -20,18 +20,14 @@
       align-items: center;
     }
     #watchlist li img {
-      width: 100px;
-      height: 100px;
+      max-width: 100%;
     }
     #watchlist li a {
       margin-top: 10px;
       text-align: center;
-      color: white;
     }
     #watchlist li button {
       margin-top: 10px;
-      background-color: white;
-      font-size: medium;
     }
 
     /* Media queries */
@@ -54,15 +50,6 @@
         font-size: 12px;
       }
     }
-    
-    header {
-      text-align: center;
-    }
-    
-    h1 {
-      color: white;
-      text-align: center;
-    }
   </style>
 </head>
 
@@ -74,14 +61,12 @@
     </a>
   </div>
  
-  <h1>My Watchlist</h1>
+  <h1 style="text-align:center;">My Watchlist</h1>
 
   
   <ul id="watchlist">
     <!-- Watchlist items will be added dynamically with JavaScript -->
   </ul>
-  
-
     <script>
       // Get the watchlist from local storage
       const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
