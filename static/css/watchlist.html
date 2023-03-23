@@ -8,94 +8,86 @@
   <title>My Watchlist</title>
   <link href="./home.css" rel="stylesheet">
 <head>
-  <style>
-    /* General styles */
-    body {
-      font-family: Arial, sans-serif;
+  <style type="text/css">
+    /* Reset default styles */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background-color: #121212;
+    }
+
+    /* Set background color to black */
+    body {
+      background-color: black;
+    }
+
+    /* Center the logo */
+    #title1 {
+      text-align: center;
+    }
+
+    /* Style the logo */
+    #title1 img {
+      max-height: 50px;
+      margin: 10px 0;
+    }
+
+    /* Center the title */
+    h1 {
+      text-align: center;
+      margin: 20px 0;
       color: white;
     }
 
-    /* Header styles */
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 20px;
-    }
-
-    #title1 {
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    #title1 img {
-      max-width: 200px;
-      height: auto;
-    }
-
-    h1 {
-      font-size: 32px;
-      margin: 0;
-      text-align: center;
-    }
-
-    /* Watchlist styles */
+    /* Style the watchlist items */
     #watchlist {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
-      padding: 20px;
+      list-style: none;
+      padding: 0;
     }
 
     #watchlist li {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: center;
-      background-color: #1c1c1c;
-      border-radius: 10px;
+      justify-content: center;
+      text-align: center;
+      background-color: #333333;
       padding: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease-in-out;
-    }
-
-    #watchlist li:hover {
-      transform: scale(1.05);
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     #watchlist li img {
       max-width: 100%;
-      height: auto;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
       margin-bottom: 10px;
     }
 
     #watchlist li a {
-      text-align: center;
       color: white;
-      font-size: 14px;
-      margin-bottom: 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-bottom: 5px;
     }
 
     #watchlist li button {
-      background-color: #e50914;
-      color: white;
+      background-color: white;
+      color: black;
+      font-size: 14px;
+      padding: 5px 10px;
       border: none;
       border-radius: 5px;
-      padding: 5px 10px;
-      font-size: 14px;
       cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
     }
 
     #watchlist li button:hover {
-      background-color: #d30813;
+      background-color: #f0f0f0;
     }
 
     /* Media queries */
@@ -103,7 +95,18 @@
       #watchlist {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 10px;
-        padding: 10px;
+      }
+
+      #watchlist li img {
+        height: 150px;
+      }
+
+      #watchlist li a {
+        font-size: 14px;
+      }
+
+      #watchlist li button {
+        font-size: 12px;
       }
     }
 
@@ -111,16 +114,22 @@
       #watchlist {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 5px;
-        padding: 5px;
+      }
+
+      #watchlist li img {
+        height: 100px;
       }
 
       #watchlist li a {
         font-size: 12px;
       }
+
+      #watchlist li button {
+        font-size: 10px;
+      }
     }
   </style>
 </head>
-
 <body>
   <header>
     <div id="title1">
