@@ -36,49 +36,58 @@
     <meta property="twitter:card" content="summary">
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
 <head>
-    <title>Bookmarks</title>
+	<title>Bookmarks</title>
 	<link href="./styles.css" rel="stylesheet">
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+	<style>
+		body {
+			background-color: #4d4dff;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			max-width: 800px;
+			margin: 0 auto;
+		}
+		th {
+			color: white;
+		}
+		.bookmark-row {
+			border: 1px solid white;
+		}
+		tbody + tbody {
+			margin-top: 20px;
+			background-color: gray;
+		}
+	</style>
 </head>
-<body style="background-color:#4d4dff;">
-<header class="header">
-  <div class="container">
-    <div class="logo">
-      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
-    </div>
-    <nav>
-      <ul class="menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="./watchlist.html">Watchlist</a></li>
-      </ul>
-    </nav>
-    <div id="search-container">
-      <form action="/search" method='GET'>
-        <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-        <button type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
-  </div>
-</header>
-	
-<style>
-<h1 style="text-align: center;">Bookmarks</h1>
-<table>
-  <tbody>
-    <!-- table body goes here -->
-  </tbody>
-</table>
-
-<style>
-  th {
-    color: white;
-  }
-  .bookmark-row {
-    border: 1px solid white;
-  }
-</style>
-
+<body>
+	<header class="header">
+		<div class="container">
+			<div class="logo">
+				<a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
+			</div>
+			<nav>
+				<ul class="menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="./watchlist.html">Watchlist</a></li>
+				</ul>
+			</nav>
+			<div id="search-container">
+				<form action="/search" method='GET'>
+					<input type="text" name="query" id="query" placeholder="Search Anime..." required>
+					<button type="submit"><i class="fa fa-search"></i></button>
+				</form>
+			</div>
+		</div>
+	</header>
+	<h1 style="text-align: center;">Bookmarks</h1>
+	<table>
+		<tbody>
+			<!-- table body goes here -->
+		</tbody>
+	</table>
 
   <script>
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
