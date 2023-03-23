@@ -8,38 +8,8 @@
   <title>My Watchlist</title>
   <link href="./home.css" rel="stylesheet">
 <head>
-<style type="text/css">
-    /* General styles */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Header styles */
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 80px;
-      background-color: #333;
-      color: white;
-      text-align: center; /* Added to center logo and title */
-    }
-
-    #title1 img {
-      height: 60px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    /* Watchlist styles */
+<style>
+/* Watchlist styles */
     #watchlist {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -77,40 +47,50 @@
       padding: 5px 10px;
       cursor: pointer;
     }
-
-    /* Media queries */
-    @media only screen and (max-width: 768px) {
-      #watchlist {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-      }
-
-      #watchlist li {
-        padding: 5px;
-      }
-
-      #watchlist li a {
-        font-size: 14px;
-      }
+  
+  /* Media queries */
+  @media only screen and (max-width: 768px) {
+    #watchlist {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
     }
-
-    @media only screen and (max-width: 480px) {
-      #watchlist {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 5px;
-      }
-
-      #watchlist li {
-        padding: 2px;
-      }
-
-      #watchlist li a {
-        font-size: 12px;
-      }
+    
+    #watchlist li a {
+      font-size: 14px;
     }
-  </style>
-
-
+  }
+  
+  @media only screen and (max-width: 480px) {
+    #watchlist {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 5px;
+    }
+    
+    #watchlist li a {
+      font-size: 12px;
+    }
+  }
+  
+  header {
+    text-align: center;
+  }
+  
+  h1 {
+    color: white;
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+  
+  #title1 {
+    text-align: center;
+  }
+  
+  #title1 img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
 </head>
 
 <body>
