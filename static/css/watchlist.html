@@ -25,28 +25,22 @@
        font-size: 14px;
     }
 #watchlist li {
-  display: grid; /* Use grid layout for list items */
-  grid-template-columns: 1fr auto; /* Two columns: first takes remaining space, second auto size for button */
-  align-items: center; /* Vertically center content within list items */
-  gap: 10px; /* Add gap between columns */
-}
-
-#watchlist li h2 {
-  margin: 0; /* Remove default margin */
+  display: flex;
+  align-items: center;
 }
 
 #watchlist li button {
+  margin-top: 10px;
   background-color: white;
   font-size: medium;
-
-  /* Center the button horizontally and vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* Match width of largest title */
-  width: max-content;
+  flex-grow: 1;
+  width: 100%;
 }
+
+#watchlist li button.large-title {
+  width: auto;
+}
+
 
 
 
@@ -98,6 +92,20 @@
   </ul>
   
   <script>
+    const buttons = document.querySelectorAll('#watchlist li button');
+let largestWidth = 0;
+
+buttons.forEach(button => {
+  const titleWidth = button.previousElementSibling.offsetWidth;
+  largestWidth = Math.max(largestWidth, titleWidth);
+});
+
+buttons.forEach(button => {
+  if (button.previousElementSibling.offsetWidth === largestWidth) {
+    button.classList.add('large-title');
+  }
+});
+
     // Get the watchlist from local storage
     const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
