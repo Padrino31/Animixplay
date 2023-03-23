@@ -62,37 +62,34 @@
   </div>
 </header>
 <style>
-  h1 {
-    text-align: center;
+  th {
     color: white;
-    margin: 20px;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 2px solid white;
-    margin: 20px;
-  }
-  th, td {
-    text-align: left;
-    padding: 8px;
-    border: 1px solid white;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
   }
   .bookmark-row {
-    border: 1px solid white;
+    border: 1px solid black;
+  }
+  tbody {
+    border: 2px solid white;
+  }
+  h1 {
+    color: white;
+  }
+  .bookmark-row td {
+    color: white;
+  }
+  tbody tr:not(:last-child) {
+    margin-bottom: 10px;
   }
 </style>
-</head>
-<body>
 
-<h1>Bookmarks</h1>
+<h1 style="text-align: center;">Bookmarks</h1>
 
 <table>
   <tbody>
-    <!-- table body goes here -->
+    <tr class=".bookmark-row">
+      <th>Title</th>
+      <th>URL</th>
+    </tr>
   </tbody>
 </table>
 <tbody style="color: white;">
