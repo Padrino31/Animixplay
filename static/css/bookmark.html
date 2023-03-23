@@ -41,7 +41,7 @@
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
 </head>
-<body style="background-color:none;">
+<body style="background-color:white;">
 <header class="header">
   <div class="container">
     <div class="logo">
@@ -63,36 +63,23 @@
 </header>
 	
 <style>
-<h1 style="text-align: center; color: white;">Bookmarks</h1>
+<h1 style="text-align: center;">Bookmarks</h1>
 <table>
   <tbody>
     <!-- table body goes here -->
   </tbody>
 </table>
-	
+
 <style>
   th {
-    color: white;
+    color: black;
   }
   .bookmark-row {
     border: 1px solid black;
   }
-  a {
-    color: white;
-  }
 </style>
 
-<h1 style="text-align: center;">Bookmarks</h1>
 
-<table>
-  <tbody>
-    <tr class=".bookmark-row">
-      <th>Title</th>
-      <th>URL</th>
-    </tr>
-  </tbody>
-</table>
-<tbody style="color: white;">
   <script>
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     bookmarks.forEach(bookmark => {
