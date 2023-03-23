@@ -41,7 +41,7 @@
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
 </head>
-<body style="background-color:#2596be;">
+<body style="background-color:none;">
 <header class="header">
   <div class="container">
     <div class="logo">
@@ -61,95 +61,40 @@
     </div>
   </div>
 </header>
-
 <style>
-  /* Set default font size and line height */
-  body {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  
-  /* Center the title */
   h1 {
     text-align: center;
     color: white;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin: 20px;
   }
-  
-  /* Set maximum width and center the table */
   table {
-    max-width: 100%;
-    margin: 0 auto;
     border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    border: 2px solid white;
+    margin: 20px;
   }
-  
-  /* Add spacing between the table and the frame */
-  table td,
-  table th {
-    padding: 0.5rem;
-    border: 1px solid black;
-  }
-  
-  /* Style the header row */
-  table th {
-    background-color: #333;
-    color: white;
+  th, td {
     text-align: left;
+    padding: 8px;
+    border: 1px solid white;
   }
-  
-  /* Style the data rows */
-  table td {
-    background-color: #f9f9f9;
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
   }
-  
-  /* Add responsive design */
-  @media only screen and (max-width: 768px) {
-    /* Center the table on small screens */
-    table {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    /* Hide the header row on small screens */
-    table th {
-      display: none;
-    }
-    
-    /* Make the data rows block elements */
-    table td {
-      display: block;
-      text-align: right;
-    }
-    
-    /* Add a border to the data rows */
-    table td::before {
-      content: attr(data-label);
-      float: left;
-      font-weight: bold;
-      text-align: left;
-    }
+  .bookmark-row {
+    border: 1px solid white;
   }
 </style>
+</head>
+<body>
 
 <h1>Bookmarks</h1>
+
 <table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>URL</th>
-    
-    </tr>
-  </thead>
-   <tbody>
-    <tr class="bookmark-row">
-  
-    </tr>
+  <tbody>
+    <!-- table body goes here -->
   </tbody>
 </table>
-
 <tbody style="color: white;">
   <script>
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
