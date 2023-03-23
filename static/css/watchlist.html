@@ -9,88 +9,78 @@
   <link href="./home.css" rel="stylesheet">
 <head>
 <style>
-  /* General Styles */
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Header Styles */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #221f1f;
-  }
-  
-  #title1 {
-    margin-right: 20px;
-  }
-  
-  #title1 img {
-    max-width: 100%;
-  }
-  
-  h1 {
-    font-size: 36px;
-    color: white;
-    text-align: center;
-  }
-
-  /* Watchlist Styles */
-  #watchlist {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
-  #watchlist li img {
-    max-width: 100%;
-  }
-  
-  #watchlist li a {
-    margin-top: 10px;
-    text-align: center;
-    color: white;
-    font-size: 14px;
-  }
-  
-  #watchlist li {
-    display: flex;
-    align-items: center;
-  }
-  
-  #watchlist li button {
-    margin-top: 10px;
-    background-color: white;
-    font-size: medium;
-  }
-  
-  /* Media queries */
-  @media only screen and (max-width: 768px) {
+    body {
+      background-color: #141414;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
     #watchlist {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    #watchlist li {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #1c1c1c;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    #watchlist li img {
+      max-width: 100%;
     }
     #watchlist li a {
+      margin-top: 10px;
+      text-align: center;
+      color: #e50914;
       font-size: 14px;
     }
-  }
-  
-  @media only screen and (max-width: 480px) {
-    #watchlist {
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 5px;
+    #watchlist li button {
+      margin-top: 10px;
+      background-color: white;
+      font-size: medium;
     }
-    #watchlist li a {
-      font-size: 12px;
+    /* Media queries */
+    @media only screen and (max-width: 768px) {
+      #watchlist {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+      }
+      #watchlist li a {
+        font-size: 14px;
+      }
     }
-  }
+    @media only screen and (max-width: 480px) {
+      #watchlist {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 5px;
+      }
+      #watchlist li a {
+        font-size: 12px;
+      }
+    }
+    header {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #141414;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    #title1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #title1 img {
+      max-height: 50px;
+    }
+    /* Add rule to make title white */
+    h1 {
+      color: white;
+      text-align: center;
+      margin: 0;
+    }
 </style>
 </head>
 
