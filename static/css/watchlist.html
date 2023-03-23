@@ -36,75 +36,82 @@
       text-align: center;
     }
 
-    /* Watchlist styles */
-    #watchlist {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+/* Watchlist styles */
+#watchlist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-    #watchlist li {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #ffffff;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      overflow: hidden;
-      transition: all 0.3s ease-in-out;
-    }
+#watchlist li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  width: 200px; /* Set a fixed width for the li element */
+  height: 250px; /* Set a fixed height for the li element */
+}
 
-    #watchlist li:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
+#watchlist li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
 
-   #watchlist li img {
-  width: 200px; /* or any other fixed value you want */
-  height: 200px; /* or any other fixed value you want */
+#watchlist li img {
+  width: 100%;
+  height: 100%; /* Set the height of the img to 100% to fill the li element */
   object-fit: cover;
 }
 
-    #watchlist li a {
-      text-align: center;
-      color: #000000;
-      font-size: 18px;
-      margin: 10px;
-      text-decoration: none;
-    }
-
-    #watchlist li button {
-      margin-top: 10px;
-      background-color: #000000;
-      color: #ffffff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-    }
-
-    #watchlist li button:hover {
-      background-color: #ffffff;
-      color: #000000;
-    }
-
-@media only screen and (max-width: 768px) {
-  #watchlist {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
+#watchlist li a {
+  text-align: center;
+  color: #000000;
+  font-size: 18px;
+  margin: 10px;
+  text-decoration: none;
 }
 
-@media only screen and (max-width: 480px) {
+#watchlist li button {
+  margin-top: 10px;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#watchlist li button:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Media queries */
+@media only screen and (max-width: 768px) {
   #watchlist {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 10px;
   }
 }
+
+@media only screen and (max-width: 480px) {
+  #watchlist {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 5px;
+  }
+  #watchlist li a {
+    font-size: 14px;
+  }
+}
+
 
   </style>
 
