@@ -7,118 +7,129 @@
   
   <title>My Watchlist</title>
   <link href="./home.css" rel="stylesheet">
-   <style>
+  <style>
+    /* General styling */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      font-family: sans-serif;
-      font-size: 16px;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
     }
-    header {
+
+    #head-div {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      background-color: #1f1f1f;
-      padding: 20px;
+      padding: 10px;
     }
+
     #title1 {
-      flex: 1;
-      margin-right: 20px;
+      margin-bottom: 10px;
     }
+
     #title1 img {
-      max-height: 50px;
+      max-width: 100%;
+      height: auto;
     }
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #fff;
-      text-align: center;
-    }
+
     #watchlist {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
-      padding: 20px;
       margin: 0;
-      list-style: none;
+      padding: 0;
     }
+
     #watchlist li {
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      justify-content: center;
+      background-color: #2f2f2f;
+      padding: 10px;
+      text-align: center;
     }
+
     #watchlist li img {
       max-width: 100%;
-      margin-bottom: 10px;
+      height: auto;
     }
+
     #watchlist li a {
-      text-align: center;
-      color: #333;
-      font-size: 16px;
       margin-top: 10px;
+      color: white;
+      font-size: 14px;
       text-decoration: none;
     }
+
     #watchlist li button {
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
       margin-top: 10px;
-      transition: background-color 0.3s ease;
+      background-color: #FFC107;
+      color: black;
+      font-size: medium;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
     }
-    #watchlist li button:hover {
-      background-color: #1f1f1f;
-    }
+
     /* Media queries */
     @media only screen and (max-width: 768px) {
       #watchlist {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 10px;
       }
+
       #watchlist li {
-        padding: 10px;
+        padding: 5px;
       }
-      #watchlist li button {
+
+      #watchlist li a {
         font-size: 14px;
       }
     }
+
     @media only screen and (max-width: 480px) {
       #watchlist {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 5px;
       }
+
       #watchlist li {
         padding: 5px;
       }
-      #watchlist li button {
+
+      #watchlist li a {
         font-size: 12px;
-        padding: 8px 16px;
       }
+    }
+
+    /* Title styling */
+    h1 {
+      color: white;
+      font-size: 24px;
+      margin: 0;
     }
   </style>
 </head>
+
 <body>
-  <header>
+  <header id="head-div">
     <div id="title1">
       <a href="https://animixplay-to.vercel.app/">
         <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animixplay">
       </a>
     </div>
-   <h1 style="text-align:center; margin-bottom: 15px;">My Watchlist</h1>
 
-  </header>
-  <ul id="watchlist">
-    <!-- Watchlist items will be added dynamically with JavaScript -->
-  </ul>
-  
+    <h1>My Watchlist</h1>
+
+    <ul id="watchlist">
+      <!-- Watchlist items will be added dynamically with JavaScript -->
+    </ul>
   <script>
 
 
