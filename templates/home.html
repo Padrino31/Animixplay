@@ -138,11 +138,6 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
             </div>
 
         </div>
-	    <div class="divox">
-        <h2 id="upcoming">Upcoming Anime</h2>
-        <div id="upcoming2">
-            UPCOMING_ANIME
-		    </div>
     </section>
     <section>
         <div class="divox">
@@ -163,32 +158,7 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 <hr>
 
     <script>
-const options = {
-  method: 'POST',
-  headers: {
-    'X-RapidAPI-Key': '68030cc53amsh4ce290013f89159p11cf3djsn8852ad0be1c9',
-    'X-RapidAPI-Host': 'anilist-graphql.p.rapidapi.com'
-  }
-};
-
-fetch('https://anilist-graphql.p.rapidapi.com/', options)
-  .then(response => response.json())
-  .then(response => {
-    const upcomingAnime = response.data.Page.media;
-    const upcomingDiv = document.getElementById('upcoming2');
-    let animeHTML = '';
-
-    upcomingAnime.forEach(anime => {
-      animeHTML += `<div class="anime">
-                      <h3>${anime.title.romaji}</h3>
-                      <p>${anime.description}</p>
-                    </div>`;
-    });
-
-    upcomingDiv.innerHTML = animeHTML;
-  })
-  .catch(err => console.error(err));
-
+	    
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
