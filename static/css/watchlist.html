@@ -10,121 +10,81 @@
   
   <style>
     #watchlist {
-      display: table;
-      width: 100%;
-      border-collapse: collapse;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
     }
-
     #watchlist li {
-      display: table-row;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
-
-    #watchlist li > * {
-      display: table-cell;
-      vertical-align: middle;
-      padding: 10px;
-    }
-
     #watchlist li img {
-      max-width: 75px;
-      height: 75px;
-      object-fit: cover;
+      max-width: 100%;
+      width: 200px;
+      height: 300px;
     }
-
     #watchlist li a {
-      display: inline-block;
-      margin-left: 10px;
+      margin-top: 10px;
+      text-align: center;
+      color: white;
+      font-size: 24px;
       font-weight: bold;
-      font-size: 16px;
+      text-decoration: none;
     }
-
     #watchlist li button {
-      margin-left: 10px;
+      margin-top: 10px;
+      background-color: white;
+      color: #2596be;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #watchlist li button:hover {
       background-color: #2596be;
       color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      cursor: pointer;
     }
 
     /* Media queries */
     @media only screen and (max-width: 768px) {
       #watchlist {
-        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 10px;
       }
-      #watchlist li {
-        display: block;
-        border: 1px solid black;
-        margin-bottom: 10px;
-        padding: 10px;
-      }
-      #watchlist li img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-      }
       #watchlist li a {
-        font-size: 14px;
-      }
-      #watchlist li button {
-        font-size: 14px;
-        padding: 5px 10px;
+        font-size: 18px;
       }
     }
 
     @media only screen and (max-width: 480px) {
       #watchlist {
-        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 5px;
       }
-      #watchlist li {
-        display: block;
-        border: 1px solid black;
-        margin-bottom: 5px;
-        padding: 5px;
-      }
-      #watchlist li img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 5px;
-      }
       #watchlist li a {
-        font-size: 12px;
-      }
-      #watchlist li button {
-        font-size: 12px;
-        padding: 3px 5px;
+        font-size: 14px;
       }
     }
   </style>
 </head>
+
 <body>
-  <header id="head-div">
-    <div id="title1">
-      <a href="https://animixplay-to.vercel.app/">
-        <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animixplay">
-      </a>
-    </div>
+<header id="head-div">
+  <div id="title1">
+    <a href="https://animixplay-to.vercel.app/">
+      <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animixplay">
+    </a>
+  </div>
+ 
+  <h1 style="text-align:center; color: white;">My Watchlist</h1>
+
   
-    <h1 style="text-align:center;">My Watchlist</h1>
-  
-    <table id="watchlist">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Title</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Watchlist items will be added dynamically with JavaScript -->
-      </tbody>
-    </table>
-    
+  <ul id="watchlist">
+    <!-- Watchlist items will be added dynamically with JavaScript -->
+  </ul>
     <script>
       // Get the watchlist from local storage
       const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
