@@ -33,17 +33,21 @@
 </head>
 
 <body>
+<body>
 <div class="container">
   <video controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
-  <button id="skip-intro" style="display: none;">Skip Intro</button>
+  <div id="skip-intro-popup">
+    <p>Skip intro?</p>
+    <button id="skip-intro-yes">Yes</button>
+    <button id="skip-intro-no">No</button>
+  </div>
 </div>
 <script>
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
-  const skipIntroButton = document.getElementById("skip-intro");
   const defaultOptions = {
     title: '{{ title }}'
   };
@@ -61,16 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       document.exitFullscreen();
     }
-  });
-  video.addEventListener('timeupdate', () => {
-    // Show "Skip Intro" button when intro starts playing
-    if (video.currentTime > 5 && video.currentTime < 10) {
-      skipIntroButton.style.display = "block";
-    }
-  });
-  skipIntroButton.addEventListener('click', () => {
-    video.currentTime = 10; // Skip the first 10 seconds of the video (assuming intro is 5-10 seconds)
-    skipIntroButton.style.display = "none"; // Hide the "Skip Intro" button
   });
   if (Hls.isSupported()) {
     const hls = new Hls({
@@ -110,6 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }, 1000);
     });
+    hls.attachMedia(video);
+    window.hls = hls;
+  } else {
+    const player = new
 
     hls.attachMedia(video);
     window.hls = hls;
