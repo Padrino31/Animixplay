@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/x-icon"
+    <!-- existing code... -->
+	<link rel="icon" type="image/x-icon"
         href="https://animixplay.to/icon.png">
     <title>Animixplay VideoPlayer</title>
     <meta charset="UTF-8" />
@@ -29,17 +30,68 @@
     <script src="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
     <script src="https://unpkg.com/plyr@3"></script>
+
+    <style type="text/css">
+        /* add some styling for the button */
+        #skip-intro-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-<div class="container">
-  <video controls crossorigin playsinline autoplay>
+    <!-- add the skip intro button -->
+    <button id="skip-intro-button">Auto-Skip Intro: On</button>
+
+    <div class="container">
+        <!-- existing code... -->
+		  <video controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
-</div>
+    </div>
 
-<script>
-  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+    <script>
+        const video = document.querySelector("video");
+        const skipIntroButton = document.getElementById("skip-intro-button");
+        let autoSkipIntro = true; // set the default to auto-skip intro
+
+        // add event listener for the skip intro button
+        skipIntroButton.addEventListener("click", () => {
+            autoSkipIntro = !autoSkipIntro; // toggle the auto-skip intro setting
+
+            if (autoSkipIntro) {
+                skipIntroButton.textContent = "Auto-Skip Intro: On";
+            } else {
+                skipIntroButton.textContent = "Auto-Skip Intro: Off";
+            }
+        });
+
+        // add event listener for when the video metadata is loaded
+        video.addEventListener("loadedmetadata", () => {
+            const introEnd = 90; // set the length of the intro in seconds
+            let currentTime = video.currentTime;
+
+            // add event listener for when the video time is updated
+            video.addEventListener("timeupdate", () => {
+                if (autoSkipIntro && video.currentTime < introEnd && video.currentTime > currentTime) {
+                    video.currentTime = introEnd; // skip the intro by setting the current time to the end of the intro
+                }
+
+                currentTime = video.currentTime; // update the current time for the next check
+            });
+        });
+
+        // existing code...
+		const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
@@ -131,6 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-</script>
+    </script>
 </body>
 </html>
