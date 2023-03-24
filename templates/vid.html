@@ -37,43 +37,13 @@
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
-<style>
-	.skip-intro-button {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 9999;
-  background-color: #fff;
-  border: 1px solid #000;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-</style>
 <script>
+  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
     title: '{{ title }}'
   };
-  
-  const skipIntroButton = document.createElement("button");
-  skipIntroButton.innerHTML = "Skip Intro";
-  skipIntroButton.classList.add("skip-intro-button");
-  skipIntroButton.addEventListener("click", () => {
-    video.currentTime = 85; // change 60 to the time you want to skip to in seconds
-  });
-
-  // Wait for the video to load before showing the skip intro button
-  video.addEventListener("loadedmetadata", () => {
-    document.body.appendChild(skipIntroButton);
-  });
-  
-  // Set the video source to bypass CORS
-  video.src = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-});
-
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
   if (savedTime !== null) {
