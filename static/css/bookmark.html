@@ -61,14 +61,46 @@
 			</div>
 		</div>
 	</header>	
-<div style="max-width: 800px; margin: 0 auto;">
-  <h1 style="text-align: center; margin-top: 20px;">Bookmarks</h1>
-  <table style="width: 100%; border-collapse: collapse;">
-    <tbody>
-      <!-- table body goes here -->
-    </tbody>
-  </table>
-</div>
+.bookmark-row {
+  background-color: #333;
+  color: white;
+}
+
+.bookmark-row td {
+  padding: 8px;
+}
+
+.bookmark-row td:first-child {
+  width: 30%;
+}
+
+.bookmark-row td:nth-child(2) {
+  width: 50%;
+}
+
+.bookmark-row td:nth-child(3) {
+  width: 20%;
+}
+
+button {
+  background-color: #ff3333;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e60000;
+}
+<h1 style="text-align: center;">Bookmarks</h1>
+	<table>
+		<tbody>
+			<!-- table body goes here -->
+		</tbody>
+	</table>
 	
   <script>
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
