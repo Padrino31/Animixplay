@@ -33,56 +33,51 @@
 </head>
 
 <body>
-    <div class="container">
-  <video controls crossorigin playsinline autoplay
-    onplay="document.getElementById('skipIntroButton').disabled = true;"
-    onended="document.getElementById('skipIntroButton').disabled = false;">
+<div class="container">
+  <video controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
-  <button id="skipIntroButton" onclick="skipIntro()" disabled>Skip Intro</button>
+  <button id="skip-intro" style="display: none;">Skip Intro</button>
 </div>
-
-    <script>
-function skipIntro() {
-  const video = document.querySelector("video");
-  const introEnd = {{ 90 }}; // replace with the time in seconds where the intro ends
-  video.currentTime = introEnd;
-}
-
-        // existing code...
-		const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-
+<script>
+  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
+  const skipIntroButton = document.getElementById("skip-intro");
   const defaultOptions = {
     title: '{{ title }}'
   };
-
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
   if (savedTime !== null) {
     video.currentTime = parseFloat(savedTime);
   }
-
   // Save current time when the video is paused or ended
   video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
-
   video.addEventListener('ended', () => {
     localStorage.removeItem('{{ title }}');
     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       document.exitFullscreen();
     }
   });
-
+  video.addEventListener('timeupdate', () => {
+    // Show "Skip Intro" button when intro starts playing
+    if (video.currentTime > 5 && video.currentTime < 10) {
+      skipIntroButton.style.display = "block";
+    }
+  });
+  skipIntroButton.addEventListener('click', () => {
+    video.currentTime = 10; // Skip the first 10 seconds of the video (assuming intro is 5-10 seconds)
+    skipIntroButton.style.display = "none"; // Hide the "Skip Intro" button
+  });
   if (Hls.isSupported()) {
     const hls = new Hls({
       autoStartLoad: true, // enable automatic start of video download
       capLevelToPlayerSize: true, // limit video quality to player size
       startLevel: 'auto' // start playing at the optimal level based on internet speed
     });
-
     hls.loadSource(source);
     hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
       const availableQualities = hls.levels.map((l) => l.height);
@@ -92,9 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         forced: true,
         onChange: (e) => updateQuality(e)
       };
-
       const player = new Plyr(video, defaultOptions);
-
       if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
         player.on('enterfullscreen', () => {
           if (screen.orientation.lock) {
@@ -102,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       }
-
       // adjust buffer length dynamically
       setInterval(() => {
         const buf = hls.buffered;
