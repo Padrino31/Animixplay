@@ -38,7 +38,7 @@
   </video>
 </div>
 <script>
- const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
@@ -59,26 +59,19 @@ document.addEventListener("DOMContentLoaded", () => {
       document.exitFullscreen();
     }
   });
-
-  // Add event listeners for double tapping
-  let lastTapTime = 0;
-  video.addEventListener('touchstart', (e) => {
+  video.addEventListener('dblclick', (e) => {
+    const x = e.clientX - video.getBoundingClientRect().left;
+    const width = video.clientWidth;
     const currentTime = video.currentTime;
-    const tapTime = new Date().getTime();
-    const timeSinceLastTap = tapTime - lastTapTime;
-    const x = e.touches[0].clientX;
-    const rect = video.getBoundingClientRect();
-    const halfWidth = rect.width / 2;
-    if (timeSinceLastTap < 300 && x < rect.left + halfWidth) {
-      // Double tap on left side, rewind 10 seconds
+    const duration = video.duration;
+    if (x < width / 2) {
+      // double tap on left side, rewind 10 seconds
       video.currentTime = Math.max(0, currentTime - 10);
-    } else if (timeSinceLastTap < 300 && x > rect.left + halfWidth) {
-      // Double tap on right side, fast forward 10 seconds
-      video.currentTime = Math.min(video.duration, currentTime + 10);
+    } else {
+      // double tap on right side, fast forward 10 seconds
+      video.currentTime = Math.min(duration, currentTime + 10);
     }
-    lastTapTime = tapTime;
   });
-
   if (Hls.isSupported()) {
     const hls = new Hls({
       autoStartLoad: true, // enable automatic start of video download
