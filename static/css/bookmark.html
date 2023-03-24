@@ -40,28 +40,6 @@
 	<link href="./styles.css" rel="stylesheet">
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
-	<style>
-		body {
-			background-color: #2596be;
-		}
-		table {
-			border-collapse: collapse;
-			width: 100%;
-			max-width: 800px;
-			margin: 0 auto;
-		}
-		th {
-			color: white;
-		}
-		.bookmark-row {
-			border: 1px solid white;
-		}
-		tbody + tbody {
-border: 1px solid white;
-			margin-top: 20px;
-			background-color: gray;
-		}
-	</style>
 </head>
 <body>
 	<header class="header">
@@ -82,14 +60,16 @@ border: 1px solid white;
 				</form>
 			</div>
 		</div>
-	</header>
-	<h1 style="text-align: center;">Bookmarks</h1>
-	<table>
-		<tbody>
-			<!-- table body goes here -->
-		</tbody>
-	</table>
-
+	</header>	
+<div style="max-width: 800px; margin: 0 auto;">
+  <h1 style="text-align: center; margin-top: 20px;">Bookmarks</h1>
+  <table style="width: 100%; border-collapse: collapse;">
+    <tbody>
+      <!-- table body goes here -->
+    </tbody>
+  </table>
+</div>
+	
   <script>
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     bookmarks.forEach(bookmark => {
