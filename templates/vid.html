@@ -38,36 +38,12 @@
   </video>
 </div>
 <script>
-const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
     title: '{{ title }}'
   };
-
-  let lastTapTime = 0;
-  const DOUBLE_TAP_DELAY = 300; // in milliseconds
-
-  video.addEventListener('touchend', (event) => {
-    const currentTime = video.currentTime;
-    const tapTime = new Date().getTime();
-    const tapX = event.changedTouches[0].clientX;
-    const playerWidth = video.offsetWidth;
-    const tapZoneWidth = playerWidth / 2;
-    if (tapX < tapZoneWidth) { // left side
-      if (tapTime - lastTapTime < DOUBLE_TAP_DELAY) {
-        video.currentTime = Math.max(currentTime - 10, 0);
-      }
-    } else { // right side
-      if (tapTime - lastTapTime < DOUBLE_TAP_DELAY) {
-        video.currentTime = Math.min(currentTime + 10, video.duration);
-      }
-    }
-    lastTapTime = tapTime;
-    event.preventDefault();
-  }, false);
-});
-
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
   if (savedTime !== null) {
