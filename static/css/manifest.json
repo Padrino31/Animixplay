@@ -1,6 +1,6 @@
 { "name":"PWA Tutorial", 
 "short_name":"PWA", 
-"start_url":"../template/home.html", 
+"start_url":"templates/home.html", 
 "display":"standalone", 
 "background_color":"#5900b3", 
 "theme_color":"black", 
