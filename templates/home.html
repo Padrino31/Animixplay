@@ -44,36 +44,27 @@
 </head>
 
 <body>
-<nav>
-  <label class="logo"><a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a></label>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="../static/css/bookmark.html">Bookmark</a></li>
-    <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-  </ul>
-  
-  <div id="search-container">
-    <form action="/search" method="GET">
-      <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
+    </div>
+    <nav>
+      <ul class="menu">
+        <li><a href="/">Home</a></li>
+         <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+        <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+      </ul>
+    </nav>
+    <div id="search-container">
+            <form action="/search" method='GET'>
+                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+                <button type="submit"><i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
   </div>
-
-  <div class="hamburger-menu">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div>
-
-  <div class="menu-overlay">
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="../static/css/bookmark.html">Bookmark</a></li>
-      <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-    </ul>
-  </div>
-</nav>
-
+</header>
      <section>
         <div class="slideshow-container">
 
@@ -167,17 +158,6 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 <hr>
 
     <script>
-	    const hamburgerMenu = document.querySelector('.hamburger-menu');
-const menuOverlay = document.querySelector('.menu-overlay');
-
-hamburgerMenu.addEventListener('click', () => {
-  menuOverlay.classList.toggle('open');
-});
-
-menuOverlay.addEventListener('click', () => {
-  menuOverlay.classList.remove('open');
-});
-
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
