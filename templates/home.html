@@ -44,28 +44,37 @@
 </head>
 
 <body>
-   <header class="header">
-  <div class="container">
-    <div class="logo">
-      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
-    </div>
-    <nav>
-      <ul class="menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="../static/css/bookmark.html">Bookmark</a></li>
-        <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-      </ul>
-    </nav>
-    <div id="search-container">
-            <form action="/search" method='GET'>
-                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-                <button type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
+<nav>
+  <label class="logo"><a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a></label>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+    <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+  </ul>
+  
+  <div id="search-container">
+    <form action="/search" method="GET">
+      <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
   </div>
-</header>
-       <section>
+
+  <div class="hamburger-menu">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="menu-overlay">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+      <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+    </ul>
+  </div>
+</nav>
+
+     <section>
         <div class="slideshow-container">
 
             <div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">#1 Spotlight</p><h1>The Angel Next Door Spoils Me Rotten</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>ANIME</span> <span class="year year2"><i class="fa fa-calendar"></i>RELEASING</span> <span class="cbox cbox1">Romance</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">Amane lives alone in an apartment, and the most beautiful girl in school, Mahiru, lives just next door. They've almost never spoken-until the day he sees her in distress on a rainy day and lends her his umbrella. To return the favor, she offers him help around the house, and a relationship slowly begins to blossom as the distance between them closes...<br>
