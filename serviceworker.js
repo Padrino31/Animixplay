@@ -4,8 +4,20 @@ const CACHE_NAME = 'animixplay-cache-v1';
 const urlsToCache = [
   '/',
   'templates/home.html',
-  'static/css/styles.css',
+  'templates/anime.html',
+  'templates/episode.html',
+  'templates/vid.html',
+  'templates/search.html',
+  'static/css/bookmark.html',
+  'static/css/watchlist.html',
+  'static/css/Season3.html',
+  'static/css/Season3vid.html',
+  'static/css/anime.css',
+  'static/css/search.css',
+  'static/css/episode.css',
   'static/css/home.css',
+  'static/css/video.css',
+  'static/css/styles.css',
   'https://animixplay.to/icon.png'
 ];
 
