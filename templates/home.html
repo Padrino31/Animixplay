@@ -37,6 +37,7 @@
     <meta property="twitter:url" content="">
     <meta property="twitter:card" content="summary">
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
+<link rel="manifest" href="../static/css/manifest.json">
       <link href="../static/css/styles.css" rel="stylesheet">
     <link href="../static/css/home.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
@@ -158,6 +159,9 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 <hr>
 
     <script>
+window.addEventListener('load', () => { registerSW(); }); 
+async function registerSW() 
+{ if ('serviceWorker' in navigator) { try { await navigator .serviceWorker .register('serviceworker.js'); } catch (e) { console.log('SW registration failed'); } } }
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
