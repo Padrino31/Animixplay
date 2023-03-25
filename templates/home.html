@@ -159,9 +159,6 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 <hr>
 
     <script>
-window.addEventListener('load', () => { registerSW(); }); 
-async function registerSW() 
-{ if ('serviceWorker' in navigator) { try { await navigator .serviceWorker .register('serviceworker.js'); } catch (e) { console.log('SW registration failed'); } } }
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
