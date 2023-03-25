@@ -167,7 +167,17 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 <hr>
 
     <script>
-	    
+	    const hamburgerMenu = document.querySelector('.hamburger-menu');
+const menuOverlay = document.querySelector('.menu-overlay');
+
+hamburgerMenu.addEventListener('click', () => {
+  menuOverlay.classList.toggle('open');
+});
+
+menuOverlay.addEventListener('click', () => {
+  menuOverlay.classList.remove('open');
+});
+
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
