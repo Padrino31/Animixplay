@@ -112,24 +112,28 @@ border-radius: 5px;
 
 nav ul.menu {
   display: flex;
-  text-align: center; 
-  justify-content: space-between;
+  justify-content: center;
   list-style: none;
   padding: 0;
 }
 
 nav ul.menu li {
-  margin-right: -20px;
+  margin: 0 7.5px; /* adjust the value to increase or decrease the space */
+}
+
+nav ul.menu li:first-child {
+  margin-left: 0;
 }
 
 nav ul.menu li:last-child {
-  margin-right: 20px;
+  margin-right: 0;
 }
 
 nav ul.menu li a {
   color: white;
   text-decoration: none;
 }
+
 
 
 </style>
