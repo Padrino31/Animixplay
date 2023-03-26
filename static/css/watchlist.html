@@ -56,7 +56,12 @@ border-radius: 5px;
     border-radius: 10px; /* Added round corners */
     cursor: pointer;
   }
-
+@media screen and (min-width: 285px) { 
+.menu li { margin-right: 40px; } 
+.menu li:last-child { margin-right: 0px; } 
+.menu li:nth-child(1) a { margin-right: 20px; } 
+.menu li:nth-child(2) a { margin-right: 20px; }
+}
   /* Media queries */
   @media only screen and (max-width: 767px) {
     #watchlist {
