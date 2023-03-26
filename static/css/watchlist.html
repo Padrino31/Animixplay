@@ -111,13 +111,26 @@ border-radius: 5px;
     height: auto;
   }
 
-nav ul.menu li a {
-  color: white;
+nav ul.menu {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
 }
 
+nav ul.menu li {
+  margin-right: 20px;
+}
+
+nav ul.menu li:last-child {
+  margin-right: 0;
+}
+
+nav ul.menu li a {
+  color: white;
+  text-decoration: none;
+}
 </style>
-
-
 </head>
 
 <body>
