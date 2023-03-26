@@ -102,16 +102,16 @@ h1 {
   text-align: center;
   padding-bottom: 20px;
 }
+table {
+  padding-bottom: 20px;
+}
 </style>
-
 <h1>Bookmarks</h1>
-
-	<table>
-		<tbody>
-			<!-- table body goes here -->
-		</tbody>
-	</table>
-	
+<table>
+  <tbody>
+    <!-- table body goes here -->
+  </tbody>
+</table>
   <script>
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     bookmarks.forEach(bookmark => {
