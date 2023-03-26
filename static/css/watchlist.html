@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,6 @@
     background-color:#383838;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    border-radius: 10px; /* Added round corners */
   }
 
   #watchlist li img {
@@ -52,6 +52,46 @@
     padding: 5px 10px;
     cursor: pointer;
   }
+  #watchlist-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#watching-button,
+#completed-button {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px 20px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+#watching-button.active,
+#completed-button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+ul#watchlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul#watchlist li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+  color: #555;
+}
+
+ul#watchlist li:last-child {
+  border-bottom: none;
+}
+
 
   /* Media queries */
   @media only screen and (max-width: 767px) {
@@ -109,8 +149,10 @@
   }
 </style>
 
+
 </head>
 
+<body>
 <body>
   <header>
     <div id="title1">
@@ -118,26 +160,47 @@
         <img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png" alt="Animixplay">
       </a>
     </div>
-    <h1>My Watchlist</h1>
-    <ul id="watchlist">
-      <!-- Watchlist items will be added dynamically with JavaScript -->
-    </ul>
-  </header>
-  <script>
-    // Get the watchlist from local storage
-    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+<h1>My Watchlist</h1>
+<div id="watchlist-section">
+  <button id="watching-button" class="active" onclick="showWatching()">Watching</button>
+  <button id="completed-button" onclick="showCompleted()">Completed</button>
+</div>
+<ul id="watchlist">
+  <!-- Watchlist items will be added dynamically with JavaScript -->
+</ul>
+<script>
+  const watchingButton = document.getElementById("watching-button");
+  const completedButton = document.getElementById("completed-button");
+  const watchlist = document.getElementById("watchlist");
 
-    // Add each anime in the watchlist to the HTML file
-    watchlist.forEach((anime, index) => {
-      const li = document.createElement("li");
-      const img = document.createElement("img");
-      img.src = anime.img;
-      img.alt = anime.title;
-      const a = document.createElement("a");
-      a.href = anime.link;
-      a.textContent = anime.title;
-    const removeBtn = document.createElement("button");
-removeBtn.textContent = "Remove";
+function showWatching() {
+watchingButton.classList.add("active");
+completedButton.classList.remove("active");
+// Display the list of anime that are currently being watched
+// ...
+}
+
+function showCompleted() {
+completedButton.classList.add("active");
+watchingButton.classList.remove("active");
+// Display the list of anime that have been completed
+// ...
+}
+
+// Get the watchlist from local storage
+const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+
+// Add each anime in the watchlist to the HTML file
+watchlist.forEach((anime, index) => {
+const li = document.createElement("li");
+const img = document.createElement("img");
+img.src = anime.img;
+img.alt = anime.title;
+const a = document.createElement("a");
+a.href = anime.link;
+a.textContent = anime.title;
+const removeBtn = document.createElement("button");
+removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 removeBtn.style.backgroundColor = "#2596be";
 removeBtn.style.fontSize = "16px";
 removeBtn.style.padding = "10px 20px";
@@ -145,20 +208,52 @@ removeBtn.onclick = () => {
   // Remove the anime from the watchlist
   watchlist.splice(index, 1);
 
-        // Update the watchlist in local storage
-        localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  // Update the watchlist in local storage
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-        // Remove the HTML element for the anime
-        li.remove();
+  // Remove the HTML element for the anime
+  li.remove();
 
-        // Show an alert to confirm the anime was removed
-        alert(`${anime.title} has been removed from your watchlist.`);
-      };
-      li.appendChild(img);
-      li.appendChild(a);
-      li.appendChild(removeBtn);
-      document.getElementById("watchlist").appendChild(li);
-    });
-  </script>
+  // Show an alert to confirm the anime was removed
+  alert(`${anime.title} has been removed from your watchlist.`);
+};
+
+const completeBtn = document.createElement("button");
+completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+completeBtn.style.backgroundColor = "#2ecc71";
+completeBtn.style.fontSize = "16px";
+completeBtn.style.padding = "10px 20px";
+completeBtn.onclick = () => {
+  // Remove the anime from the watchlist
+  watchlist.splice(index, 1);
+
+  // Add the anime to the completed list
+  const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+  completedList.push(anime);
+  localStorage.setItem("completedList", JSON.stringify(completedList));
+
+  // Remove the HTML element for the anime
+  li.remove();
+
+  // Show an alert to confirm the anime was completed
+  alert(`${anime.title} has been completed and moved to your completed list.`);
+};
+
+const checkmarkIcon = document.createElement("i");
+checkmarkIcon.className = "fas fa-check";
+completeBtn.appendChild(checkmarkIcon);
+
+const removeIcon = document.createElement("i");
+removeIcon.className = "fas fa-times";
+removeBtn.appendChild(removeIcon);
+
+li.appendChild(img);
+li.appendChild(a);
+li.appendChild(removeBtn);
+li.appendChild(completeBtn);
+document.getElementById("watchlist").appendChild(li);
+});
+</script>
+
 </body>
 </html>
