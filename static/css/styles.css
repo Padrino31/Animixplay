@@ -20,7 +20,8 @@
 .logo {
   flex: 1;
   text-align: center;
-  background-size: 50px 50px; /* Replace with your desired image size */
+  max-width: 100%;  
+  height: auto;  
 }
 
 
