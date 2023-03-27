@@ -10,6 +10,7 @@ from programs.html_gen import (
     get_selector_btns,
     get_genre_html,
     get_trending_html,
+    get_upcoming_html,
     slider_gen,
  
 )
@@ -35,11 +36,13 @@ def home():
     html = render_template("home.html")
     div1 = get_trending_html(TechZApi.top_animedex())
     div2 = get_recent_html(TechZApi.gogo_latest())
+     div3 = get_recent_html(TechZApi.gogo_upcoming())
     sliders = slider_gen()
 
     html = (
         html.replace("MOST_POPULAR", div1)
         .replace("RECENT_RELEASE", div2)
+        .replace("UPCOMING", div3)
         .replace("SLIDERS", sliders)
     )
     update_views("home-animedex")
