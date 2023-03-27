@@ -11,7 +11,6 @@ from programs.html_gen import (
     get_genre_html,
     get_trending_html,
     slider_gen,
-     upcomingHtml,
 )
 from flask import Flask, render_template, request, redirect
 from programs.anilist import Anilist
@@ -29,13 +28,6 @@ def favicon():
         "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico"
     )
 
-@app.route("/upcoming")
-def upcoming():
-    html = render_template("upcoming.html")
-    div1 = upcomingHtml(TechZApi.upcoming())
-    html = html.replace("UPCOMING", div1)
-    update_views("upcoming-animedex")
-    return html
 
 @app.route("/")
 def home():
