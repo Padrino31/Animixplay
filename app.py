@@ -11,6 +11,7 @@ from programs.html_gen import (
     get_genre_html,
     get_trending_html,
     slider_gen,
+    upcomingHtml,
 )
 from flask import Flask, render_template, request, redirect
 from programs.anilist import Anilist
@@ -20,6 +21,14 @@ from config import API_KEY
 
 app = Flask(__name__)
 TechZApi = TechZApi(API_KEY)
+
+@app.route("/upcoming")
+def upcoming():
+    html = render_template("upcoming.html")
+    div1 = upcomingHtml(TechZApi.upcoming())
+    html = html.replace("UPCOMING", div1)
+    update_views("upcoming-animedex")
+    return html
 
 
 @app.route("/favicon.ico")
