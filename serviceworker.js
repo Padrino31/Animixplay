@@ -1,5 +1,5 @@
 // Service Worker script
-const CACHE_NAME = 'animixplay-cache-v1';
+const CACHE_NAME = 'animeflv-cache-v1';
 
 const urlsToCache = [
   '/',
@@ -18,7 +18,7 @@ const urlsToCache = [
   'static/css/home.css',
   'static/css/video.css',
   'static/css/styles.css',
-  'https://animixplay.to/icon.png'
+  'https://od.lk/s/OTBfMzU2NDg5MDhf/logo.png'
 ];
 
 self.addEventListener('install', function(event) {
