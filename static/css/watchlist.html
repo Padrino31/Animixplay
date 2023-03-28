@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="https://animixplay.to/icon.png">
+  <link rel="icon" type="image/x-icon" href="https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.anime.flv/ec0213b8-f1d8-11e7-8b0a-7d62278fee98/128x128">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>My Watchlist</title>
+   <link href="./styles.css" rel="stylesheet">
   <link href="./home.css" rel="stylesheet">
 <head>
 <style>
@@ -140,21 +141,35 @@ nav ul.menu li a {
 </head>
 
 <body>
-  <header class="header"> 
-<div class="container"> 
-<div class="logo"> <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a> 
-</div> 
-<nav> 
-<ul class="menu">
- <li><a href="/">Home</a></li>
-<li><a href="./bookmark.html">Bookmark</a></li>
-</ul>
-</nav>
+  <nav>
+         <div class="menu-icon">
+            <span class="fas fa-bars"></span>
+         </div>
+         <div class="logo">
+            <a href="#"><img src="https://od.lk/s/OTBfMzU2NDQ1MTBf/animeflv.png"></a>
+         </div>
+         <div class="nav-items">
+		 <li><a href="/">Home</a></li>
+             <li><a href="./bookmark.html">Bookmark</a></li>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
+                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+                <button type="submit"><i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+      </nav>
+ 
     <h1>My Watchlist</h1>
     <ul id="watchlist">
       <!-- Watchlist items will be added dynamically with JavaScript -->
     </ul>
-  </header>
   <script>
     // Get the watchlist from local storage
     const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
