@@ -50,27 +50,30 @@
 </head>
 
 <body>
-<header class="header">
-  <div class="container">
-    <div class="logo">
-      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
-    </div>
-    <nav>
-      <ul class="menu">
-        <li><a href="/">Home</a></li>
-         <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+<nav>
+         <div class="menu-icon">
+            <span class="fas fa-bars"></span>
+         </div>
+         <div class="logo">
+            <a href="#"><img src="../static/img/animeflv.png"></a>
+         </div>
+         <div class="nav-items">
+             <li><a href="../static/css/bookmark.html">Bookmark</a></li>
         <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-      </ul>
-    </nav>
-    <div id="search-container">
-            <form action="/search" method='GET'>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
                 <input type="text" name="query" id="query" placeholder="Search Anime..." required>
                 <button type="submit"><i class="fa fa-search"></i>
                 </button>
             </form>
         </div>
-  </div>
-</header>
+      </nav>
     <section>
         <div id="background">
             <div id="cover"></div>
@@ -170,6 +173,32 @@
 <hr>
 
     <script>
+	    	  
+         const menuBtn = document.querySelector(".menu-icon span");
+         const searchBtn = document.querySelector(".search-icon");
+         const cancelBtn = document.querySelector(".cancel-icon");
+         const items = document.querySelector(".nav-items");
+         const form = document.querySelector("form");
+         menuBtn.onclick = ()=>{
+           items.classList.add("active");
+           menuBtn.classList.add("hide");
+           searchBtn.classList.add("hide");
+           cancelBtn.classList.add("show");
+         }
+         cancelBtn.onclick = ()=>{
+           items.classList.remove("active");
+           menuBtn.classList.remove("hide");
+           searchBtn.classList.remove("hide");
+           cancelBtn.classList.remove("show");
+           form.classList.remove("active");
+           cancelBtn.style.color = "#ff3d00";
+         }
+         searchBtn.onclick = ()=>{
+           form.classList.add("active");
+		   form.style.display = "inline-block"; // or "flex"
+           searchBtn.classList.add("hide");
+           cancelBtn.classList.add("show");
+         }
 function addToWatchList(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
