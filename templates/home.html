@@ -3,14 +3,14 @@
 
 <head>
     <link rel="icon" type="image/x-icon"
-        href="https://animixplay.to/icon.png">
-    <title>Animixplay - Watch High Quality Anime Online</title>
+        href="https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.anime.flv/ec0213b8-f1d8-11e7-8b0a-7d62278fee98/128x128">
+    <title> animeflv - Watch High Quality Anime Online</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="title" content="Animixplay - Watch High Quality Anime Online" />
+    <meta name="title" content="animeflv - Watch High Quality Anime Online" />
     <meta name="description"
-        content="Animixplay - Watch High Quality Anime Online. You can watch anime online free in HD without Ads. Best place for free find and one-click anime." />
+        content="animeflv - Watch High Quality Anime Online. You can watch anime online free in HD without Ads. Best place for free find and one-click anime." />
     <meta name="keywords"
-        content="Animixplay, watch anime online, free anime, anime stream, anime hd, english sub, kissanime, gogoanime, animeultima, 9anime, 123animes, animefreak, vidstreaming, gogo-stream, animekisa, zoro.to, gogoanime.run, animedex, animekisa" />
+        content="animeflv, watch anime online, free anime, anime stream, anime hd, english sub, kissanime, gogoanime, animeultima, 9anime, 123animes, animefreak, vidstreaming, gogo-stream, animekisa, zoro.to, gogoanime.run, animekisa" />
     <meta name="charset" content="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <meta name="robots" content="index, follow" />
@@ -18,12 +18,12 @@
     <meta name="revisit-after" content="1 days" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Content-Language" content="en" />
-    <meta property="og:title" content="Animixplay - Watch High Quality Anime Online">
+    <meta property="og:title" content="animeflv - Watch High Quality Anime Online">
     <meta property="og:description"
-        content="Animixplay - Watch High Quality Anime Online. You can watch anime online free in HD without Ads. Best place for free find and one-click anime.">
+        content="animeflv - Watch High Quality Anime Online. You can watch anime online free in HD without Ads. Best place for free find and one-click anime.">
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Animixplay">
+    <meta property="og:site_name" content="animeflv">
     <meta property="og:url" content="https://animixplay.vercel.app/">
     <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/screenshots/home.jpeg">
     <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/screenshots/home.jpeg">
@@ -31,9 +31,9 @@
         content="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/screenshots/home.jpeg">
     <meta property="og:image:width" content="650">
     <meta property="og:image:height" content="350">
-    <meta property="twitter:title" content="Animixplay - Watch High Quality Anime Online">
+    <meta property="twitter:title" content="animeflv - Watch High Quality Anime Online">
     <meta property="twitter:description"
-        content="Trending page for anime on Animixplay. You can watch anime online free in HD without Sign up. Best place for free find and one-click anime.">
+        content="Trending page for anime on animeflv. You can watch anime online free in HD without Sign up. Best place for free find and one-click anime.">
     <meta property="twitter:url" content="">
     <meta property="twitter:card" content="summary">
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
@@ -45,26 +45,30 @@
 </head>
 
 <body>
-<header class="header">
-  <div class="container">
-    <div class="logo">
-      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
-    </div>
-    <nav>
-      <ul class="menu">
-         <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+  <nav>
+         <div class="menu-icon">
+            <span class="fas fa-bars"></span>
+         </div>
+         <div class="logo">
+            <a href="#"><img src="https://www3.animeflv.net/assets/animeflv/img/logo.png?v=2.3"></a>
+         </div>
+         <div class="nav-items">
+             <li><a href="../static/css/bookmark.html">Bookmark</a></li>
         <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-      </ul>
-    </nav>
-    <div id="search-container">
-            <form action="/search" method='GET'>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
                 <input type="text" name="query" id="query" placeholder="Search Anime..." required>
                 <button type="submit"><i class="fa fa-search"></i>
                 </button>
             </form>
         </div>
-  </div>
-</header>
+      </nav>
      <section>
         <div class="slideshow-container">
 
@@ -153,13 +157,38 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 <hr>
 <footer style="background-color: #2596be;">
   <div>
-    <p style="color: white;">All content © 2023 Animixplay. All rights reserved.</p>
+    <p style="color: white;">All content © 2023 animeflv. All rights reserved.</p>
   </div>
 </footer>
 <hr>
 
 
     <script>
+	 const menuBtn = document.querySelector(".menu-icon span");
+         const searchBtn = document.querySelector(".search-icon");
+         const cancelBtn = document.querySelector(".cancel-icon");
+         const items = document.querySelector(".nav-items");
+         const form = document.querySelector("form");
+         menuBtn.onclick = ()=>{
+           items.classList.add("active");
+           menuBtn.classList.add("hide");
+           searchBtn.classList.add("hide");
+           cancelBtn.classList.add("show");
+         }
+         cancelBtn.onclick = ()=>{
+           items.classList.remove("active");
+           menuBtn.classList.remove("hide");
+           searchBtn.classList.remove("hide");
+           cancelBtn.classList.remove("show");
+           form.classList.remove("active");
+           cancelBtn.style.color = "#ff3d00";
+         }
+         searchBtn.onclick = ()=>{
+           form.classList.add("active");
+		   form.style.display = "inline-block"; // or "flex"
+           searchBtn.classList.add("hide");
+           cancelBtn.classList.add("show");
+         }
         document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
