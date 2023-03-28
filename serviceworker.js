@@ -18,7 +18,7 @@ const urlsToCache = [
   'static/css/home.css',
   'static/css/video.css',
   'static/css/styles.css',
-  'https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.anime.flv/ec0213b8-f1d8-11e7-8b0a-7d62278fee98/128x128'
+  'https://od.lk/s/OTBfMzU2NDk3OTdf/applogo.jpg'
 ];
 
 self.addEventListener('install', function(event) {
