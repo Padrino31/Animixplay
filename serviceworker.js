@@ -18,7 +18,7 @@ const urlsToCache = [
   'static/css/home.css',
   'static/css/video.css',
   'static/css/styles.css',
-  'https://is1-ssl.mzstatic.com/image/thumb/Purple122/v4/20/15/e8/2015e880-f772-dd23-9a12-1cf2259ae8bd/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg'
+  'https://od.lk/s/OTBfMzU2NTA1NDdf/applogov2.png'
 ];
 
 self.addEventListener('install', function(event) {
