@@ -43,27 +43,31 @@
 </head>
 
 <body>
-<header class="header">
-  <div class="container">
-    <div class="logo">
-      <a href="#"><img src="https://animixplay.b-cdn.net/wp-content/uploads/2022/10/cropped-animixplaylogo-1.png"></a>
-    </div>
-    <nav>
-      <ul class="menu">
-        <li><a href="/">Home</a></li>
-         <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+<nav>
+         <div class="menu-icon">
+            <span class="fas fa-bars"></span>
+         </div>
+         <div class="logo">
+            <a href="#"><img src="../static/img/animeflv.png"></a>
+         </div>
+         <div class="nav-items">
+		 <li><a href="/">Home</a></li>
+             <li><a href="../static/css/bookmark.html">Bookmark</a></li>
         <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-      </ul>
-    </nav>
-    <div id="search-container">
-            <form action="/search" method='GET'>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
                 <input type="text" name="query" id="query" placeholder="Search Anime..." required>
                 <button type="submit"><i class="fa fa-search"></i>
                 </button>
             </form>
         </div>
-  </div>
-</header>
+      </nav>
     <section>
         <div class="divox">
             <h2 id="latest">Search Results: {{ aid }}</h2>
