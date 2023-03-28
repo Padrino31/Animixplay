@@ -123,6 +123,18 @@ function saveBookmark() {
   a.click();
   document.body.removeChild(a);
 }
+        // Add active class to the current link
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace(" active", "");
+        }
+        this.className += " active";
+    });
+}
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
             const iframe = document.getElementById('AnimeDexFrame');
