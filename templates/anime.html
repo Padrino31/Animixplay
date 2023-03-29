@@ -91,16 +91,15 @@
         <span class="dot"></span>
         <span class="year">{{ TYPE }}</span>
     </div>
-<div id="watchh" class="mid">
-  <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
+<div id="watchh" class="mid" style="display: flex; flex-direction: column; align-items: center;">
+  <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px; width: 100%;">
     <i class="fa fa-play"></i> Watch Now
   </a>
   <br> <!-- Add a line break -->
-  <button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px; margin-top: 10px;">
+  <button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px; margin-top: 10px; width: 100%;">
     Add to my list
   </button>
 </div>
-
 <style>
 @media only screen and (max-width: 355px) {
   #watchh {
