@@ -39,7 +39,7 @@
 </div>
 
 <script>
-	const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
@@ -58,9 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem('{{ title }}');
     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       document.exitFullscreen();
-      if (screen.orientation.unlock) {
-        screen.orientation.unlock();
-      }
     }
   });
 
@@ -80,18 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
         onChange: (e) => updateQuality(e)
       };
       const player = new Plyr(video, defaultOptions);
-      if (navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null) {
+      if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
         player.on('enterfullscreen', () => {
           if (screen.orientation.lock) {
             screen.orientation.lock('landscape');
-          }
-        });
-        player.on('exitfullscreen', () => {
-          if (screen.orientation.unlock) {
-            screen.orientation.unlock();
-          }
-          if (window.innerHeight > window.innerWidth) {
-            screen.orientation.lock('portrait').catch(() => {});
           }
         });
       }
@@ -114,22 +103,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.hls = hls;
   } else {
     const player = new Plyr(video, defaultOptions);
-    if (navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null) {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
       player.on('enterfullscreen', () => {
         if (screen.orientation.lock) {
           screen.orientation.lock('landscape');
         }
       });
-      player.on('exitfullscreen', () => {
-        if (screen.orientation.unlock) {
-          screen.orientation.unlock();
-}
-if (window.innerHeight > window.innerWidth) {
-screen.orientation.lock('portrait').catch(() => {});
-}
-});
-}
-}
+    }
+  }
   function updateQuality(newQuality) {
     window.hls.levels.forEach((level, levelIndex) => {
       if (level.height === newQuality) {
