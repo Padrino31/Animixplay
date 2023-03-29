@@ -245,14 +245,11 @@ transform: translateY(-50%);
 font-size: 16px;
 }
 }
- /* Media query for screens with a maximum width of 355px */
-    @media (max-width: 355px) {
-        /* Reduce the font size and padding of the button */
-        #addToListBtn {
-            font-size: 16px;
-            padding: 5px 10px;
-        }
-    }
+@media screen and (max-width: 355px) {
+#watchh .watch-btn {
+margin-bottom: 10px;
+}
+}
 
 .content{
   position: absolute;
