@@ -371,7 +371,7 @@ font-size: 16px;
 </footer>
 <hr>
     <script>
- const menuBtn = document.querySelector(".menu-icon span");
+         const menuBtn = document.querySelector(".menu-icon span");
          const searchBtn = document.querySelector(".search-icon");
          const cancelBtn = document.querySelector(".cancel-icon");
          const items = document.querySelector(".nav-items");
@@ -395,10 +395,9 @@ font-size: 16px;
 		   form.style.display = "inline-block"; // or "flex"
            searchBtn.classList.add("hide");
            cancelBtn.classList.add("show");
-         }   
-
- function saveBookmark() {
-  const title = "{{ title }}";
+         }
+function saveBookmark() {
+  const title = "Episode Kimetsu no Yaiba Season 3 - Episode 1";
   const url = window.location.href;
   const bookmark = `<a href="${url}">${title}</a><br>`;
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
@@ -420,7 +419,7 @@ font-size: 16px;
   const a = document.createElement('a');
   a.href = URL.createObjectURL(file);
   a.setAttribute('target', '_blank');
-  a.setAttribute('../static/css/bookmark.html');
+  a.setAttribute('./bookmark.html');
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -440,80 +439,6 @@ font-size: 16px;
         document.getElementById('showdl').style.display = "none";
         document.getElementById('dldiv').classList.toggle('show');
     }
-  // Check if there is saved current time for this episode
-  const savedTime = localStorage.getItem('{{ title }}');
-  if (savedTime !== null) {
-    video.currentTime = parseFloat(savedTime);
-  }
-  // Save current time when the video is paused or ended
-  video.addEventListener('pause', () => {
-    localStorage.setItem('{{ title }}', video.currentTime.toString());
-  });
-  video.addEventListener('ended', () => {
-    localStorage.removeItem('{{ title }}');
-    if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
-      document.exitFullscreen();
-    }
-  });
-
-  if (Hls.isSupported()) {
-    const hls = new Hls({
-      autoStartLoad: true, // enable automatic start of video download
-      capLevelToPlayerSize: true, // limit video quality to player size
-      startLevel: 'auto' // start playing at the optimal level based on internet speed
-    });
-    hls.loadSource(source);
-    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-      const availableQualities = hls.levels.map((l) => l.height);
-      defaultOptions.quality = {
-        default: availableQualities[0],
-        options: availableQualities,
-        forced: true,
-        onChange: (e) => updateQuality(e)
-      };
-      const player = new Plyr(video, defaultOptions);
-      if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-        player.on('enterfullscreen', () => {
-          if (screen.orientation.lock) {
-            screen.orientation.lock('landscape');
-          }
-        });
-      }
-      // adjust buffer length dynamically
-      setInterval(() => {
-        const buf = hls.buffered;
-        if (buf.length > 0 && video.paused && video.readyState > 1) {
-          const end = buf.end(0);
-          const targetBuffer = video.currentTime + 20; // target buffer time in seconds
-          if (end < targetBuffer) {
-            const bwEstimate = hls.currentLevel > -1 ? hls.levels[hls.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
-            const bufState = end - video.currentTime; // current buffer state in seconds
-            const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
-            hls.config.maxBufferLength = newBufLength;
-          }
-        }
-      }, 1000);
-    });
-    hls.attachMedia(video);
-    window.hls = hls;
-  } else {
-    const player = new Plyr(video, defaultOptions);
-    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-      player.on('enterfullscreen', () => {
-        if (screen.orientation.lock) {
-          screen.orientation.lock('landscape');
-        }
-      });
-    }
-  }
-  function updateQuality(newQuality) {
-    window.hls.levels.forEach((level, levelIndex) => {
-      if (level.height === newQuality) {
-        window.hls.currentLevel = levelIndex;
-      }
-    });
-  }
-});
     </script>
 
 
