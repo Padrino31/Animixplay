@@ -180,7 +180,7 @@ Animixplay is the best site to watch Demon Slayer: Kimetsu no Yaiba – To the S
     <hr>
 
     <script>
-	 const menuBtn = document.querySelector(".menu-icon span");
+	        const menuBtn = document.querySelector(".menu-icon span");
          const searchBtn = document.querySelector(".search-icon");
          const cancelBtn = document.querySelector(".cancel-icon");
          const items = document.querySelector(".nav-items");
@@ -229,25 +229,16 @@ function addToWatchList(link, img, title) {
 
     // Show an alert to confirm the anime was added
     alert(`${title} has been added to your watchlist.`);
-
-    // Get the watchlist HTML element
-    const watchlistElem = document.getElementById("watchlist");
-
-    // If the watchlist element doesn't exist, return
-    if (!watchlistElem) {
-        return;
-    }
-
-    // Create a new list item element with the anime data
-    const listItem = document.createElement("li");
-    listItem.innerHTML = `
-        <img src="${img}" alt="${title}">
-        <a href="${link}">${title}</a>
-    `;
-
-    // Add the new list item to the watchlist element
-    watchlistElem.appendChild(listItem);
 }
+
+// Restore the last episode watched when the "Watch Now" button is clicked
+const watchNowBtn = document.querySelector('.watch-btn');
+watchNowBtn.addEventListener('click', function() {
+    const lastEpisode = localStorage.getItem("lastEpisode");
+    if (lastEpisode) {
+        window.location.href = lastEpisode;
+    }
+});
 
 // Add active class to the current link
 var header = document.getElementById("header");
