@@ -9,6 +9,6 @@
 - Fast And Responsive
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
-> Website : https://animixplay-to.vercel.app/
+> Website : https://animeflv-sc.vercel.app/
 
 > Powered By TechZApi
