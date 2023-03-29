@@ -18,7 +18,7 @@ const urlsToCache = [
   'static/css/home.css',
   'static/css/video.css',
   'static/css/styles.css',
-  'https://od.lk/s/OTBfMzU2NTkxMzhf/applogov2.png-removebg.png'
+  'https://od.lk/s/OTBfMzU2NTk4NTBf/Applogov3.png'
 ];
 
 self.addEventListener('install', function(event) {
