@@ -34,23 +34,20 @@
 <body>
 <div class="container">
   <video controls crossorigin playsinline autoplay>
-    <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
+    <source type="application/x-mpegURL" src="https://cors-anywhere.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
 
 <script>
-  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-document.addEventListener("DOMContentLoaded", () => {
+	 const source = 'https://cors-anywhere.herokuapp.com/{{ m3u8 }}';
   const video = document.querySelector("video");
   const defaultOptions = {
     title: '{{ title }}'
   };
-  // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
   if (savedTime !== null) {
     video.currentTime = parseFloat(savedTime);
   }
-  // Save current time when the video is paused or ended
   video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
@@ -63,9 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (Hls.isSupported()) {
     const hls = new Hls({
-      autoStartLoad: true, // enable automatic start of video download
-      capLevelToPlayerSize: true, // limit video quality to player size
-      startLevel: 'auto' // start playing at the optimal level based on internet speed
+      autoStartLoad: true,
+      capLevelToPlayerSize: true,
+      startLevel: 'auto'
     });
     hls.loadSource(source);
     hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
