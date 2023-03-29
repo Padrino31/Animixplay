@@ -40,7 +40,6 @@ nav .nav-items li a{
   font-size: 18px;
   font-weight: 500;
   text-decoration: none;
-overflow-y: hidden;
 }
 nav .nav-items li a:hover{
   color: #2596be;
@@ -136,6 +135,7 @@ nav button[type="submit"] {
     background: #14181f;
     display: inline-block;
     transition: left 0.3s ease;
+overflow-y: hidden;
   }
   nav .nav-items.active{
     left: 0px;
