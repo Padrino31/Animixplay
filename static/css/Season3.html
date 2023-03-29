@@ -92,15 +92,27 @@
         <span class="dot"></span>
         <span class="year">TV Series</span>
     </div>
-    <div id="watchh" class="mid">
-        <a href="./Season3vid.html" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
-            <i class="fa fa-play"></i> Watch Now
-        </a>
-       <button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
-            Add to my list
-        </button>
-    </div>
+    <div id="watchh" class="mid" style="display: flex; flex-direction: column; align-items: center;">
+  <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
+    <i class="fa fa-play"></i> Watch Now
+  </a>
+  <br> <!-- Add a line break -->
+  <button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px; margin-top: 10px;">
+    Add to my list
+  </button>
 </div>
+<style>
+@media only screen and (max-width: 355px) {
+  #watchh {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #addToListBtn {
+    margin-top: 10px;
+  }
+}
+</style>
 
 
             <div id="info" class="col-3">
