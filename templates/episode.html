@@ -41,7 +41,10 @@
     
     <link href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/episode.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-<style>
+
+</head>
+<body>
+	<style>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
 *{
   margin: 0;
@@ -308,10 +311,7 @@ font-size: 16px;
 }
 
 </style>
-</head>
-
-<body>
-<nav>
+	 <nav>
          <div class="menu-icon">
             <span class="fas fa-bars"></span>
          </div>
@@ -319,14 +319,19 @@ font-size: 16px;
             <a href="#"><img src="https://od.lk/s/OTBfMzU2NDQ1MTBf/animeflv.png"></a>
          </div>
          <div class="nav-items">
-		 <li><a href="/">Home</a></li>
-		 <form action="/search" method='GET'>
+	 <li><a href="/">Home</a></li>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
                 <input type="text" name="query" id="query" placeholder="Search Anime..." required>
                 <button type="submit"><i class="fa fa-search"></i>
-	        </button>
+                </button>
             </form>
-         </div>
-	
         </div>
       </nav>
 <section id="vid-sec">
