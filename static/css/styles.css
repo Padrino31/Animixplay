@@ -108,6 +108,7 @@ nav button[type="submit"] {
 
 
 }
+
 @media (max-width: 1245px) {
   nav{
     padding: 0 50px;
@@ -244,9 +245,15 @@ transform: translateY(-50%);
 font-size: 16px;
 }
 }
+ /* Media query for screens with a maximum width of 355px */
+    @media (max-width: 355px) {
+        /* Reduce the font size and padding of the button */
+        #addToListBtn {
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+    }
 
-
-}
 .content{
   position: absolute;
   top: 50%;
