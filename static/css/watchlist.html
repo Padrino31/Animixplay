@@ -35,12 +35,18 @@
 }
 
 #watchlist li a {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2; /* number of lines to show */
   font-size: 16px;
   text-align: center;
   color: white;
   text-decoration: none;
   margin-bottom: 10px;
 }
+
 
 #watchlist li button {
   /* Watchlist li button styles */
