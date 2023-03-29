@@ -77,13 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
         onChange: (e) => updateQuality(e)
       };
       const player = new Plyr(video, defaultOptions);
-      if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-        player.on('enterfullscreen', () => {
+      player.on('fullscreenchange', (event) => {
+        if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
           if (screen.orientation.lock) {
             screen.orientation.lock('landscape');
           }
-        });
-      }
+        }
+      });
       // adjust buffer length dynamically
       setInterval(() => {
         const buf = hls.buffered;
@@ -103,13 +103,13 @@ document.addEventListener("DOMContentLoaded", () => {
     window.hls = hls;
   } else {
     const player = new Plyr(video, defaultOptions);
-    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-      player.on('enterfullscreen', () => {
+    player.on('fullscreenchange', (event) => {
+      if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
         if (screen.orientation.lock) {
           screen.orientation.lock('landscape');
         }
-      });
-    }
+      }
+    });
   }
   function updateQuality(newQuality) {
     window.hls.levels.forEach((level, levelIndex) => {
