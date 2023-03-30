@@ -18,6 +18,8 @@
     }
   ],
   "prefer_related_applications": false,
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "ios": {
+    "supportsFullScreen": true
+  }
 }
-
