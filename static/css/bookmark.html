@@ -159,11 +159,15 @@ table {
     });
 
     function removeBookmark(url) {
-      const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-      const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
-      localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
-      location.reload();
-    }
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+  const bookmarkToRemove = bookmarks.find(bookmark => bookmark.url === url);
+
+  if (confirm(`Are you sure you want to remove "${bookmarkToRemove.title}"?`)) {
+    const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
+    localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
+    location.reload();
+  }
+}
   </script>
 </tbody>
 </table>
