@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 video.addEventListener('webkitfullscreenchange', function() {
-  if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod/i))) {
+  if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
     if (screen.orientation.lock) {
       screen.orientation.lock('landscape');
     }
@@ -83,7 +83,7 @@ video.addEventListener('webkitfullscreenchange', function() {
       };
       const player = new Plyr(video, defaultOptions);
       player.on('fullscreenchange', (event) => {
-        if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null)) {
+        if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
           if (screen.orientation.lock) {
             screen.orientation.lock('landscape');
           }
@@ -110,7 +110,7 @@ video.addEventListener('webkitfullscreenchange', function() {
   } else {
     const player = new Plyr(video, defaultOptions);
     player.on('fullscreenchange', (event) => {
-      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null)) {
+      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
         if (screen.orientation.lock) {
           screen.orientation.lock('landscape');
         }
