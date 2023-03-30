@@ -57,12 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
   video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
-  video.addEventListener('ended', () => {
-    localStorage.removeItem('{{ title }}');
-    if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
-      document.exitFullscreen();
+video.addEventListener('webkitfullscreenchange', function() {
+  if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod/i))) {
+    if (screen.orientation.lock) {
+      screen.orientation.lock('landscape');
     }
-  });
+  }
+});
+
 
   if (Hls.isSupported()) {
     const hls = new Hls({
@@ -81,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       const player = new Plyr(video, defaultOptions);
       player.on('fullscreenchange', (event) => {
-        if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+        if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null)) {
           if (screen.orientation.lock) {
             screen.orientation.lock('landscape');
           }
@@ -108,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     const player = new Plyr(video, defaultOptions);
     player.on('fullscreenchange', (event) => {
-      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null)) {
         if (screen.orientation.lock) {
           screen.orientation.lock('landscape');
         }
