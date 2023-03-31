@@ -41,7 +41,7 @@
 
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
     <meta name="theme-color" content="#202125">
-    
+    <link href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/home.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/episode.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
@@ -350,6 +350,57 @@ font-size: 16px;
         PROSLO
       <button onclick="saveBookmark()" style="color: black;">Bookmark</button>
     </div>
+	<div id="background">
+            <div id="cover"></div>
+        </div>
+        <div class="anime row">
+            <div class="poster col-3">
+                <img src="{{ IMG }}">
+            </div>
+<div class="details col-6">
+    <h1>{{ TITLE }}</h1>
+    <div class="mid" style="margin: 20px 0px;">
+        <span class="cbox">HD</span>
+        <span class="cbox">{{ LANG }}</span>
+        <span class="dot"></span>
+        <span class="year">{{ TYPE }}</span>
+    </div>
+	<div id="info" class="col-3">
+                <div class="info-items overview">
+                    <span id="overview2" class="item-head">Overview:</span>
+                    <span id="overview1" class="item-des">SYNOPSIS</span>
+                </div>
+
+                <div class=info-items>
+                    <span class="item-head">Other Names:</span>
+                    <span class="item-des">{{ OTHER }}</span>
+                </div>
+                <div class=info-items>
+                    <span class="item-head">Episodes:</span>
+                    <span class="item-des">{{ TOTAL }}</span>
+                </div>
+                <div class=info-items>
+                    <span class="item-head">Release Year:</span>
+                    <span class="item-des">{{ YEAR }}</span>
+                </div>
+                <div class=info-items>
+                    <span class="item-head">Type:</span>
+                    <span class="item-des">{{ TYPE }}</span>
+                </div>
+                <div class=info-items>
+                    <span class="item-head">Status:</span>
+                    <span class="item-des">{{ STATUS }}</span>
+                </div>
+                <div class=info-items>
+                    <span class="item-head">Studios:</span>
+                    <span class="item-des">{{ STUDIO }}</span>
+                </div>
+
+                <div class="info-items genre">
+                    <span class="item-head">Genres:</span> GENERES
+                </div>
+            </div>
+ 
     <div id="server_main">
         <div class="status">
         </div>
