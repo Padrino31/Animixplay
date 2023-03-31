@@ -497,8 +497,21 @@ function saveBookmark() {
         document.getElementById('showdl').style.display = "none";
         document.getElementById('dldiv').classList.toggle('show');
     }
+	     document.addEventListener("DOMContentLoaded", function () {
+            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                    }
+                });
+            });
+            const arr = document.querySelectorAll('img.lzy_img');
+            arr.forEach((v) => {
+                imageObserver.observe(v);
+            });
+        })
     </script>
-
-
+    <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>
 </body>
 </html>
