@@ -58,6 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
   video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
+video.addEventListener('ended', () => {
+ document.exitFullscreen();
+ });
+
 video.addEventListener('webkitfullscreenchange', function() {
   if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
     if (screen.orientation.lock) {
