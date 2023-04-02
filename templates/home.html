@@ -167,6 +167,20 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
 
 
     <script>
+document.addEventListener("DOMContentLoaded", function () {
+            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                    }
+                });
+            });
+            const arr = document.querySelectorAll('img.lzy_img');
+            arr.forEach((v) => {
+                imageObserver.observe(v);
+            });
+        })
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
 const cancelBtn = document.querySelector(".cancel-icon"); 
@@ -198,21 +212,6 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                    }
-                });
-            });
-            const arr = document.querySelectorAll('img.lzy_img');
-            arr.forEach((v) => {
-                imageObserver.observe(v);
-            });
-        })
     </script>
     <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>
 </body>
