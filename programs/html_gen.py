@@ -240,7 +240,6 @@ def slider_gen():
         pos += 1
     return html
 
-
 def episodeHtml(episode, title):
     isSub = episode.get("SUB")
     isDub = episode.get("DUB")
