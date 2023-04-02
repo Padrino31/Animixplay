@@ -25,7 +25,7 @@ TechZApi = TechZApi(API_KEY)
 @app.route("/favicon.ico")
 def favicon():
     return redirect(
-        "https://animixplay.to/icon.png"
+        "https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.anime.flv/ec0213b8-f1d8-11e7-8b0a-7d62278fee98/128x128"
     )
 
 
@@ -236,7 +236,3 @@ def latest(page):
         return {"html": html}
     except:
         return {"html": ""}
-
-
-if __name__ == "__main__":
-    app.run("0.0.0.0", debug=True)
