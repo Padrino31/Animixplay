@@ -218,8 +218,7 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-
-   // Get the watchlist from local storage
+// Get the watchlist from local storage
 const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
 // Add each anime in the watchlist to the HTML file
@@ -253,11 +252,36 @@ watchlist.forEach((anime, index) => {
       alert(`${anime.title} has been removed from your watchlist.`);
     }
   };
+  const checkBtn = document.createElement("button");
+  checkBtn.innerHTML = "&#10003;";
+  checkBtn.style.backgroundColor = "#3cba54";
+  checkBtn.style.fontSize = "16px";
+  checkBtn.style.padding = "10px 20px";
+  checkBtn.onclick = () => {
+    // Add the anime to completed.html
+    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+    completedList.push(anime);
+    localStorage.setItem("completedList", JSON.stringify(completedList));
+
+    // Remove the anime from the watchlist
+    watchlist.splice(index, 1);
+
+    // Update the watchlist in local storage
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+    // Remove the HTML element for the anime
+    li.remove();
+
+    // Show an alert to confirm the anime was added to completed.html
+    alert(`${anime.title} has been added to completed.html.`);
+  };
   li.appendChild(img);
   li.appendChild(a);
   li.appendChild(removeBtn);
+  li.appendChild(checkBtn);
   document.getElementById("watchlist").appendChild(li);
 });
+
 
   </script>
 </body>
