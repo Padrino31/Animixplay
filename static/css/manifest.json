@@ -9,7 +9,7 @@
       "purpose": "maskable"
     },
     {
-      "src": "https://od.lk/s/OTBfMzU4MDczNjdf/20230402_184020.gif", 
+      "src": "https://od.lk/d/OTBfMzU4MDczNjdf/20230402_184020.gif", 
       "sizes": "192x192",
       "type": "image/gif", 
       "purpose": "any"
@@ -21,7 +21,7 @@
   "theme_color": "#000000",
   "background_color": "#000000",
   "loading": {
-    "icon": "https://od.lk/s/OTBfMzU4MDczNjdf/20230402_184020.gif",
+    "icon": "https://od.lk/d/OTBfMzU4MDczNjdf/20230402_184020.gif",
     "color": "#000000"
   }
 }
