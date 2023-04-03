@@ -251,11 +251,11 @@ watchlist.forEach((anime, index) => {
   checkBtn.style.fontSize = "16px";
   checkBtn.style.padding = "10px 20px";
   checkBtn.style.width = "100px";
-  checkBtn.style.marginLeft = "12px";
+  checkBtn.style.marginRight = "12px";
   checkBtn.style.borderRadius = "10px";
   checkBtn.onclick = () => {
     // Prompt the user to confirm they want to add the anime to completed.html
-    const confirmed = confirm(`Are you sure you want to add ${anime.title} to completed.html?`);
+    const confirmed = confirm(`Are you sure you want to add ${anime.title} to the completed List?`);
     if (confirmed) {
       // Add the anime to completed.html
       const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
@@ -272,7 +272,7 @@ watchlist.forEach((anime, index) => {
       li.remove();
 
       // Show an alert to confirm the anime was added to completed.html
-      alert(`${anime.title} has been added to completed.html.`);
+      alert(`${anime.title} has been added to the completed List.`);
     }
   };
 
