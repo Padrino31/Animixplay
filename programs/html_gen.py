@@ -45,9 +45,9 @@ def get_eps_html2(data):
     return html
 
 
-ANIME_POS = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div><div class="dubb dubb2">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> <span class="dot"></span> <span>{}</span> </div></div></div></a>"""
+ANIME_POS = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div><div class="dubb dubb2">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.dribbble.com/users/303363/screenshots/2505716/media/51a757785579b2042ede381d9dd1fd82.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> <span class="dot"></span> <span>{}</span> </div></div></div></a>"""
 
-ANIME_POS2 = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> </div></div></div></a>"""
+ANIME_POS2 = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.dribbble.com/users/303363/screenshots/2505716/media/51a757785579b2042ede381d9dd1fd82.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> </div></div></div></a>"""
 
 
 def animeRecHtml(data):
@@ -206,7 +206,7 @@ def get_selector_btns(url, current, episodes):
     return selector
 
 
-SLIDER_HTML = """<div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">{}</p><h1>{}</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>{}</span> <span class="year year2"><i class="fa fa-calendar"></i>{}</span> <span class="cbox cbox1">{}</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">{}</p><div id="watchh"> <a href="{{ WATCHNOW }}" class="watch-btn"> <i class="fa fa-play-circle"></i> Watch Now </a> <a href="{{ WATCHNOW }}" class="watch-btn watch-btn2"> <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i> </a> </div></div><div class="shado"> <a href="{}"></a> </div><img src="{}"> </div>"""
+SLIDER_HTML = """<div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">{}</p><h1>{}</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>{}</span> <span class="year year2"><i class="fa fa-calendar"></i>{}</span> <span class="cbox cbox1">{}</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">{}</p><div id="watchh"> <a href="{ WATCHNOW }" class="watch-btn"> <i class="fa fa-play-circle"></i> Watch Now </a> <a href="{}" class="watch-btn watch-btn2"> <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i> </a> </div></div><div class="shado"> <a href="{}"></a> </div><img src="{}"> </div>"""
 
 
 def slider_gen():
