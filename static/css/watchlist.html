@@ -233,7 +233,7 @@ a.textContent = anime.title;
 const btnContainer = document.createElement("div");
 btnContainer.style.display = "flex";
 btnContainer.style.justifyContent = "center";
-btnContainer.style.alignItems = "center";
+btnContainer.style.marginTop = "10px";
 
 const removeBtn = document.createElement("button");
 removeBtn.textContent = "Remove";
@@ -266,7 +266,7 @@ checkBtn.style.padding = "10px 20px";
 checkBtn.style.width = "100px";
 checkBtn.style.margin = "0 5px";
 checkBtn.onclick = () => {
-// Prompt the user to confirm they want to add the anime to completed.html
+// Prompt the user to confirm they want to add the anime to the completed.html file
 const confirmed = confirm(Are you sure you want to add ${anime.title} to completed.html?);
 if (confirmed) {
 // Add the anime to completed.html
