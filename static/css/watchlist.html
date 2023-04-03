@@ -218,81 +218,85 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
+</script>
+	
+<script>
 // Get the watchlist from local storage
 const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-
 watchlist.forEach((anime, index) => {
-  const li = document.createElement("li");
-  const img = document.createElement("img");
-  img.src = anime.img;
-  img.alt = anime.title;
-  const a = document.createElement("a");
-  a.href = anime.link;
-  a.textContent = anime.title;
+const li = document.createElement("li");
+const img = document.createElement("img");
+img.src = anime.img;
+img.alt = anime.title;
+const a = document.createElement("a");
+a.href = anime.link;
+a.textContent = anime.title;
 
-  const btnContainer = document.createElement("div");
-  btnContainer.style.display = "flex";
+const btnContainer = document.createElement("div");
+btnContainer.style.display = "flex";
+btnContainer.style.justifyContent = "center";
+btnContainer.style.alignItems = "center";
 
-  const removeBtn = document.createElement("button");
-  removeBtn.textContent = "Remove";
-  removeBtn.style.backgroundColor = "#2596be";
-  removeBtn.style.fontSize = "16px";
-  removeBtn.style.padding = "10px 20px";
-  removeBtn.style.width = "100px";
-  removeBtn.style.marginRight = "10px";
-  removeBtn.onclick = () => {
-    // Prompt the user to confirm they want to remove the anime
-    const confirmed = confirm(`Are you sure you want to remove ${anime.title} from your watchlist?`);
-    if (confirmed) {
-      // Remove the anime from the watchlist
-      watchlist.splice(index, 1);
+const removeBtn = document.createElement("button");
+removeBtn.innerHTML = "X";;
+removeBtn.style.backgroundColor = "#2596be";
+removeBtn.style.fontSize = "16px";
+removeBtn.style.padding = "10px 20px";
+removeBtn.style.width = "100px";
+removeBtn.style.margin = "0 5px";
+removeBtn.onclick = () => {
+// Prompt the user to confirm they want to remove the anime
+const confirmed = confirm(Are you sure you want to remove ${anime.title} from your watchlist?);
+if (confirmed) {
+// Remove the anime from the watchlist
+watchlist.splice(index, 1);
+	  // Update the watchlist in local storage
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-      // Update the watchlist in local storage
-      localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  // Remove the HTML element for the anime
+  li.remove();
 
-      // Remove the HTML element for the anime
-      li.remove();
+  // Show an alert to confirm the anime was removed
+  alert(`${anime.title} has been removed from your watchlist.`);
+}
+};
+const checkBtn = document.createElement("button");
+checkBtn.innerHTML = "✓";
+checkBtn.style.backgroundColor = "#3cba54";
+checkBtn.style.fontSize = "16px";
+checkBtn.style.padding = "10px 20px";
+checkBtn.style.width = "100px";
+checkBtn.style.margin = "0 5px";
+checkBtn.onclick = () => {
+// Prompt the user to confirm they want to add the anime to completed.html
+const confirmed = confirm(Are you sure you want to add ${anime.title} to completed.html?);
+if (confirmed) {
+// Add the anime to completed.html
+const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+completedList.push(anime);
+localStorage.setItem("completedList", JSON.stringify(completedList));
+	  // Remove the anime from the watchlist
+  watchlist.splice(index, 1);
 
-      // Show an alert to confirm the anime was removed
-      alert(`${anime.title} has been removed from your watchlist.`);
-    }
-  };
-  const checkBtn = document.createElement("button");
-  checkBtn.innerHTML = "&#10003;";
-  checkBtn.style.backgroundColor = "#3cba54";
-  checkBtn.style.fontSize = "16px";
-  checkBtn.style.padding = "10px 20px";
-  checkBtn.style.width = "100px";
-  checkBtn.style.marginRight = "10px";
-  checkBtn.onclick = () => {
-    // Add the anime to completed.html
-    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
-    completedList.push(anime);
-    localStorage.setItem("completedList", JSON.stringify(completedList));
+  // Update the watchlist in local storage
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-    // Remove the anime from the watchlist
-    watchlist.splice(index, 1);
+  // Remove the HTML element for the anime
+  li.remove();
 
-    // Update the watchlist in local storage
-    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  // Show an alert to confirm the anime was added to completed.html
+  alert(`${anime.title} has been added to completed.html.`);
+}
+};
 
-    // Remove the HTML element for the anime
-    li.remove();
+btnContainer.appendChild(checkBtn);
+btnContainer.appendChild(removeBtn);
 
-    // Show an alert to confirm the anime was added to completed.html
-    alert(`${anime.title} has been added to the completed section.`);
-  };
-
-  btnContainer.appendChild(checkBtn);
-  btnContainer.appendChild(removeBtn);
-
-  li.appendChild(img);
-  li.appendChild(a);
-  li.appendChild(btnContainer);
-  document.getElementById("watchlist").appendChild(li);
+li.appendChild(img);
+li.appendChild(a);
+li.appendChild(btnContainer);
+document.getElementById("watchlist").appendChild(li);
 });
-
-
   </script>
 </body>
 </html>
