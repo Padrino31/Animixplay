@@ -230,6 +230,10 @@ watchlist.forEach((anime, index) => {
   const a = document.createElement("a");
   a.href = anime.link;
   a.textContent = anime.title;
+
+  const btnContainer = document.createElement("div");
+  btnContainer.style.display = "flex";
+
   const removeBtn = document.createElement("button");
   removeBtn.textContent = "Remove";
   removeBtn.style.backgroundColor = "#2596be";
@@ -275,13 +279,15 @@ watchlist.forEach((anime, index) => {
     // Show an alert to confirm the anime was added to completed.html
     alert(`${anime.title} has been added to completed.html.`);
   };
+
+  btnContainer.appendChild(checkBtn);
+  btnContainer.appendChild(removeBtn);
+
   li.appendChild(img);
   li.appendChild(a);
-  li.appendChild(removeBtn);
-  li.appendChild(checkBtn);
+  li.appendChild(btnContainer);
   document.getElementById("watchlist").appendChild(li);
 });
-
 
   </script>
 </body>
