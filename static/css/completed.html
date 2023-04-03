@@ -179,15 +179,31 @@ body {
       </nav>
  
 	<div class="navbar">
-  <a href="./watchlist.html" class="active">Watchlist</a>
-  <a href="./completed.html">Completed</a>
+  <a href="./watchlist.html" id="watchlist-link">Watchlist</a>
+  <a href="./completed.html" id="completed-link">Completed</a>
 </div>
    
    <ul id="completedList">
       <!-- Completed items will be added dynamically with JavaScript -->
     </ul>
+	<script>
+  const watchlistLink = document.getElementById("watchlist-link");
+  const completedLink = document.getElementById("completed-link");
+
+  // Add event listener to watchlist link
+  watchlistLink.addEventListener("click", () => {
+    watchlistLink.classList.add("active");
+    completedLink.classList.remove("active");
+  });
+
+  // Add event listener to completed link
+  completedLink.addEventListener("click", () => {
+    completedLink.classList.add("active");
+    watchlistLink.classList.remove("active");
+  });
+</script>
   <script>
-	           const menuBtn = document.querySelector(".menu-icon span"); 
+const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
 const cancelBtn = document.querySelector(".cancel-icon"); 
 const items = document.querySelector(".nav-items"); 
