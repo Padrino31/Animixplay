@@ -21,7 +21,7 @@
       "purpose": "any"
     }
   ],
-  "start_url": "https://animeflv-seven.vercel.app",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "any",
   "theme_color": "#000000",
