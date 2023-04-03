@@ -206,6 +206,7 @@ searchBtn.onclick = () => {
 }
 // Get the watchlist from local storage
 const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+
 watchlist.forEach((anime, index) => {
   const li = document.createElement("li");
   const img = document.createElement("img");
@@ -225,6 +226,7 @@ watchlist.forEach((anime, index) => {
   removeBtn.style.padding = "10px 20px";
   removeBtn.style.width = "100px";
   removeBtn.style.marginRight = "10px";
+  removeBtn.style.borderRadius = "5px";
   removeBtn.onclick = () => {
     // Prompt the user to confirm they want to remove the anime
     const confirmed = confirm(`Are you sure you want to remove ${anime.title} from your watchlist?`);
@@ -242,13 +244,15 @@ watchlist.forEach((anime, index) => {
       alert(`${anime.title} has been removed from your watchlist.`);
     }
   };
+
   const checkBtn = document.createElement("button");
   checkBtn.innerHTML = "&#10003;";
   checkBtn.style.backgroundColor = "#3cba54";
   checkBtn.style.fontSize = "16px";
   checkBtn.style.padding = "10px 20px";
   checkBtn.style.width = "100px";
-  checkBtn.style.marginRight = "10px";
+  checkBtn.style.marginRight = "5px";
+  checkBtn.style.borderRadius = "5px";
   checkBtn.onclick = () => {
     // Add the anime to completed.html
     const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
@@ -276,6 +280,7 @@ watchlist.forEach((anime, index) => {
   li.appendChild(btnContainer);
   document.getElementById("watchlist").appendChild(li);
 });
+
   </script>
 </body>
 </html>
