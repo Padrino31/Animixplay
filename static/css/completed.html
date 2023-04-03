@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   
-  <title>My Watchlist</title>
+  <title>Completed</title>
    <link href="./styles.css" rel="stylesheet">
   <link href="./home.css" rel="stylesheet">
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -120,7 +120,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 12px; 
+  margin-bottom: 20px; 
 }
 
 .navbar a {
@@ -183,8 +183,8 @@ body {
   <a href="./completed.html">Completed</a>
 </div>
    
-    <ul id="watchlist">
-      <!-- Watchlist items will be added dynamically with JavaScript -->
+   <ul id="completedList">
+      <!-- Completed items will be added dynamically with JavaScript -->
     </ul>
   <script>
 	           const menuBtn = document.querySelector(".menu-icon span"); 
@@ -219,46 +219,21 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 
-   // Get the watchlist from local storage
-const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-
-// Add each anime in the watchlist to the HTML file
-watchlist.forEach((anime, index) => {
-  const li = document.createElement("li");
-  const img = document.createElement("img");
-  img.src = anime.img;
-  img.alt = anime.title;
-  const a = document.createElement("a");
-  a.href = anime.link;
-  a.textContent = anime.title;
-  const removeBtn = document.createElement("button");
-  removeBtn.textContent = "Remove";
-  removeBtn.style.backgroundColor = "#2596be";
-  removeBtn.style.fontSize = "16px";
-  removeBtn.style.padding = "10px 20px";
-  removeBtn.onclick = () => {
-    // Prompt the user to confirm they want to remove the anime
-    const confirmed = confirm(`Are you sure you want to remove ${anime.title} from your watchlist?`);
-    if (confirmed) {
-      // Remove the anime from the watchlist
-      watchlist.splice(index, 1);
-
-      // Update the watchlist in local storage
-      localStorage.setItem("watchlist", JSON.stringify(watchlist));
-
-      // Remove the HTML element for the anime
-      li.remove();
-
-      // Show an alert to confirm the anime was removed
-      alert(`${anime.title} has been removed from your watchlist.`);
-    }
-  };
-  li.appendChild(img);
-  li.appendChild(a);
-  li.appendChild(removeBtn);
-  document.getElementById("watchlist").appendChild(li);
-});
-
-  </script>
+ // Get the completed list from local storage
+		const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+	  	// Add each anime in the completed list to the HTML file
+	completedList.forEach((anime) => {
+		const li = document.createElement("li");
+		const img = document.createElement("img");
+		img.src = anime.img;
+		img.alt = anime.title;
+		const a = document.createElement("a");
+		a.href = anime.link;
+		a.textContent = anime.title;
+		li.appendChild(img);
+		li.appendChild(a);
+		document.getElementById("completedList").appendChild(li);
+	});
+</script>
 </body>
 </html>
