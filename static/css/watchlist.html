@@ -218,9 +218,7 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-</script>
-	
-<script>
+
 // Get the watchlist from local storage
 const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 watchlist.forEach((anime, index) => {
