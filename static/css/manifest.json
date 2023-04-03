@@ -1,68 +1,58 @@
 {
-  "name": "Animeflv",
   "short_name": "Animeflv",
-  "start_url": "https://animeflv-sc.vercel.app/",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "name": "Animeflv",
   "icons": [
     {
-      "src": "https://od.lk/s/OTBfMzU4MDczNjdf/20230402_184020.gif",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "scope": "/",
-  "start_url": "/",
-  "prefer_related_applications": false,
-  "orientation": "portrait",
-  "related_applications": [
-    {
-      "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.example.app",
-      "id": "com.example.app"
+      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/Applogov3.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "platform": "itunes",
-      "url": "https://itunes.apple.com/us/app/example-app/id123456789?ls=1&mt=8",
-      "id": "123456789"
-    }
-  ],
-  "shortcuts": [
+      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/Applogov3.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
-      "name": "Search",
-      "url": "/search",
-      "icons": [
-        {
-          "src": "https://od.lk/s/OTBfMzU4MDczNjdf/20230402_184020.gif",
-          "sizes": "512x512",
-          "type": "image/png"
-        }
-      ]
+      "src": "{
+  "short_name": "Animeflv",
+  "name": "Animeflv",
+  "icons": [
+    {
+      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/Applogov3.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/Applogov3.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/loading.gif", // Here we have replaced the app icon with a loading gif
+      "sizes": "512x512",
+      "type": "image/gif", // Change the image type to gif
+      "purpose": "any"
     }
   ],
-  "service_worker": {
-    "src": "/sw.js",
-    "scope": "/"
-  },
-  "permissions": [
-    "geolocation",
-    "notifications",
-    "push"
+  "start_url": "https://animeflv-seven.vercel.app",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#000000",
+  "background_color": "#000000"
+}
+", // Here we have replaced the app icon with a loading gif
+      "sizes": "512x512",
+      "type": "image/gif", // Change the image type to gif
+      "purpose": "any"
+    }
   ],
-  "web_app_manifest": {
-    "theme_color": "#121212",
-    "background_color": "#121212",
-    "display": "standalone",
-    "start_url": "/",
-    "name": "Animeflv",
-    "short_name": "Animeflv",
-    "icons": [
-      {
-        "src": "https://od.lk/s/OTBfMzU4MDczNjdf/20230402_184020.gif",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
-  }
+  "start_url": "https://animeflv-seven.vercel.app",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#000000",
+  "background_color": "#000000"
 }
