@@ -40,10 +40,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
-<link rel="manifest" href="../static/css/manifest.json">
+
       <link href="../static/css/styles.css" rel="stylesheet">
     <link href="../static/css/home.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+	<link rel="manifest" href="../static/css/manifest.json">
+	<script>
+   if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../static/css/sw.js')
+      .then(function() {
+        console.log('Service Worker Registered');
+      }).catch(function(err) {
+        console.log(err);
+      });
+    }
+</script>
        
 </head>
 
