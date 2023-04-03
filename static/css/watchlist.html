@@ -231,6 +231,8 @@ watchlist.forEach((anime, index) => {
 
   const btnContainer = document.createElement("div");
   btnContainer.style.display = "flex";
+  btnContainer.style.justifyContent = "center";
+  btnContainer.style.gap = "10px";
 
   const removeBtn = document.createElement("button");
   removeBtn.textContent = "Remove";
@@ -238,7 +240,6 @@ watchlist.forEach((anime, index) => {
   removeBtn.style.fontSize = "16px";
   removeBtn.style.padding = "10px 20px";
   removeBtn.style.width = "100px";
-  removeBtn.style.marginRight = "10px";
   removeBtn.onclick = () => {
     // Prompt the user to confirm they want to remove the anime
     const confirmed = confirm(`Are you sure you want to remove ${anime.title} from your watchlist?`);
@@ -262,7 +263,6 @@ watchlist.forEach((anime, index) => {
   checkBtn.style.fontSize = "16px";
   checkBtn.style.padding = "10px 20px";
   checkBtn.style.width = "100px";
-  checkBtn.style.marginRight = "10px";
   checkBtn.onclick = () => {
     // Add the anime to completed.html
     const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
@@ -290,6 +290,7 @@ watchlist.forEach((anime, index) => {
   li.appendChild(btnContainer);
   document.getElementById("watchlist").appendChild(li);
 });
+
   </script>
 </body>
 </html>
