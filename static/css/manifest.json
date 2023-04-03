@@ -32,9 +32,9 @@
       "purpose": "maskable"
     },
     {
-      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/loading.gif", // Here we have replaced the app icon with a loading gif
+      "src": "https://od.lk/s/OTBfMzU2NTk4NTBf/loading.gif", 
       "sizes": "512x512",
-      "type": "image/gif", // Change the image type to gif
+      "type": "image/gif", 
       "purpose": "any"
     }
   ],
