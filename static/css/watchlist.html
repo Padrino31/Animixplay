@@ -107,7 +107,7 @@ h1 {
 
 
 </style>
-	<style>
+<style>
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -116,32 +116,20 @@ body {
 .navbar {
   overflow: hidden;
   background-color: #333;
-  position: fixed;
-  bottom: 0;
+  position: static;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .navbar a {
-  /* Remove float */
-  /* float: left; */
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
+  display: block;
   color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-  padding: 14px 16px;
-  /* Add background color to prevent overlapping */
-  background-color: #333;
-  /* Add box-sizing to prevent width issues */
-  box-sizing: border-box;
-  /* Add width and max-width to control element size */
-  width: 100%;
-  max-width: 200px; /* adjust to desired size */
 }
-
 
 .navbar a:hover {
   background: #f1f1f1;
