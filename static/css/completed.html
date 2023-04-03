@@ -238,17 +238,12 @@ completedList.forEach((anime) => {
   a.textContent = anime.title;
   const removeBtn = document.createElement("button");
   removeBtn.textContent = "Remove";
-// Add the given style to the removeBtn
-removeBtn.style.width = "100%";
-removeBtn.style.backgroundColor = "#333";
-removeBtn.style.color = "white";
-removeBtn.style.fontSize = "14px";
-removeBtn.style.border = "none";
-removeBtn.style.padding = "5px 10px";
-removeBtn.style.borderRadius = "10px";
-removeBtn.style.cursor = "pointer";
-removeBtn.style.position = "relative";
-removeBtn.style.alignSelf = "flex-end";
+  removeBtn.style.backgroundColor = "#2596be";
+  removeBtn.style.fontSize = "16px";
+  removeBtn.style.padding = "10px 20px";
+  removeBtn.style.width = "100px";
+  removeBtn.style.marginLeft = "12px";
+  removeBtn.style.borderRadius = "10px";
   removeBtn.addEventListener("click", () => {
     const confirmRemove = confirm("Are you sure you want to remove this anime from the completed list?");
     if (confirmRemove) {
