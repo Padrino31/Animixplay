@@ -74,9 +74,9 @@
   </div>
  <div class="notification-icon" style="color: white;">
   <span class="fas fa-bell"></span>
-  <span class="badge">0</span>
+  <div id="notification-dropdown" class="dropdown-content"></div>
 </div>
-  <div style="padding-left: 10px;"></div> <!-- Add a space between the notification icon and the search icon -->
+  <div style="padding-left: 5px;"></div> <!-- Add a space between the notification icon and the search icon -->
   <div class="search-icon">
     <span class="fas fa-search"></span>
   </div>
@@ -148,7 +148,7 @@
 
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+   document.addEventListener("DOMContentLoaded", function () {
   const imageObserver = new IntersectionObserver((entries, imgObserver) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -162,19 +162,10 @@
     imageObserver.observe(v);
   });
 
-  // fetch latest episode data
-  fetch('/api/latest-episodes')
-    .then(response => response.json())
-    .then(data => {
-      const latestEpisodes = data.latestEpisodes;
-      const newEpisodes = latestEpisodes.filter(e => !e.watched);
-      const badge = document.querySelector('.badge');
-      badge.textContent = newEpisodes.length.toString();
-    });
-});
     </script>
 	
     <script>
+	    
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
 const cancelBtn = document.querySelector(".cancel-icon"); 
@@ -207,6 +198,25 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
     </script>
+	<script>
+		const notificationIcon = document.querySelector(".notification-icon");
+const notificationDropdown = document.querySelector("#notification-dropdown");
+notificationIcon.addEventListener("click", async () => {
+  const response = await fetch("/api/latest_episodes");
+  const episodes = await response.json();
+  // Clear any existing content in the notification dropdown
+  notificationDropdown.innerHTML = "";
+  // Loop through the episodes and create a new element for each one
+  episodes.forEach((episode) => {
+    const episodeElement = document.createElement("div");
+    episodeElement.innerText = `${episode.title} - Episode ${episode.episode_number}`;
+    notificationDropdown.appendChild(episodeElement);
+  });
+  // Show the notification dropdown
+  notificationDropdown.classList.toggle("show");
+});
+
+	</script>
     <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>
 </body>
 
