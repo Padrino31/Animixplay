@@ -72,9 +72,10 @@
       <li><a href="../static/css/watchlist.html">Watchlist</a></li>
     </ul>
   </div>
-  <div class="notification-icon" style="color: white;">
-    <span class="fas fa-bell"></span>
-  </div>
+ <div class="notification-icon" style="color: white;">
+  <span class="fas fa-bell"></span>
+  <span class="badge">0</span>
+</div>
   <div style="padding-left: 10px;"></div> <!-- Add a space between the notification icon and the search icon -->
   <div class="search-icon">
     <span class="fas fa-search"></span>
@@ -147,21 +148,32 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                    }
-                });
-            });
-            const arr = document.querySelectorAll('img.lzy_img');
-            arr.forEach((v) => {
-                imageObserver.observe(v);
-            });
-        })
+      document.addEventListener("DOMContentLoaded", function () {
+  const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const lazyImage = entry.target;
+        lazyImage.src = lazyImage.dataset.src;
+      }
+    });
+  });
+  const arr = document.querySelectorAll('img.lzy_img');
+  arr.forEach((v) => {
+    imageObserver.observe(v);
+  });
+
+  // fetch latest episode data
+  fetch('/api/latest-episodes')
+    .then(response => response.json())
+    .then(data => {
+      const latestEpisodes = data.latestEpisodes;
+      const newEpisodes = latestEpisodes.filter(e => !e.watched);
+      const badge = document.querySelector('.badge');
+      badge.textContent = newEpisodes.length.toString();
+    });
+});
     </script>
+	
     <script>
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
