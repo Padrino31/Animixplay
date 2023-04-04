@@ -10,7 +10,9 @@ from programs.html_gen import (
     get_selector_btns,
     get_genre_html,
     get_trending_html,
+    get_releasing_html,
     slider_gen,
+ 
 )
 from flask import Flask, render_template, request, redirect
 from programs.anilist import Anilist
@@ -25,7 +27,7 @@ TechZApi = TechZApi(API_KEY)
 @app.route("/favicon.ico")
 def favicon():
     return redirect(
-        "https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.anime.flv/ec0213b8-f1d8-11e7-8b0a-7d62278fee98/128x128"
+        "https://animixplay.to/icon.png"
     )
 
 
@@ -35,15 +37,16 @@ def home():
     div1 = get_trending_html(TechZApi.top_animedex())
     div2 = get_recent_html(TechZApi.gogo_latest())
     sliders = slider_gen()
+    releasing_html = get_releasing_html()  # Include get_releasing_html() here
 
     html = (
         html.replace("MOST_POPULAR", div1)
         .replace("RECENT_RELEASE", div2)
         .replace("SLIDERS", sliders)
+        .replace("RELEASES_TODAY", releasing_html)  # Replace a placeholder in the HTML template with the releasing_html content
     )
     update_views("home-animedex")
     return html
-
 
 @app.route("/anime/<anime>")
 def get_anime(anime):
