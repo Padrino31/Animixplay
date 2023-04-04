@@ -345,7 +345,23 @@ font-size: 16px;
     <div class="selector link-data">
         PROSLO
       <button onclick="saveBookmark()" style="color: black;">Bookmark</button>
-	    
+	  </div>
+	    <div id="background">
+            <div id="cover"></div>
+        </div>
+        <div class="anime row">
+            <div class="poster col-3">
+                <img src="{{ IMG }}">
+            </div>
+<div class="details col-6">
+    <h1>{{ TITLE }}</h1>
+    <div class="mid" style="margin: 20px 0px;">
+        <span class="cbox">HD</span>
+        <span class="cbox">{{ LANG }}</span>
+        <span class="dot"></span>
+        <span class="year">{{ TYPE }}</span>
+    </div>
+	</div>
     <div id="server_main">
         <div class="status">
         </div>
@@ -358,7 +374,6 @@ font-size: 16px;
         </div>
     </div>
 </section>
-
  <hr>
 <footer style="background-color: #2596be;">
   <div>
@@ -427,6 +442,20 @@ function saveBookmark() {
   a.click();
   document.body.removeChild(a);
 }
+	     document.addEventListener("DOMContentLoaded", function () {
+            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                    }
+                })
+            });
+            const arr = document.querySelectorAll('img.lzy_img');
+            arr.forEach((v) => {
+                imageObserver.observe(v);
+            });
+        })
 
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
