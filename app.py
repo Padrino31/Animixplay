@@ -46,6 +46,16 @@ def home():
     update_views("home-animedex")
     return html
 
+@app.route("/releasing")
+def releasing():
+    html = render_template("releasing.html")
+    anilist = Anilist()
+    anime_list = anilist.get_airing_anime()
+    releasing_html = animeRecHtml(anime_list)
+    html = html.replace("RELEASING_ANIME_LIST", releasing_html)
+    update_views("releasing")
+    return html
+
 @app.route("/anime/<anime>")
 def get_anime(anime):
     try:
