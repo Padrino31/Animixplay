@@ -186,4 +186,58 @@ query ($id: Int, $idMal: Int, $search: String) {
             cache["recommend"][anime] = data
         return data
     
+    def get_releasing_html():
+    # Get current date in YYYY-MM-DD format
+    today = datetime.date.today().strftime("%Y-%m-%d")
+    
+    # Query AniList API for anime that are releasing today
+    query = '''
+        query ($date: String) {
+            Page {
+                airingSchedules(today: $date) {
+                    id
+                    media {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        format
+                        status
+                        coverImage {
+                            medium
+                        }
+                    }
+                    episode
+                }
+            }
+        }
+    '''
+    variables = {
+        'date': today
+    }
+    response = requests.post('https://graphql.anilist.co', json={'query': query, 'variables': variables})
+    data = response.json().get('data', {}).get('Page', {}).get('airingSchedules', [])
+    
+    # Generate HTML for each releasing anime
+    html = ""
+    for i in data:
+        media = i.get('media', {})
+        title = media.get('title', {}).get('english') or media.get('title', {}).get('romaji') or "Not Available"
+        img = media.get('coverImage', {}).get('medium')
+        url = get_urls(title)
+        x = ANIME_POS.format(
+            url,
+            "N/A",
+            "Ep " + str(i.get("episode")).strip(),
+            img,
+            title,
+            media.get("format"),
+            media.get("status"),
+        )
+        html += x
+    
+    return html
+
+    
    
