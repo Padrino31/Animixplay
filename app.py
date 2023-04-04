@@ -46,15 +46,6 @@ def home():
     update_views("home-animedex")
     return html
 
-@app.route("/releasing")
-def releasing():
-    html = render_template("releasing.html")
-    anilist = Anilist()
-    anime_list = anilist.get_airing_anime()
-    releasing_html = animeRecHtml(anime_list)
-    html = html.replace("RELEASING_ANIME_LIST", releasing_html)
-    update_views("releasing")
-    return html
 
 @app.route("/anime/<anime>")
 def get_anime(anime):
@@ -162,12 +153,20 @@ def get_episode(anime, episode):
         x = TechZApi.gogo_anime(anime)
         total_eps = x.get("total_ep")
         ep_list = x.get("episodes")
+        TITLE = x.get("title")
+        IMG = x.get("img")
+        LANG = x.get("lang")
+        TYPE = x.get("type")
     except:
         search = TechZApi.gogo_search(anime)[0]
         anime = search.get("id")
         total_eps = search.get("total_ep")
         ep_list = search.get("episodes")
         data = TechZApi.gogo_episode(f"{anime}-episode-{episode}")
+        TITLE = search.get("title")
+        IMG = search.get("img")
+        LANG = search.get("lang")
+        TYPE = search.get("type")
 
     ep_list = get_eps_html2(ep_list)
     btn_html = get_selector_btns(f"/episode/{anime}/", int(episode), int(total_eps))
@@ -175,7 +174,10 @@ def get_episode(anime, episode):
 
     temp = render_template(
         "episode.html",
-        title=f"{anime} - Episode {episode}",
+        TITLE=TITLE,
+        IMG=IMG,
+        LANG=LANG,
+        TYPE=TYPE,
         heading=anime,
         iframe=iframe,
     )
