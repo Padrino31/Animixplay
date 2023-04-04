@@ -186,18 +186,4 @@ query ($id: Int, $idMal: Int, $search: String) {
             cache["recommend"][anime] = data
         return data
     
-    def upcoming(self):
-        if cache.get("upcoming"):
-            return cache.get("upcoming")
-
-        s, y = get_season(future=True)
-        vars = {"s": s, "y": y, "sort": "POPULARITY_DESC"}
-        data = requests.post(
-            "https://graphql.anilist.co",
-            json={"query": self.BROWSE_QUERY, "variables": vars},
-        ).json()
-        data = data.get("data").get("Page").get("media")
-        if data:
-            cache["upcoming"] = data
-        return data
-
+   
