@@ -60,36 +60,30 @@
 
 <body>
 <nav>
-  <div class="menu-icon">
-    <span class="fas fa-bars"></span>
-  </div>
-  <div class="logo">
-    <a href="#"><img src="../static/img/animeflv.png"></a>
-  </div>
-  <div class="nav-items">
-    <ul>
-      <li><a href="../static/css/bookmark.html">Bookmark</a></li>
-      <li><a href="../static/css/watchlist.html">Watchlist</a></li>
-      <li class="notification-item">
-        <div class="notification-icon" style="color: white;">
-          <span class="fas fa-bell"></span>
-          <div id="notification-dropdown" class="dropdown-content"></div>
+         <div class="menu-icon">
+            <span class="fas fa-bars"></span>
+         </div>
+         <div class="logo">
+            <a href="#"><img src="../static/img/animeflv.png"></a>
+         </div>
+         <div class="nav-items">
+		  <li><a href="/">Home</a></li>
+             <li><a href="../static/css/bookmark.html">Bookmark</a></li>
+        <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
+                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+                <button type="submit"><i class="fa fa-search"></i>
+                </button>
+            </form>
         </div>
-      </li>
-    </ul>
-  </div>
-  <div class="search-icon">
-    <span class="fas fa-search"></span>
-  </div>
-  <div class="cancel-icon">
-    <span class="fas fa-times"></span>
-  </div>
-  <form action="/search" method='GET'>
-    <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-    <button type="submit"><i class="fa fa-search"></i></button>
-  </form>
-</nav>
-
+      </nav>
 <section>
         <div class="slideshow-container">
             SLIDERS
@@ -164,31 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
     </script>
-	
-<script>
-		// get the notification bell and the dropdown content
-const notificationBell = document.querySelector('.notification-icon');
-const dropdownContent = document.querySelector('#notification-dropdown');
-
-// get the recent release information from the HTML
-const recentRelease = document.querySelector('#latest2').textContent.trim();
-
-// add a click event listener to the notification bell
-notificationBell.addEventListener('click', () => {
-  // set the dropdown content to the recent release information
-  dropdownContent.textContent = recentRelease;
-  // display the dropdown
-  dropdownContent.style.display = 'block';
-});
-
-// hide the dropdown when the user clicks outside of it
-document.addEventListener('click', (event) => {
-  if (!event.target.closest('.notification-icon')) {
-    dropdownContent.style.display = 'none';
-  }
-});
-</script>
-	
     <script>
 	    
 const menuBtn = document.querySelector(".menu-icon span"); 
