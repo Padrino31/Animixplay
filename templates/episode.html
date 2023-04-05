@@ -452,7 +452,7 @@ function saveBookmark() {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
   // alert when bookmark is added
-  alert("Bookmark added.");
+  alert("Bookmark added to continue Watching.");
 
   const file = new Blob([bookmark], { type: 'text/html' });
   const a = document.createElement('a');
