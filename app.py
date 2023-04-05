@@ -153,7 +153,6 @@ def get_episode(anime, episode):
         x = TechZApi.gogo_anime(anime)
         total_eps = x.get("total_ep")
         ep_list = x.get("episodes")
-        title = x.get("title")
         IMG = x.get("img")
         LANG = x.get("lang")
         TYPE = x.get("type")
@@ -163,7 +162,6 @@ def get_episode(anime, episode):
         total_eps = search.get("total_ep")
         ep_list = search.get("episodes")
         data = TechZApi.gogo_episode(f"{anime}-episode-{episode}")
-        title = search.get("title")
         IMG = search.get("img")
         LANG = search.get("lang")
         TYPE = search.get("type")
@@ -174,7 +172,7 @@ def get_episode(anime, episode):
 
     temp = render_template(
         "episode.html",
-        title=title,
+        title=f"{anime} - Episode {episode}",
         IMG=IMG,
         LANG=LANG,
         TYPE=TYPE,
