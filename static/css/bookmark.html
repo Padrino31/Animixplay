@@ -66,35 +66,8 @@
         </div>
       </nav>
 
-<style>
-.card {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: box-shadow 0.2s ease;
-    }
-    .card:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .card img {
-      width: 64px;
-      height: 90px;
-      margin-right: 16px;
-    }
-    .card h2 {
-      font-size: 20px;
-      margin: 0;
-    }
-    .card p {
-      margin: 4px 0;
-    }
-</style>
 <h1>Continue Watching</h1>
-<div id="continue-watching"></div>
+<div id="bookmark"></div>
 
   <script>
 const menuBtn = document.querySelector(".menu-icon span"); 
@@ -129,27 +102,12 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 
- const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-    bookmarks.forEach(bookmark => {
-      document.write(`
-        <tr class="bookmark-row">
-          <td style="color: white;">${bookmark.title}</td>
-          <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
-          <td><button onclick="removeBookmark('${bookmark.url}')">Remove</button></td>
-        </tr>
-      `);
-    });
-
-    function removeBookmark(url) {
-  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-  const bookmarkToRemove = bookmarks.find(bookmark => bookmark.url === url);
-
-  if (confirm(`Are you sure you want to remove "${bookmarkToRemove.title}"?`)) {
-    const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
-    localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
-    location.reload();
-  }
-}
+ const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+      const bookmark = bookmarks[bookmarks.length - 1];
+      const bookmarkElement = document.createElement('a');
+      bookmarkElement.href = bookmark.url;
+      bookmarkElement.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br>${bookmark.title}`;
+      document.getElementById("bookmark").appendChild(bookmarkElement);
   </script>
 </tbody>
 </table>
