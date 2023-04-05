@@ -198,52 +198,91 @@ document.addEventListener("DOMContentLoaded", function () {
                 imageObserver.observe(v);
             });
         })
-	function addToWatchList(link, img, title) {
-    // Create an object with the anime data
-    const anime = { link, img, title };
+document.addEventListener("DOMContentLoaded", function () {
+  const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const lazyImage = entry.target;
+        lazyImage.src = lazyImage.dataset.src;
+      }
+    })
+  });
+  const arr = document.querySelectorAll('img.lzy_img');
+  arr.forEach((v) => {
+    imageObserver.observe(v);
+  });
+})
 
-    // Get the current watchlist and completedList from local storage or create empty arrays
-    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+function addToWatchList(link, img, title) {
+  // Create an object with the anime data
+  const anime = { link, img, title };
 
-    // Check if the anime already exists in the completedList
-    const isCompleted = completedList.some((item) => item.link === link);
+  // Get the current watchlist from local storage or create an empty array
+  let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-    // If the anime is already in the completedList, show an alert and return
-    if (isCompleted) {
-        alert(`${title} is already in your completed list.`);
-        return;
-    }
+  // Check if the anime already exists in the watchlist
+  const existsInWatchList = watchlist.some((item) => item.link === link);
 
-    // Check if the anime already exists in the watchlist
-    const isWatched = watchlist.some((item) => item.link === link);
+  // Check if the anime already exists in the completedList
+  const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+  const existsInCompletedList = completedList.some((item) => item.link === link);
 
-    // If the anime exists in the watchlist, show an alert and return
-    if (isWatched) {
-        alert(`${title} is already in your watchlist.`);
-        return;
-    }
+  // If the anime is already in the completedList, show an alert and return
+  if (existsInCompletedList) {
+    alert(`${title} is already in your completed list.`);
+    return;
+  }
 
-    // Add the anime to the watchlist
-    watchlist.push(anime);
+  // If the anime exists in the watchlist, show an alert and return
+  if (existsInWatchList) {
+    alert(`${title} is already in your watchlist.`);
+    return;
+  }
 
-    // Store the updated watchlist in local storage
-    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  // Add the anime to the watchlist
+  watchlist.push(anime);
 
-    // Show an alert to confirm the anime was added
-    alert(`${title} has been added to your watchlist.`);
+  // Store the updated watchlist in local storage
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+  // Show an alert to confirm the anime was added
+  alert(`${title} has been added to your watchlist.`);
 }
 
+function addToCompletedList(link, img, title) {
+  // Create an object with the anime data
+  const anime = { link, img, title };
+
+  // Get the current completedList from local storage or create an empty array
+  let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+
+  // Check if the anime already exists in the completedList
+  const exists = completedList.some((item) => item.link === link);
+
+  // If the anime exists, show an alert and return
+  if (exists) {
+    alert(`${title} is already in your completed list.`);
+    return;
+  }
+
+  // Add the anime to the completedList
+  completedList.push(anime);
+
+  // Store the updated completedList in local storage
+  localStorage.setItem("completedList", JSON.stringify(completedList));
+
+  // Show an alert to confirm the anime was added
+  alert(`${title} has been added to your completed list.`);
+}
 
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
 watchNowBtn.addEventListener('click', function() {
-    const lastEpisode = localStorage.getItem("lastEpisode");
-    if (lastEpisode) {
-        window.location.href = lastEpisode;
-    }
+  const lastEpisode = localStorage.getItem("lastEpisode");
+  if (lastEpisode) {
+    window.location.href = lastEpisode;
+  }
 });
-
 // Add active class to the current link
 var header = document.getElementById("header");
 var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
