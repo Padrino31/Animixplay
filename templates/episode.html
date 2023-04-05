@@ -435,64 +435,87 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 
-function saveBookmark() {
+function storeEpisode() {
   const title = "{{ title }}";
   const url = window.location.href;
-  const bookmark = `<a href="${url}">${title}</a><br>`;
-  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+  const img = "{{ img }}"; // replace with the image URL
+  const timestamp = videoPlayer.currentTime(); // replace with the function that gets the video timestamp
+  const episode = { title, url, img, timestamp };
   
-  // check for duplicate bookmark
-  const isDuplicate = bookmarks.some(b => b.url === url);
-  if (isDuplicate) {
-    alert("This bookmark is already saved.");
-    return;
+  // check if the episode is already stored
+  let storedEpisodes = JSON.parse(localStorage.getItem("episodes")) || [];
+  let index = storedEpisodes.findIndex(e => e.url === url);
+  if (index === -1) {
+    storedEpisodes.push(episode);
+  } else {
+    storedEpisodes[index] = episode;
   }
   
-  bookmarks.push({ title, url });
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  
-  // alert when bookmark is added
-  alert("Bookmark added.");
-  
-  const file = new Blob([bookmark], { type: 'text/html' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(file);
-  a.setAttribute('target', '_blank');
-  a.setAttribute('../static/css/bookmark.html');
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  localStorage.setItem("episodes", JSON.stringify(storedEpisodes));
 }
-	     document.addEventListener("DOMContentLoaded", function () {
-            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                    }
-                })
-            });
-            const arr = document.querySelectorAll('img.lzy_img');
-            arr.forEach((v) => {
-                imageObserver.observe(v);
-            });
-        })
 
-       function selectServer(btn) {
-            const buttons = document.getElementsByClassName('sobtn');
-            const iframe = document.getElementById('AnimeDexFrame');
-            iframe.src = btn.getAttribute('data-value');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].className = "sobtn";
-            }
-            btn.className = "sobtn sactive";
-        };
+function displayContinueWatching() {
+  let storedEpisodes = JSON.parse(localStorage.getItem("episodes")) || [];
+  let continueWatching = document.getElementById("continue-watching");
+  
+  // clear the continue watching section
+  continueWatching.innerHTML = "";
+  
+  // add each stored episode to the continue watching section
+  for (let episode of storedEpisodes) {
+    let link = document.createElement("a");
+    link.href = episode.url;
+    link.innerHTML = episode.title;
+    
+    let img = document.createElement("img");
+    img.src = episode.img;
+    
+    let timestamp = document.createElement("span");
+    timestamp.innerHTML = episode.timestamp;
+    
+    let episodeDiv = document.createElement("div");
+    episodeDiv.appendChild(link);
+    episodeDiv.appendChild(img);
+    episodeDiv.appendChild(timestamp);
+    
+    continueWatching.appendChild(episodeDiv);
+  }
+}
 
-        function showDownload() {
-        document.getElementById('showdl').style.display = "none";
-        document.getElementById('dldiv').classList.toggle('show');
-    }
-	
+document.addEventListener("DOMContentLoaded", function () {
+  storeEpisode();
+  displayContinueWatching();
+  
+  const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const lazyImage = entry.target;
+        lazyImage.src = lazyImage.dataset.src;
+      }
+    })
+  });
+  
+  const arr = document.querySelectorAll('img.lzy_img');
+  arr.forEach((v) => {
+    imageObserver.observe(v);
+  });
+});
+
+function selectServer(btn) {
+  const buttons = document.getElementsByClassName('sobtn');
+  const iframe = document.getElementById('AnimeDexFrame');
+  iframe.src = btn.getAttribute('data-value');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].className = "sobtn";
+  }
+  btn.className = "sobtn sactive";
+};
+
+function showDownload() {
+  document.getElementById('showdl').style.display = "none";
+  document.getElementById('dldiv').classList.toggle('show');
+}
+
 </script>
 </body>
 </html>
