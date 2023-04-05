@@ -170,61 +170,58 @@
     <hr>
 
     <script>
- document.addEventListener("DOMContentLoaded", function () {
-    const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const lazyImage = entry.target;
-                lazyImage.src = lazyImage.dataset.src;
-            }
+document.addEventListener("DOMContentLoaded", function () {
+            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                    }
+                })
+            });
+            const arr = document.querySelectorAll('img.lzy_img');
+            arr.forEach((v) => {
+                imageObserver.observe(v);
+            });
         })
-    });
-    const arr = document.querySelectorAll('img.lzy_img');
-    arr.forEach((v) => {
-        imageObserver.observe(v);
-    });
-})
-
-function addAnimeToList(listName, link, img, title) {
+document.addEventListener("DOMContentLoaded", function () {
+            const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                    }
+                })
+            });
+            const arr = document.querySelectorAll('img.lzy_img');
+            arr.forEach((v) => {
+                imageObserver.observe(v);
+            });
+        })
+	 function addToWatchList(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
 
-    // Get the current list from local storage or create an empty array
-    let list = JSON.parse(localStorage.getItem(listName)) || [];
+    // Get the current watchlist from local storage or create an empty array
+    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-    // Check if the anime already exists in the list
-    const exists = list.some((item) => item.link === link);
+    // Check if the anime already exists in the watchlist
+    const exists = watchlist.some((item) => item.link === link);
 
     // If the anime exists, show an alert and return
     if (exists) {
-        alert(`${title} is already in your ${listName}.`);
-        return;
-    }
-
-    // Add the anime to the list
-    list.push(anime);
-
-    // Store the updated list in local storage
-    localStorage.setItem(listName, JSON.stringify(list));
-
-    // Show an alert to confirm the anime was added
-    alert(`${title} has been added to your ${listName}.`);
-}
-
-function addToWatchList(link, img, title) {
-    // Check if the anime is already in the watchlist or completed list
-    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-    const completed = JSON.parse(localStorage.getItem("completed")) || [];
-    const isInWatchlist = watchlist.some((item) => item.link === link);
-    const isInCompleted = completed.some((item) => item.link === link);
-
-    if (isInWatchlist || isInCompleted) {
-        alert(`${title} is already in your ${isInWatchlist ? "watchlist" : "completed list"}.`);
+        alert(`${title} is already in your watchlist.`);
         return;
     }
 
     // Add the anime to the watchlist
-    addAnimeToList("watchlist", link, img, title);
+    watchlist.push(anime);
+
+    // Store the updated watchlist in local storage
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+    // Show an alert to confirm the anime was added
+    alert(`${title} has been added to your watchlist.`);
 }
 
 // Restore the last episode watched when the "Watch Now" button is clicked
@@ -237,17 +234,39 @@ watchNowBtn.addEventListener('click', function() {
 });
 
 // Add active class to the current link
-const header = document.getElementById("header");
-const links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
-for (let i = 0; i < links.length; i++) {
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
     links[i].addEventListener("click", function() {
-        const current = document.getElementsByClassName("active");
+        var current = document.getElementsByClassName("active");
         if (current.length > 0) {
             current[0].className = current[0].className.replace(" active", "");
         }
         this.className += " active";
     });
-}
+} 
+
+// Restore the last episode watched when the "Watch Now" button is clicked
+const watchNowBtn = document.querySelector('.watch-btn');
+watchNowBtn.addEventListener('click', function() {
+    const lastEpisode = localStorage.getItem("lastEpisode");
+    if (lastEpisode) {
+        window.location.href = lastEpisode;
+    }
+});
+
+// Add active class to the current link
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace(" active", "");
+        }
+        this.className += " active";
+    });
+} 
 
  </script>
 	<script>
