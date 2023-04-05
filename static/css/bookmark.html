@@ -39,6 +39,37 @@
 	<link href="./styles.css" rel="stylesheet">
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+	<style>
+		#bookmark {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* creates a grid with a minimum width of 200px and as many columns as fit in the container */
+  gap: 20px; /* adds a gap between each grid item */
+}
+
+#bookmark a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#bookmark img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* ensures that the image fills the container while preserving aspect ratio */
+}
+
+#bookmark a > br {
+  display: none; /* hides the line break after the image */
+}
+
+#bookmark a > span {
+  color: white; /* sets the title color to white */
+  font-size: 16px; /* sets the title font size */
+  margin-top: 10px; /* adds space between the image and title */
+}
+
+	</style>
 </head>
 <body>
 	<nav>
@@ -104,13 +135,17 @@ searchBtn.onclick = () => {
 
 const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
 
+const bookmarkContainer = document.getElementById("bookmark");
+bookmarkContainer.className = "grid-container"; // add the CSS class to the parent element
+
 for (let i = 0; i < bookmarks.length; i++) {
   const bookmark = bookmarks[i];
   const bookmarkElement = document.createElement('a');
   bookmarkElement.href = bookmark.url;
-  bookmarkElement.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br>${bookmark.title}`;
-  document.getElementById("bookmark").appendChild(bookmarkElement);
+  bookmarkElement.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
+  bookmarkContainer.appendChild(bookmarkElement);
 }
+
 
   </script>
 
