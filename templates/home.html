@@ -55,7 +55,46 @@
       });
     }
 </script>
-       
+      <style>
+	      #continue-watching-container {
+  margin-top: 50px;
+  padding: 0 20px;
+}
+
+#continue-watching-container h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.continue-watching-episode {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.continue-watching-episode a {
+  flex-grow: 1;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.continue-watching-episode img {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.continue-watching-episode span {
+  font-size: 16px;
+  color: #777;
+}
+
+	</style>
 </head>
 
 <body>
@@ -121,10 +160,10 @@
         </div>
 	</section>
 		<section>
-    <div class="divox">
-        <h2 id="latest">Continue Watching</h2>
-        <div id="continue-watching"></div>
-    </div>
+  <div id="continue-watching-container">
+   <h2 id="latest">Continue Watching</h2>
+  <div id="continue-watching"></div>
+</div>
 </section>
 
 	    
