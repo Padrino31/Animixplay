@@ -437,8 +437,28 @@ searchBtn.onclick = () => {
 function saveBookmark() {
   const title = document.title;
   const url = window.location.href;
-  const img = document.querySelector('IMG').src;
-  const bookmark = `<a href="${url}"><img src="${IMG}" alt="${title}"><br>${title}</a><br>`;
+  const img = document.querySelector('img').src;
+  const bookmark = `
+    <section>
+      <div class="anime row">
+        <div class="poster col-3">
+          <img src="${img}">
+        </div>
+        <div class="details col-6">
+          <h1>${title}</h1>
+          <div class="mid" style="margin: 20px 0px;">
+            <span class="cbox">HD</span>
+            <span class="cbox">${LANG}</span>
+            <span class="dot"></span>
+            <span class="year">${TYPE}</span>
+          </div>
+          <div class="bookmark-url">
+            <a href="${url}">${url}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
 
   // check for duplicate bookmark
@@ -448,7 +468,7 @@ function saveBookmark() {
     return;
   }
 
-  bookmarks.push({ title, url, IMG });
+  bookmarks.push({ title, url, img });
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
   // alert when bookmark is added
@@ -463,6 +483,7 @@ function saveBookmark() {
   a.click();
   document.body.removeChild(a);
 }
+
 
        function selectServer(btn) {
             const buttons = document.getElementsByClassName('sobtn');
