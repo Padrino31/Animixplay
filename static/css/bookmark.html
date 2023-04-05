@@ -39,37 +39,88 @@
 	<link href="./styles.css" rel="stylesheet">
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
-	<style>
-		#bookmark {
+<style>
+	#bookmark {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* creates a grid with a minimum width of 200px and as many columns as fit in the container */
-  gap: 20px; /* adds a gap between each grid item */
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
 }
 
-#bookmark a {
+ #bookmark a {
+  height: 100%;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 
 #bookmark img {
   width: 100%;
-  height: auto;
-  object-fit: cover; /* ensures that the image fills the container while preserving aspect ratio */
+  height: 100%;
+  object-fit: cover;
+  flex-grow: 1;
 }
 
 #bookmark a > br {
   display: none; /* hides the line break after the image */
 }
 
-#bookmark a > span {
-  color: white; /* sets the title color to white */
-  font-size: 16px; /* sets the title font size */
-  margin-top: 10px; /* adds space between the image and title */
+#bookmark a > span  {
+  font-size: 16px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 10px;
+  position: relative;
+  padding: 20px;
+  background-color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* Media queries */
+@media only screen and (max-width: 767px) {
+  #bookmark {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+
+  #bookmark a > span {
+    font-size: 14px;
+  }
 }
 
-	</style>
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  #bookmark {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+#bookmark a > span {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  #bookmark {
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    gap: 25px;
+  }
+
+  #bookmark a > span {
+    font-size: 18px;
+  }
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+</style>
 </head>
 <body>
 	<nav>
