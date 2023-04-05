@@ -102,15 +102,18 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 
- const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-      const bookmark = bookmarks[bookmarks.length - 1];
-      const bookmarkElement = document.createElement('a');
-      bookmarkElement.href = bookmark.url;
-      bookmarkElement.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br>${bookmark.title}`;
-      document.getElementById("bookmark").appendChild(bookmarkElement);
+const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+for (let i = 0; i < bookmarks.length; i++) {
+  const bookmark = bookmarks[i];
+  const bookmarkElement = document.createElement('a');
+  bookmarkElement.href = bookmark.url;
+  bookmarkElement.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br>${bookmark.title}`;
+  document.getElementById("bookmark").appendChild(bookmarkElement);
+}
+
   </script>
-</tbody>
-</table>
+
 
 </body>
 </html>
