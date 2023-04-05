@@ -270,25 +270,32 @@ watchlist.forEach((anime, index) => {
   checkBtn.style.marginRight = "12px";
   checkBtn.style.borderRadius = "10px";
   checkBtn.onclick = () => {
-    // Prompt the user to confirm they want to add the anime to completed.html
-    const confirmed = confirm(`Are you sure you want to add ${anime.title} to the completed List?`);
-    if (confirmed) {
-      // Add the anime to completed.html
-      const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
-      completedList.push(anime);
-      localStorage.setItem("completedList", JSON.stringify(completedList));
+    // Check if the anime is already in the completed list
+    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+    const isAlreadyCompleted = completedList.some(completedAnime => completedAnime.title === anime.title);
 
-      // Remove the anime from the watchlist
-      watchlist.splice(index, 1);
+    if (isAlreadyCompleted) {
+      alert(`${anime.title} is already in your completed list.`);
+    } else {
+      // Prompt the user to confirm they want to add the anime to completed.html
+      const confirmed = confirm(`Are you sure you want to add ${anime.title} to the completed list?`);
+      if (confirmed) {
+        // Add the anime to completed.html
+        completedList.push(anime);
+        localStorage.setItem("completedList", JSON.stringify(completedList));
 
-      // Update the watchlist in local storage
-      localStorage.setItem("watchlist", JSON.stringify(watchlist));
+        // Remove the anime from the watchlist
+        watchlist.splice(index, 1);
 
-      // Remove the HTML element for the anime
-      li.remove();
+        // Update the watchlist in local storage
+        localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-      // Show an alert to confirm the anime was added to completed.html
-      alert(`${anime.title} has been added to the completed List.`);
+        // Remove the HTML element for the anime
+        li.remove();
+
+        // Show an alert to confirm the anime was added to completed.html
+        alert(`${anime.title} has been added to the completed list.`);
+      }
     }
   };
 
@@ -300,6 +307,7 @@ watchlist.forEach((anime, index) => {
   li.appendChild(btnContainer);
   document.getElementById("watchlist").appendChild(li);
 });
+
 
 
   </script>
