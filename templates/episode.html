@@ -434,11 +434,13 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-
 function saveBookmark() {
   const title = "{{ title }}";
   const url = window.location.href;
-  const bookmark = `<a href="${url}">${title}</a><br>`;
+  const img = document.querySelector("img.poster").src;
+  const episodeUrl = document.querySelector("a.episode-link").href;
+  
+  const bookmark = { title, url, img, episodeUrl };
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
   
   // check for duplicate bookmark
@@ -448,20 +450,11 @@ function saveBookmark() {
     return;
   }
   
-  bookmarks.push({ title, url });
+  bookmarks.push(bookmark);
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   
   // alert when bookmark is added
   alert("Bookmark added.");
-  
-  const file = new Blob([bookmark], { type: 'text/html' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(file);
-  a.setAttribute('target', '_blank');
-  a.setAttribute('../static/css/bookmark.html');
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
 }
 	     document.addEventListener("DOMContentLoaded", function () {
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
