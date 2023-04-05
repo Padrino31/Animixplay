@@ -144,13 +144,26 @@ for (let i = 0; i < bookmarks.length; i++) {
   bookmarkLink.href = bookmark.url;
   bookmarkLink.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
   bookmarkElement.appendChild(bookmarkLink);
+  
   const removeButton = document.createElement('button'); // create a button element for the remove button
-  removeButton.innerText = 'Remove';
+  removeButton.textContent = "Remove";
+// Add the given style to the removeBtn
+  removeButton.style.width = "100%";
+  removeButton.style.backgroundColor = "#2596be";
+  removeButton.style.color = "white";
+  removeButton.style.fontSize = "14px";
+  removeButton.style.border = "none";
+  removeButton.style.padding = "15px 20px";
+  removeButton.style.borderRadius = "10px";
+  removeButton.style.cursor = "pointer";
+  removeButton.style.position = "relative";
+  removeButton.style.alignSelf = "flex-end";
   removeButton.addEventListener('click', () => {
     bookmarks.splice(i, 1); // remove the bookmark from the array
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks)); // update the local storage
     bookmarkElement.remove(); // remove the bookmark element from the DOM
   });
+  
   bookmarkElement.appendChild(removeButton);
   bookmarkContainer.appendChild(bookmarkElement);
 }
