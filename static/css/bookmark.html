@@ -132,7 +132,6 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-
 const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
 
 const bookmarkContainer = document.getElementById("bookmark");
@@ -140,27 +139,20 @@ bookmarkContainer.className = "grid-container"; // add the CSS class to the pare
 
 for (let i = 0; i < bookmarks.length; i++) {
   const bookmark = bookmarks[i];
-  const bookmarkElement = document.createElement('div'); // change from 'a' to 'div' element
-  bookmarkElement.className = "bookmark-item"; // add a class for styling purposes
-  bookmarkElement.innerHTML = `
-    <a href="${bookmark.url}">
-      <img src="${bookmark.img}" alt="${bookmark.title}"><br>
-    </a>
-    <button class="remove-btn" data-index="${i}">Remove</button>
-  `;
+  const bookmarkElement = document.createElement('div'); // create a div element instead of an anchor
+  const bookmarkLink = document.createElement('a'); // create an anchor element for the bookmark link
+  bookmarkLink.href = bookmark.url;
+  bookmarkLink.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
+  bookmarkElement.appendChild(bookmarkLink);
+  const removeButton = document.createElement('button'); // create a button element for the remove button
+  removeButton.innerText = 'Remove';
+  removeButton.addEventListener('click', () => {
+    bookmarks.splice(i, 1); // remove the bookmark from the array
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks)); // update the local storage
+    bookmarkElement.remove(); // remove the bookmark element from the DOM
+  });
+  bookmarkElement.appendChild(removeButton);
   bookmarkContainer.appendChild(bookmarkElement);
-}
-
-// Add event listener to remove button
-bookmarkContainer.addEventListener('click', (event) => {
-  if (event.target.classList.contains('remove-btn')) {
-    const index = parseInt(event.target.dataset.index);
-    bookmarks.splice(index, 1);
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-    event.target.parentElement.remove();
-  }
-});
-
 }
 
 
