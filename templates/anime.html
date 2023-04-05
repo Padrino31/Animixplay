@@ -198,18 +198,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 imageObserver.observe(v);
             });
         })
-	 function addToWatchList(link, img, title) {
+	function addToWatchList(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
 
-    // Get the current watchlist from local storage or create an empty array
+    // Get the current watchlist and completedList from local storage or create empty arrays
     let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+
+    // Check if the anime already exists in the completedList
+    const isCompleted = completedList.some((item) => item.link === link);
+
+    // If the anime is already in the completedList, show an alert and return
+    if (isCompleted) {
+        alert(`${title} is already in your completed list.`);
+        return;
+    }
 
     // Check if the anime already exists in the watchlist
-    const exists = watchlist.some((item) => item.link === link);
+    const isWatched = watchlist.some((item) => item.link === link);
 
-    // If the anime exists, show an alert and return
-    if (exists) {
+    // If the anime exists in the watchlist, show an alert and return
+    if (isWatched) {
         alert(`${title} is already in your watchlist.`);
         return;
     }
@@ -223,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show an alert to confirm the anime was added
     alert(`${title} has been added to your watchlist.`);
 }
+
 
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
