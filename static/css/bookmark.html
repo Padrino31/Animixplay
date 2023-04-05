@@ -142,7 +142,7 @@ for (let i = 0; i < bookmarks.length; i++) {
   const bookmarkElement = document.createElement('div'); // create a div element instead of an anchor
   const bookmarkLink = document.createElement('a'); // create an anchor element for the bookmark link
   bookmarkLink.href = bookmark.url;
-  bookmarkLink.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br>`;
+  bookmarkLink.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
   bookmarkElement.appendChild(bookmarkLink);
   const removeButton = document.createElement('button'); // create a button element for the remove button
   removeButton.innerText = 'Remove';
