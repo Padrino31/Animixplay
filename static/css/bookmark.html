@@ -65,7 +65,7 @@
   display: none; /* hides the line break after the image */
 }
 
-#bookmark a > span  {
+#bookmark a > span {
   font-size: 16px;
   text-align: center;
   color: white;
@@ -75,9 +75,10 @@
   padding: 20px;
   background-color: #333;
   overflow: hidden;
-
-
+  white-space: normal; /* Add this line */
+  text-overflow: ellipsis;
 }
+
 /* Media queries */
 @media only screen and (max-width: 767px) {
   #bookmark {
