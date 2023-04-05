@@ -435,24 +435,25 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 function saveBookmark() {
-  const title = "{{ title }}";
+  const title = document.title;
   const url = window.location.href;
-  const bookmark = `<a href="${url}">${title}</a><br>`;
+  const img = document.querySelector('img').src;
+  const bookmark = `<a href="${url}"><img src="${img}" alt="${title}"><br>${title}</a><br>`;
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-  
+
   // check for duplicate bookmark
   const isDuplicate = bookmarks.some(b => b.url === url);
   if (isDuplicate) {
     alert("This bookmark is already saved.");
     return;
   }
-  
-  bookmarks.push({ title, url });
+
+  bookmarks.push({ title, url, img });
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  
+
   // alert when bookmark is added
   alert("Bookmark added.");
-  
+
   const file = new Blob([bookmark], { type: 'text/html' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(file);
