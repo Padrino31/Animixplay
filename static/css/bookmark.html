@@ -35,7 +35,7 @@
 
     <meta name="apple-mobile-web-app-status-bar" content="#202125">
 <head>
-	<title>Bookmarks</title>
+	<title>Continue Watching</title>
 	<link href="./styles.css" rel="stylesheet">
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
@@ -65,66 +65,36 @@
             </form>
         </div>
       </nav>
-	<style>  
-.bookmark-row {
-  background-color: #333;
-  color: white;
-}
 
-.bookmark-row td {
-  padding: 8px;
-}
-
-.bookmark-row td:first-child {
-  width: 30%;
-}
-
-.bookmark-row td:nth-child(2) {
-  width: 50%;
-}
-
-.bookmark-row td:nth-child(3) {
-  width: 20%;
-}
-
-button {
-  background-color: #2596be;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  padding: 6px 10px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #e60000;
-}
-		
-</style>
 <style>
-h1 {
-  text-align: center;
-  color: white;
-  font-size: 24px;
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-table {
-  padding-bottom: 20px;
-}
+.card {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease;
+    }
+    .card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card img {
+      width: 64px;
+      height: 90px;
+      margin-right: 16px;
+    }
+    .card h2 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .card p {
+      margin: 4px 0;
+    }
 </style>
-<h1>Bookmarks</h1>
-<table>
-  <tbody>
-    <!-- table body goes here -->
-  </tbody>
-</table>
-	
-	<div id="continue-watching-container">
-  <h2>Continue Watching</h2>
-  <div id="continue-watching"></div>
-</div>
+<h1>Continue Watching</h1>
+  <div id="cards"></div>
 
   <script>
 const menuBtn = document.querySelector(".menu-icon span"); 
@@ -159,84 +129,31 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 
-    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const cards = document.getElementById("cards");
+    
     bookmarks.forEach(bookmark => {
-      document.write(`
-        <tr class="bookmark-row">
-          <td style="color: white;">${bookmark.title}</td>
-          <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
-          <td><button onclick="removeBookmark('${bookmark.url}')">Remove</button></td>
-        </tr>
-      `);
+      const card = document.createElement("div");
+      card.classList.add("card");
+      
+      const img = document.createElement("img");
+      img.src = bookmark.img;
+      card.appendChild(img);
+      
+      const info = document.createElement("div");
+      card.appendChild(info);
+      
+      const title = document.createElement("h2");
+      title.textContent = bookmark.title;
+      info.appendChild(title);
+      
+      const episodeLink = document.createElement("a");
+      episodeLink.href = bookmark.episodeUrl;
+      episodeLink.textContent = "Continue Watching";
+      info.appendChild(episodeLink);
+      
+      cards.appendChild(card);
     });
-
-    function removeBookmark(url) {
-  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-  const bookmarkToRemove = bookmarks.find(bookmark => bookmark.url === url);
-
-  if (confirm(`Are you sure you want to remove "${bookmarkToRemove.title}"?`)) {
-    const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
-    localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
-    location.reload();
-  }
-}
-	  function storeEpisode() {
-  const title = "{{ title }}";
-  const url = window.location.href;
-  const img = "{{ img }}"; // replace with the image URL
-  const timestamp = videoPlayer.currentTime(); // replace with the function that gets the video timestamp
-  const episode = { title, url, img, timestamp };
-  
-  // check if the episode is already stored
-  let storedEpisodes = JSON.parse(localStorage.getItem("episodes")) || [];
-  let index = storedEpisodes.findIndex(e => e.url === url);
-  if (index === -1) {
-    storedEpisodes.push(episode);
-  } else {
-    storedEpisodes[index] = episode;
-  }
-  
-  localStorage.setItem("episodes", JSON.stringify(storedEpisodes));
-}function displayContinueWatching() {
-  let storedEpisodes = JSON.parse(localStorage.getItem("episodes")) || [];
-  let continueWatching = document.getElementById("continue-watching");
-  
-  // clear the continue watching section
-  continueWatching.innerHTML = "";
-
-  // sort the stored episodes by timestamp in descending order
-  storedEpisodes.sort((a, b) => b.timestamp - a.timestamp);
-
-  // display up to 5 of the most recent episodes
-  for (let i = 0; i < Math.min(storedEpisodes.length, 5); i++) {
-    let episode = storedEpisodes[i];
-
-    let link = document.createElement("a");
-    link.href = episode.url;
-    link.innerHTML = episode.title;
-    
-    let img = document.createElement("img");
-    img.src = episode.img;
-    
-    let timestamp = document.createElement("span");
-    timestamp.innerHTML = formatTimestamp(episode.timestamp);
-
-    let episodeDiv = document.createElement("div");
-    episodeDiv.classList.add("continue-watching-episode");
-    episodeDiv.appendChild(link);
-    episodeDiv.appendChild(img);
-    episodeDiv.appendChild(timestamp);
-    
-    continueWatching.appendChild(episodeDiv);
-  }
-}
-
-// helper function to format a timestamp in minutes and seconds
-function formatTimestamp(timestamp) {
-  let minutes = Math.floor(timestamp / 60);
-  let seconds = Math.floor(timestamp % 60);
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-}
 
   </script>
 </tbody>
