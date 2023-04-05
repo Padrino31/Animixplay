@@ -140,10 +140,27 @@ bookmarkContainer.className = "grid-container"; // add the CSS class to the pare
 
 for (let i = 0; i < bookmarks.length; i++) {
   const bookmark = bookmarks[i];
-  const bookmarkElement = document.createElement('a');
-  bookmarkElement.href = bookmark.url;
-  bookmarkElement.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
+  const bookmarkElement = document.createElement('div'); // change from 'a' to 'div' element
+  bookmarkElement.className = "bookmark-item"; // add a class for styling purposes
+  bookmarkElement.innerHTML = `
+    <a href="${bookmark.url}">
+      <img src="${bookmark.img}" alt="${bookmark.title}"><br>
+    </a>
+    <button class="remove-btn" data-index="${i}">Remove</button>
+  `;
   bookmarkContainer.appendChild(bookmarkElement);
+}
+
+// Add event listener to remove button
+bookmarkContainer.addEventListener('click', (event) => {
+  if (event.target.classList.contains('remove-btn')) {
+    const index = parseInt(event.target.dataset.index);
+    bookmarks.splice(index, 1);
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    event.target.parentElement.remove();
+  }
+});
+
 }
 
 
