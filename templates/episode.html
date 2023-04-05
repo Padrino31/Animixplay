@@ -437,8 +437,8 @@ searchBtn.onclick = () => {
 function saveBookmark() {
   const title = document.title;
   const url = window.location.href;
-  const img = document.querySelector('img').src;
-  const bookmark = `<a href="${url}"><img src="${img}" alt="${title}"><br>${title}</a><br>`;
+  const img = document.querySelector('IMG').src;
+  const bookmark = `<a href="${url}"><img src="${IMG}" alt="${title}"><br>${title}</a><br>`;
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
 
   // check for duplicate bookmark
@@ -448,7 +448,7 @@ function saveBookmark() {
     return;
   }
 
-  bookmarks.push({ title, url, img });
+  bookmarks.push({ title, url, IMG });
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
   // alert when bookmark is added
