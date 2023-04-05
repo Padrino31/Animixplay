@@ -460,9 +460,14 @@ function displayContinueWatching() {
   
   // clear the continue watching section
   continueWatching.innerHTML = "";
-  
-  // add each stored episode to the continue watching section
-  for (let episode of storedEpisodes) {
+
+  // sort the stored episodes by timestamp in descending order
+  storedEpisodes.sort((a, b) => b.timestamp - a.timestamp);
+
+  // display up to 5 of the most recent episodes
+  for (let i = 0; i < Math.min(storedEpisodes.length, 5); i++) {
+    let episode = storedEpisodes[i];
+
     let link = document.createElement("a");
     link.href = episode.url;
     link.innerHTML = episode.title;
@@ -471,9 +476,10 @@ function displayContinueWatching() {
     img.src = episode.img;
     
     let timestamp = document.createElement("span");
-    timestamp.innerHTML = episode.timestamp;
-    
+    timestamp.innerHTML = formatTimestamp(episode.timestamp);
+
     let episodeDiv = document.createElement("div");
+    episodeDiv.classList.add("continue-watching-episode");
     episodeDiv.appendChild(link);
     episodeDiv.appendChild(img);
     episodeDiv.appendChild(timestamp);
@@ -481,6 +487,14 @@ function displayContinueWatching() {
     continueWatching.appendChild(episodeDiv);
   }
 }
+
+// helper function to format a timestamp in minutes and seconds
+function formatTimestamp(timestamp) {
+  let minutes = Math.floor(timestamp / 60);
+  let seconds = Math.floor(timestamp % 60);
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
   storeEpisode();
