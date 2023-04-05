@@ -190,6 +190,8 @@
 
     <script>
 document.addEventListener("DOMContentLoaded", function () {
+	storeEpisode();
+  displayContinueWatching();
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
