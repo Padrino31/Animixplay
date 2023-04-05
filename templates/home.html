@@ -237,7 +237,68 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-    </script>
+function storeEpisode() {
+  const title = "{{ title }}";
+  const url = window.location.href;
+  const img = "{{ img }}"; // replace with the image URL
+  const timestamp = videoPlayer.currentTime(); // replace with the function that gets the video timestamp
+  const episode = { title, url, img, timestamp };
+  
+  // check if the episode is already stored
+  let storedEpisodes = JSON.parse(localStorage.getItem("episodes")) || [];
+  let index = storedEpisodes.findIndex(e => e.url === url);
+  if (index === -1) {
+    storedEpisodes.push(episode);
+  } else {
+    storedEpisodes[index] = episode;
+  }
+  
+  localStorage.setItem("episodes", JSON.stringify(storedEpisodes));
+}
+	    
+function displayContinueWatching() {
+  let storedEpisodes = JSON.parse(localStorage.getItem("episodes")) || [];
+  let continueWatching = document.getElementById("continue-watching");
+  
+  // clear the continue watching section
+  continueWatching.innerHTML = "";
+
+  // sort the stored episodes by timestamp in descending order
+  storedEpisodes.sort((a, b) => b.timestamp - a.timestamp);
+
+  // display up to 5 of the most recent episodes
+  for (let i = 0; i < Math.min(storedEpisodes.length, 5); i++) {
+    let episode = storedEpisodes[i];
+
+    let link = document.createElement("a");
+    link.href = episode.url;
+    link.innerHTML = episode.title;
+    
+    let img = document.createElement("img");
+    img.src = episode.img;
+    
+    let timestamp = document.createElement("span");
+    timestamp.innerHTML = formatTimestamp(episode.timestamp);
+
+    let episodeDiv = document.createElement("div");
+    episodeDiv.classList.add("continue-watching-episode");
+    episodeDiv.appendChild(link);
+    episodeDiv.appendChild(img);
+    episodeDiv.appendChild(timestamp);
+    
+    continueWatching.appendChild(episodeDiv);
+  }
+}
+
+// helper function to format a timestamp in minutes and seconds
+function formatTimestamp(timestamp) {
+  let minutes = Math.floor(timestamp / 60);
+  let seconds = Math.floor(timestamp % 60);
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+  
+</script>
 
     <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>
 </body>
