@@ -128,24 +128,28 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
- function loadBookmarks() {
-        const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-        const continueWatching = document.getElementById("continue-watching");
-        
-        bookmarks.forEach((bookmark) => {
-          const { title, img, url } = bookmark;
-          const item = document.createElement("div");
-          item.classList.add("continue-watching-item");
-          item.innerHTML = `
-            <a href="${url}">
-              <img src="${img}" alt="${title}">
-              <span>${title}</span>
-            </a>
-          `;
-          continueWatching.appendChild(item);
-        });
-      }
-      loadBookmarks();
+
+ const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    bookmarks.forEach(bookmark => {
+      document.write(`
+        <tr class="bookmark-row">
+          <td style="color: white;">${bookmark.title}</td>
+          <td style="color: white;"><a href="${bookmark.url}" style="color: white;">${bookmark.url}</a></td>
+          <td><button onclick="removeBookmark('${bookmark.url}')">Remove</button></td>
+        </tr>
+      `);
+    });
+
+    function removeBookmark(url) {
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+  const bookmarkToRemove = bookmarks.find(bookmark => bookmark.url === url);
+
+  if (confirm(`Are you sure you want to remove "${bookmarkToRemove.title}"?`)) {
+    const filteredBookmarks = bookmarks.filter(bookmark => bookmark.url !== url);
+    localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
+    location.reload();
+  }
+}
   </script>
 </tbody>
 </table>
