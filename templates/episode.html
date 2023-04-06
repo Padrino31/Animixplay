@@ -435,56 +435,50 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
 function saveBookmark() {
-  const title = document.querySelector('.details.col-6 h1').textContent;
+ const title = document.querySelector('.details.col-6 h1').textContent;
   const url = window.location.href;
   const img = document.querySelector('.poster.col-3 img').src;
+  const bookmark = `<a href="${url}"><img src="${img}" alt="${title}"><br>${title}</a><br>`;
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
 
-  // Check if there is an existing bookmark for this anime
-  const existingBookmark = bookmarks.find(b => b.title === title);
-
-  if (existingBookmark) {
-    // Update the existing bookmark with the new URL
-    existingBookmark.url = url;
-  } else {
-    // Create a new bookmark object
-    const bookmark = { title, url, img };
-    bookmarks.push(bookmark);
+  // check for duplicate bookmark
+  const isDuplicate = bookmarks.some(b => b.url === url);
+  if (isDuplicate) {
+    alert("This bookmark is already saved.");
+    return;
   }
 
+  bookmarks.push({ title, url, img });
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
-  // Alert the user that the bookmark was added or updated
-  alert(existingBookmark ? "Bookmark updated." : "Bookmark added to continue Watching.");
+  // alert when bookmark is added
+  alert("Bookmark added to continue Watching.");
 
-  // Create a download link for the bookmark
-  const bookmarkLink = `<a href="${url}"><img src="${img}" alt="${title}"><br>${title}</a><br>`;
-  const file = new Blob([bookmarkLink], { type: 'text/html' });
+  const file = new Blob([bookmark], { type: 'text/html' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(file);
   a.setAttribute('target', '_blank');
-   a.setAttribute('../static/css/bookmark.html');
+  a.setAttribute('../static/css/bookmark.html');
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
 }
 
 
-function selectServer(btn) {
-  const buttons = document.getElementsByClassName('sobtn');
-  const iframe = document.getElementById('AnimeDexFrame');
-  iframe.src = btn.getAttribute('data-value');
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].className = "sobtn";
-  }
-  btn.className = "sobtn sactive";
-};
+       function selectServer(btn) {
+            const buttons = document.getElementsByClassName('sobtn');
+            const iframe = document.getElementById('AnimeDexFrame');
+            iframe.src = btn.getAttribute('data-value');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = "sobtn";
+            }
+            btn.className = "sobtn sactive";
+        };
 
-function showDownload() {
-  document.getElementById('showdl').style.display = "none";
-  document.getElementById('dldiv').classList.toggle('show');
-}
-
+        function showDownload() {
+        document.getElementById('showdl').style.display = "none";
+        document.getElementById('dldiv').classList.toggle('show');
+    }
 	
 </script>
 </body>
