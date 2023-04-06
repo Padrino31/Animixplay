@@ -29,6 +29,14 @@ def favicon():
         "https://animixplay.to/icon.png"
     )
 
+@app.route('/manifest.json')
+def manifest():
+    return app.send_static_file('manifest.json')
+
+@app.route('/serviceworker.js')
+def sw():
+    return app.send_static_file('serviceworker.js')
+
 
 @app.route("/")
 def home():
