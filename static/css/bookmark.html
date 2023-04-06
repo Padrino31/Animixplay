@@ -40,6 +40,8 @@
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
 <style>
+
+
 #bookmark {
   display: flex;
   flex-direction: column;
@@ -48,9 +50,7 @@
 
 #bookmark div {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
   background-color: #333333;
   padding: 10px;
   border-radius: 5px;
@@ -60,21 +60,28 @@
   width: 100px;
   height: 100px;
   object-fit: contain;
-  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 #bookmark div span {
   color: #ffffff;
   font-size: 1.2em;
+  margin-right: 10px;
 }
 
 #bookmark div button {
   margin-top: 10px;
   background-color: #ffffff;
-  border: none;
+  border: 1px solid #ff0000;
   color: #ff0000;
   font-size: 1em;
   cursor: pointer;
+}
+
+#bookmark div > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 h1 {
