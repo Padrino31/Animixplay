@@ -44,10 +44,10 @@
       <link href="../static/css/styles.css" rel="stylesheet">
     <link href="../static/css/home.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
-	<link rel="manifest" href="../static/css/manifest.json">
+	<link rel="manifest" href="./static/manifest.json">
 	<script>
    if('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('../static/css/sw.js')
+      navigator.serviceWorker.register('./static/serviceworker.js')
       .then(function() {
         console.log('Service Worker Registered');
       }).catch(function(err) {
