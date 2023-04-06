@@ -48,29 +48,26 @@
 
 #bookmark div {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
   background-color: #333333;
   padding: 10px;
   border-radius: 5px;
+  gap: 10px;
 }
 
 #bookmark div img {
   width: 100px;
   height: 100px;
   object-fit: contain;
-  margin-right: 10px;
 }
 
 #bookmark div span {
-  flex: 1;
   color: #ffffff;
   font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
 #bookmark div button {
-  margin-top: 10px;
   background-color: #ffffff;
   border: none;
   color: #ff0000;
@@ -78,6 +75,22 @@
   cursor: pointer;
 }
 
+@media screen and (min-width: 600px) {
+  #bookmark div {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #bookmark div span {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+
+  #bookmark div button {
+    margin-top: auto;
+  }
+}
 
 h1 {
   text-align: center;
@@ -86,7 +99,6 @@ h1 {
   margin-top: 15px;
   margin-bottom: 10px;
 }
-
 </style>
 </head>
 <body>
