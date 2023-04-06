@@ -1,21 +1,21 @@
 {
-  "short_name": "Animeflv",
-  "name": "Animeflv",
-   "icons": [
-    {
-      "src": "https://od.lk/s/OTBfMzU4MDc3MjNf/ApplogoDark.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "https://od.lk/s/OTBfMzU4MDc3MjNf/ApplogoDark.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#000000",
-  "background_color": "#000000"
+"short_name": "Animeflv",
+"name": "Animeflv",
+"icons": [
+{
+"src": "https://od.lk/s/OTBfMzU4MDc3MjNf/ApplogoDark.png",
+"sizes": "192x192",
+"type": "image/png"
+},
+{
+"src": "https://od.lk/s/OTBfMzU4MDc3MjNf/ApplogoDark.png",
+"sizes": "512x512",
+"type": "image/png"
+}
+],
+"start_url": "/index.html",
+"display": "fullscreen",
+"orientation": "portrait",
+"theme_color": "#000000",
+"background_color": "#000000"
 }
