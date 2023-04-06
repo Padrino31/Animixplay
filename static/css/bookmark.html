@@ -40,53 +40,48 @@
 	<link href="./home.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
 <style>
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 20px;
+#bookmark {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .bookmark {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.bookmark a {
-  display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: #f7f7f7;
+  padding: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
-.bookmark a img {
-  width: 60px;
+.bookmark img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
   margin-right: 10px;
 }
 
-.bookmark a span {
-  font-size: 18px;
+.bookmark a {
+  flex-grow: 1;
 }
 
 .bookmark button {
-  width: 100%;
-  background-color: #2596be;
-  color: white;
-  font-size: 14px;
-  border: none;
-  padding: 15px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 10px;
-  position: relative;
-  align-self: flex-end;
+  margin-top: 5px;
 }
 
+@media (max-width: 768px) {
+  .bookmark {
+    flex-direction: column;
+  }
+
+  .bookmark img {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
 
 h1 {
   text-align: center;
