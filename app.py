@@ -29,15 +29,19 @@ def favicon():
         "https://animixplay.to/icon.png"
     )
 
+# Serve the manifest.json file
 @app.route('/manifest.json')
-def manifest():
-    return app.send_static_file('manifest.json')
+def serve_manifest():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'manifest.json')
 
+# Serve the serviceworker.js file
 @app.route('/serviceworker.js')
-def sw():
-    return app.send_static_file('serviceworker.js')
+def serve_worker():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'serviceworker.js')
 
-
+if __name__ == '__main__':
+    app.run()
+    
 @app.route("/")
 def home():
     html = render_template("home.html")
