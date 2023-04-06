@@ -1,7 +1,7 @@
 {
   "short_name": "Animeflv",
   "name": "Animeflv",
-"icons": [
+  "icons": [
     {
       "src": "/static/ApplogoDark.png",
       "sizes": "192x192",
@@ -17,5 +17,12 @@
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "scope": "/",
+  "serviceworker": {
+    "script": "service-worker.js"
+  },
+  "navigation": {
+    "external": "useless"
+  }
 }
