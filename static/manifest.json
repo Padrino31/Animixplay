@@ -3,12 +3,12 @@
   "name": "Animeflv",
   "icons": [
     {
-      "src": "{{ url_for('static', filename='ApplogoDark.png') }}",
+      "src": "https://od.lk/s/OTBfMzU4MDc3MjNf/ApplogoDark.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "{{ url_for('static', filename='ApplogoDark.png') }}",
+      "src": "https://od.lk/s/OTBfMzU4MDc3MjNf/ApplogoDark.png",
       "sizes": "512x512",
       "type": "image/png"
     }
