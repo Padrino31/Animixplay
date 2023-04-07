@@ -93,10 +93,18 @@
   plyr.on('enterfullscreen', function(event) {
     if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       if (screen.orientation.lock) {
-        screen.orientation.lock('landscape').then(function() {
-          if (screen.orientation.type.startsWith('portrait')) {
-            screen.orientation.lock('landscape');
-          }
+        screen.orientation.lock('landscape').catch(function() {
+          // Failed to lock orientation
+        });
+      }
+    }
+  });
+
+  plyr.on('exitfullscreen', function(event) {
+    if ((document.fullscreenElement === null || document.webkitFullscreenElement === null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+      if (screen.orientation.unlock) {
+        screen.orientation.unlock().catch(function() {
+          // Failed to unlock orientation
         });
       }
     }
