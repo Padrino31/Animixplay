@@ -27,39 +27,107 @@
         }
     </style>
 
-  <head>
-<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/7.11.4/video.js"></script>
-
-
-</head>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.css">
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
+    <script src="https://unpkg.com/plyr@3"></script>
 </head>
 <body>
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{"fluid": true}'>
-  <source src="https://corsbypass.herokuapp.com/{{ m3u8 }}" type="application/x-mpegURL">
-</video>
+<div class="container">
+  <video controls crossorigin playsinline autoplay>
+    <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
+  </video>
+</div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", () => {
-  const player = videojs("my-video", { title: "{{ title }}" });
+  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
-  player.qualityPickerPlugin({
-    defaultQuality: 0,
-    availableQualities: [360, 480, 720, 1080],
-    qualitySwitchCallback: (quality) => updateQuality(quality),
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.querySelector("video");
+  const defaultOptions = {
+    title: '{{ title }}'
+  };
+
+  // Check if there is saved current time for this episode
+  const savedTime = localStorage.getItem('{{ title }}');
+  if (savedTime !== null) {
+    video.currentTime = parseFloat(savedTime);
+  }
+
+  // Save current time when the video is paused or ended
+  video.addEventListener('pause', () => {
+    localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
+video.addEventListener('ended', () => {
+ document.exitFullscreen();
+ });
 
-  function updateQuality(newQuality) {
-    player.src({
-      src: source.replace(".m3u8", "_" + newQuality + ".m3u8"),
-      type: "application/x-mpegURL",
-    });
-    player.play();
+video.addEventListener('webkitfullscreenchange', function() {
+  if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
+    if (screen.orientation.lock) {
+      screen.orientation.lock('landscape');
+    }
   }
 });
 
-
+if (Hls.isSupported()) {
+  const hls = new Hls({
+    autoStartLoad: true,
+    capLevelToPlayerSize: true,
+    startLevel: 'auto'
+  });
+  hls.loadSource(source);
+  hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+    const availableQualities = hls.levels.map((l) => l.height);
+    defaultOptions.quality = {
+      default: availableQualities[0],
+      options: availableQualities,
+      forced: true,
+      onChange: (e) => updateQuality(e)
+    };
+    const player = new Plyr(video, defaultOptions);
+    player.on('enterfullscreen', (event) => {
+      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+        if (screen.orientation.lock) {
+          screen.orientation.lock('landscape');
+        }
+      }
+    });
+    // adjust buffer length dynamically
+    setInterval(() => {
+      const buf = hls.buffered;
+      if (buf.length > 0 && video.paused && video.readyState > 1) {
+        const end = buf.end(0);
+        const targetBuffer = video.currentTime + 20; // target buffer time in seconds
+        if (end < targetBuffer) {
+          const bwEstimate = hls.currentLevel > -1 ? hls.levels[hls.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
+          const bufState = end - video.currentTime; // current buffer state in seconds
+          const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
+          hls.config.maxBufferLength = newBufLength;
+        }
+      }
+    }, 5000);
+  });
+  hls.attachMedia(video);
+  window.hls = hls;
+} else {
+  const player = new Plyr(video, defaultOptions);
+  player.on('enterfullscreen', (event) => {
+    if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
+    }
+  });
+}
+  function updateQuality(newQuality) {
+    window.hls.levels.forEach((level, levelIndex) => {
+      if (level.height === newQuality) {
+        window.hls.currentLevel = levelIndex;
+      }
+    });
+  }
+});
 </script>
 </body>
 </html>
