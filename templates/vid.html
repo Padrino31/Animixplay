@@ -43,7 +43,7 @@
 </div>
 
 <script>
-  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
@@ -61,77 +61,66 @@ document.addEventListener("DOMContentLoaded", () => {
   video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
-video.addEventListener('ended', () => {
- document.exitFullscreen();
- });
-
-video.addEventListener('webkitfullscreenchange', function() {
-  if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
-    if (screen.orientation.lock) {
-      screen.orientation.lock('landscape');
-    }
-  }
-});
-
-if (Hls.isSupported()) {
-  const hls = new Hls({
-    autoStartLoad: true,
-    capLevelToPlayerSize: true,
-    startLevel: 'auto'
+  video.addEventListener('ended', () => {
+    document.exitFullscreen();
   });
-  hls.loadSource(source);
-  hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-    const availableQualities = hls.levels.map((l) => l.height);
+
+  const player = videojs(video, defaultOptions);
+
+  player.ready(function() {
+    const availableQualities = player.qualityLevels().map((l) => l.height);
     defaultOptions.quality = {
       default: availableQualities[0],
       options: availableQualities,
       forced: true,
       onChange: (e) => updateQuality(e)
     };
-    const player = videojs(video, defaultOptions);
-    player.on('fullscreenchange', (event) => {
-      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
-        if (screen.orientation.lock) {
-          screen.orientation.lock('landscape');
-        }
-      }
-    });
-    // adjust buffer length dynamically
-    setInterval(() => {
-      const buf = hls.buffered;
-      if (buf.length > 0 && video.paused && video.readyState > 1) {
-        const end = buf.end(0);
-        const targetBuffer = video.currentTime + 20; // target buffer time in seconds
-        if (end < targetBuffer) {
-          const bwEstimate = hls.currentLevel > -1 ? hls.levels[hls.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
-          const bufState = end - video.currentTime; // current buffer state in seconds
-          const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
-          hls.config.maxBufferLength = newBufLength;
-        }
-      }
-    }, 1000);
+    player.updateSettings(defaultOptions);
   });
-  hls.attachMedia(video);
-  window.hls = hls;
-} else {
-  const player = videojs(video, defaultOptions);
-  player.on('fullscreenchange', (event) => {
+
+  player.on('enterfullscreen', (event) => {
     if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       if (screen.orientation.lock) {
         screen.orientation.lock('landscape');
       }
     }
   });
+
+  // adjust buffer length dynamically
+  setInterval(() => {
+    const buf = video.buffered;
+    if (buf.length > 0 && video.paused && video.readyState > 1) {
+      const end = buf.end(0);
+      const targetBuffer = video.currentTime + 20; // target buffer time in seconds
+      if (end < targetBuffer) {
+        const bwEstimate = video.currentLevel().bitrate / 8; // current bandwidth estimate in bytes/sec
+        const bufState = end - video.currentTime; // current buffer state in seconds
+        const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
+        video.tech().hls.bandwidth = bwEstimate;
+        video.tech().hls.xhr.beforeRequest = function(options) {
+          options.headers['x-bandwidth-estimate'] = bwEstimate;
+        };
+        video.tech().hls.playlists.media().attributes.BANDWIDTH = bwEstimate * 8;
+        video.tech().hls.config.maxBufferLength = newBufLength;
+      }
+    }
+  }, 1000);
+
+  player.src({
+    src: source,
+    type: 'application/x-mpegURL'
+  });
+});
+
+function updateQuality(newQuality) {
+  const player = videojs.getPlayer('my-video');
+  player.qualityLevels().forEach((level, levelIndex) => {
+    if (level.height === newQuality) {
+      player.currentQuality(levelIndex);
+    }
+  });
 }
 
-  function updateQuality(newQuality) {
-    window.hls.levels.forEach((level, levelIndex) => {
-      if (level.height === newQuality) {
-        window.hls.currentLevel = levelIndex;
-      }
-    });
-  }
-});
 </script>
 </body>
 </html>
