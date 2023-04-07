@@ -43,8 +43,6 @@
 </div>
 
 <script>
-const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
@@ -65,25 +63,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.exitFullscreen();
   });
 
-  const player = videojs(video, defaultOptions);
+  const sources = [
+    { src: 'https://corsbypass.herokuapp.com/{{ m3u8 }}', type: 'application/x-mpegURL' },
+    { src: 'https://corsbypass.herokuapp.com/{{ mp4 }}', type: 'video/mp4' }
+  ];
 
-  player.ready(function() {
-    const availableQualities = player.qualityLevels().map((l) => l.height);
-    defaultOptions.quality = {
-      default: availableQualities[0],
-      options: availableQualities,
-      forced: true,
-      onChange: (e) => updateQuality(e)
-    };
-    player.updateSettings(defaultOptions);
-  });
-
-  player.on('enterfullscreen', (event) => {
-    if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
-      if (screen.orientation.lock) {
-        screen.orientation.lock('landscape');
-      }
-    }
+  const player = new Plyr(video, {
+    sources: sources,
+    title: '{{ title }}',
+    autoplay: true,
+    fullscreen: { iosNative: true }
   });
 
   // adjust buffer length dynamically
@@ -93,33 +82,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const end = buf.end(0);
       const targetBuffer = video.currentTime + 20; // target buffer time in seconds
       if (end < targetBuffer) {
-        const bwEstimate = video.currentLevel().bitrate / 8; // current bandwidth estimate in bytes/sec
+        const bwEstimate = video.currentLevel > -1 ? video.levels[video.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
         const bufState = end - video.currentTime; // current buffer state in seconds
         const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
-        video.tech().hls.bandwidth = bwEstimate;
-        video.tech().hls.xhr.beforeRequest = function(options) {
-          options.headers['x-bandwidth-estimate'] = bwEstimate;
-        };
-        video.tech().hls.playlists.media().attributes.BANDWIDTH = bwEstimate * 8;
-        video.tech().hls.config.maxBufferLength = newBufLength;
+        video.config.maxBufferLength = newBufLength;
       }
     }
   }, 1000);
 
-  player.src({
-    src: source,
-    type: 'application/x-mpegURL'
+  player.on('enterfullscreen', (event) => {
+    if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
+    }
   });
 });
 
-function updateQuality(newQuality) {
-  const player = videojs.getPlayer('my-video');
-  player.qualityLevels().forEach((level, levelIndex) => {
-    if (level.height === newQuality) {
-      player.currentQuality(levelIndex);
-    }
-  });
-}
 
 </script>
 </body>
