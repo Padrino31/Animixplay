@@ -10,7 +10,6 @@ from programs.html_gen import (
     get_selector_btns,
     get_genre_html,
     get_trending_html,
-    get_releasing_html,
     slider_gen,
  
 )
@@ -30,23 +29,33 @@ def favicon():
         "https://animixplay.to/icon.png"
     )
 
+# Serve the manifest.json file
+@app.route('/manifest.json')
+def serve_manifest():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'manifest.json')
 
+# Serve the serviceworker.js file
+@app.route('/serviceworker.js')
+def serve_worker():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'serviceworker.js')
+
+    
 @app.route("/")
 def home():
     html = render_template("home.html")
     div1 = get_trending_html(TechZApi.top_animedex())
     div2 = get_recent_html(TechZApi.gogo_latest())
     sliders = slider_gen()
-    releasing_html = get_releasing_html()  # Include get_releasing_html() here
 
     html = (
         html.replace("MOST_POPULAR", div1)
         .replace("RECENT_RELEASE", div2)
         .replace("SLIDERS", sliders)
-        .replace("RELEASES_TODAY", releasing_html)  # Replace a placeholder in the HTML template with the releasing_html content
+       
     )
     update_views("home-animedex")
     return html
+
 
 @app.route("/anime/<anime>")
 def get_anime(anime):
@@ -154,12 +163,18 @@ def get_episode(anime, episode):
         x = TechZApi.gogo_anime(anime)
         total_eps = x.get("total_ep")
         ep_list = x.get("episodes")
+        IMG = x.get("img")
+        LANG = x.get("lang")
+        TYPE = x.get("type")
     except:
         search = TechZApi.gogo_search(anime)[0]
         anime = search.get("id")
         total_eps = search.get("total_ep")
         ep_list = search.get("episodes")
         data = TechZApi.gogo_episode(f"{anime}-episode-{episode}")
+        IMG = search.get("img")
+        LANG = search.get("lang")
+        TYPE = search.get("type")
 
     ep_list = get_eps_html2(ep_list)
     btn_html = get_selector_btns(f"/episode/{anime}/", int(episode), int(total_eps))
@@ -168,6 +183,9 @@ def get_episode(anime, episode):
     temp = render_template(
         "episode.html",
         title=f"{anime} - Episode {episode}",
+        IMG=IMG,
+        LANG=LANG,
+        TYPE=TYPE,
         heading=anime,
         iframe=iframe,
     )
