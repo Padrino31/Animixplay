@@ -39,8 +39,6 @@ def serve_manifest():
 def serve_worker():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'serviceworker.js')
 
-if __name__ == '__main__':
-    app.run()
     
 @app.route("/")
 def home():
