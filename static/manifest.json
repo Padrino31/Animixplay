@@ -35,7 +35,10 @@
   "features": {
     "vibration": false,
     "keyboard": true,
-    "mouse": "touch",
+    "mouse": {
+      "pointerLock": true,
+      "toggle": true
+    },
     "gamepad": true
   },
   "manifest_version": 2,
