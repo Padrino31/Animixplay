@@ -1,21 +1,43 @@
-{ 
-"name": "Animeflv", 
-"short_name": "Animeflv", 
-"description": "Ads Free anime streaming app",
-"icons": [ 
-{ 
-"src": "/static/ApplogoDark.png", 
-"sizes": "192x192", "type": "image/png" }, 
-{ "src": "/static/ApplogoDark.png", 
-"sizes": "512x512", "type": "image/png" } 
-], 
-"start_url": "/", 
-"display": "standalone",
- "orientation": "portrait",
- "background_color": "#000000",
- "theme_color": "#000000", 
-"scope": "/",
- "permissions": [ "INTERNET", "ACCESS_NETWORK_STATE", "WAKE_LOCK" ], 
-"serviceworker": { "src": "service-worker.js" }, 
-"manifest_version": 2, "version": "1.0" 
+{
+  "name": "Animeflv",
+  "short_name": "Animeflv",
+  "description": "Ads Free anime streaming app",
+  "icons": [
+    {
+      "src": "/static/ApplogoDark.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/ApplogoDark.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "scope": "/",
+  "permissions": [
+    "INTERNET",
+    "ACCESS_NETWORK_STATE",
+    "WAKE_LOCK"
+  ],
+  "service_worker": {
+    "src": "service-worker.js"
+  },
+  "navigation": {
+    "external": "useless"
+  },
+  "prefer_related_applications": false,
+  "features": {
+    "vibration": false,
+    "keyboard": true,
+    "mouse": "touch",
+    "gamepad": true
+  },
+  "manifest_version": 2,
+  "version": "1.0"
 }
