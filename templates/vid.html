@@ -40,78 +40,60 @@
 </div>
 
 <script>
-const source = 'https://cdn.example.com/{{ m3u8 }}';
+const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
-const video = document.querySelector("video");
-const defaultOptions = {
-title: '{{ title }}'
-};
+  const video = document.querySelector("video");
 
-// Check if there is saved current time for this episode
-const savedTime = localStorage.getItem('{{ title }}');
-if (savedTime !== null) {
-video.currentTime = parseFloat(savedTime);
-}
+  const defaultOptions = {
+    title: '{{ title }}',
+    controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'fullscreen'],
+    settings: ['quality', 'speed', 'loop'],
+    speed: {
+      selected: 1,
+      options: [0.5, 1, 1.25, 1.5, 2]
+    },
+    captions: {
+      defaultActive: true,
+      update: true
+    },
+    keyboard: {
+      focused: true,
+      global: true
+    },
+    autoplay: true,
+    displayDuration: true,
+    tooltips: {
+      controls: true,
+      seek: true
+    },
+    listeners: {
+      seek: (event) => {
+        console.log('Seeking', event.detail.plyr.currentTime);
+      }
+    }
+  };
 
-// Save current time when the video is paused or ended
-video.addEventListener('pause', () => {
-localStorage.setItem('{{ title }}', video.currentTime.toString());
-});
-video.addEventListener('ended', () => {
-document.exitFullscreen();
-});
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(source);
+    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+      const availableQualities = hls.levels.map((l) => l.height);
 
-video.addEventListener('webkitfullscreenchange', function() {
-if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
-if (screen.orientation.lock) {
-screen.orientation.lock('landscape');
-}
-}
-});
+      defaultOptions.quality = {
+        default: availableQualities[0],
+        options: availableQualities,
+        forced: true,
+        onChange: (e) => updateQuality(e),
+      };
+      const player = new Plyr(video, defaultOptions);
+    });
+    hls.attachMedia(video);
+    window.hls = hls;
+  } else {
+    const player = new Plyr(video, defaultOptions);
+  }
 
-if (Hls.isSupported()) {
-const hls = new Hls({
-autoStartLoad: true,
-capLevelToPlayerSize: true,
-startLevel: 'auto'
-});
-hls.loadSource(source);
-hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-const availableQualities = hls.levels.map((l) => l.height);
-defaultOptions.quality = {
-default: availableQualities[0],
-options: availableQualities,
-forced: true,
-onChange: (e) => updateQuality(e)
-};
-const player = new Plyr(video, defaultOptions);
-player.on('enterfullscreen', (event) => {
-if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
-if (screen.orientation.lock) {
-screen.orientation.lock('landscape');
-}
-}
-});
-// Use adaptive bitrate streaming
-hls.config.enableAbr = true;
-hls.config.abrEwmaFastLive = 5.0;
-hls.config.abrEwmaSlowLive = 9.0;
-hls.config.abrEwmaFastVoD = 5.0;
-hls.config.abrEwmaSlowVoD = 9.0;
-hls.attachMedia(video);
-});
-window.hls = hls;
-} else {
-const player = new Plyr(video, defaultOptions);
-player.on('enterfullscreen', (event) => {
-if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
-if (screen.orientation.lock) {
-screen.orientation.lock('landscape');
-}
-}
-});
-}
   function updateQuality(newQuality) {
     window.hls.levels.forEach((level, levelIndex) => {
       if (level.height === newQuality) {
@@ -120,6 +102,7 @@ screen.orientation.lock('landscape');
     });
   }
 });
+
 </script>
 </body>
 </html>
