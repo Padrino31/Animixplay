@@ -28,69 +28,69 @@
     </style>
 
   <head>
-  <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-  <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
-	  <script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
-    <script src="https://unpkg.com/plyr@3"></script>
+ <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+<link href="https://cdn.plyr.io/3.6.8/plyr.css" rel="stylesheet" />
+<script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+
 </head>
 
 </head>
 <body>
-<div class="container">
-  <video controls crossorigin playsinline autoplay>
-    <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
-  </video>
-</div>
+<video id="my-video" class="video-js" controls preload="auto" width="100%" height="100%" poster="{{ poster }}">
+  <source src="https://corsbypass.herokuapp.com/{{ m3u8 }}" type="application/x-mpegURL">
+  <source src="https://corsbypass.herokuapp.com/{{ mp4 }}" type="video/mp4">
+</video>
+
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const video = document.querySelector("video");
-  const defaultOptions = {
-    title: '{{ title }}'
-  };
-
-  // Check if there is saved current time for this episode
-  const savedTime = localStorage.getItem('{{ title }}');
-  if (savedTime !== null) {
-    video.currentTime = parseFloat(savedTime);
-  }
-
-  // Save current time when the video is paused or ended
-  video.addEventListener('pause', () => {
-    localStorage.setItem('{{ title }}', video.currentTime.toString());
+document.addEventListener('DOMContentLoaded', function() {
+  var player = videojs('my-video', {
+    sources: [
+      { src: 'https://corsbypass.herokuapp.com/{{ m3u8 }}', type: 'application/x-mpegURL' },
+      { src: 'https://corsbypass.herokuapp.com/{{ mp4 }}', type: 'video/mp4' }
+    ],
+    autoplay: true,
+    fluid: true,
+    controls: true,
+    responsive: true,
+    aspectRatio: '16:9'
   });
-  video.addEventListener('ended', () => {
+  
+  player.on('pause', function() {
+    localStorage.setItem('{{ title }}', player.currentTime().toString());
+  });
+  
+  player.on('ended', function() {
     document.exitFullscreen();
   });
-
-  const sources = [
-    { src: 'https://corsbypass.herokuapp.com/{{ m3u8 }}', type: 'application/x-mpegURL' },
-    { src: 'https://corsbypass.herokuapp.com/{{ mp4 }}', type: 'video/mp4' }
-  ];
-
-  const player = new Plyr(video, {
-    sources: sources,
-    title: '{{ title }}',
-    autoplay: true,
-    fullscreen: { iosNative: true }
-  });
-
-  // adjust buffer length dynamically
-  setInterval(() => {
-    const buf = video.buffered;
-    if (buf.length > 0 && video.paused && video.readyState > 1) {
-      const end = buf.end(0);
-      const targetBuffer = video.currentTime + 20; // target buffer time in seconds
+  
+  var savedTime = localStorage.getItem('{{ title }}');
+  if (savedTime !== null) {
+    player.currentTime(savedTime);
+  }
+  
+  setInterval(function() {
+    var buf = player.buffered();
+    if (buf.length > 0 && player.paused() && player.readyState() > 1) {
+      var end = buf.end(0);
+      var targetBuffer = player.currentTime() + 20;
       if (end < targetBuffer) {
-        const bwEstimate = video.currentLevel > -1 ? video.levels[video.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
-        const bufState = end - video.currentTime; // current buffer state in seconds
-        const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
-        video.config.maxBufferLength = newBufLength;
+        var bwEstimate = player.currentLevel() > -1 ? player.levels[player.currentLevel()].bitrate / 8 : NaN;
+        var bufState = end - player.currentTime();
+        var newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - player.currentTime()), bufState);
+        player.config().maxBufferLength = newBufLength;
       }
     }
   }, 1000);
-
-  player.on('enterfullscreen', (event) => {
+  
+  const plyr = new Plyr('#my-video', {
+    captions: { active: true, update: true, language: 'en' },
+    fullscreen: { enabled: true, iosNative: true },
+    ratio: '16:9'
+  });
+  
+  plyr.on('enterfullscreen', function(event) {
     if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       if (screen.orientation.lock) {
         screen.orientation.lock('landscape');
@@ -98,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
 
 </script>
