@@ -40,39 +40,94 @@
 </div>
 
 <script>
-const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-const defaultOptions = {
-    title: '{{ title }}',
-    controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-    autoplay: true,
-    ratio: '16:9',
-    youtube: {
-        noCookie: true,
-        rel: 0,
-        showinfo: 0,
-        iv_load_policy: 3
-    },
-    vimeo: {
-        byline: false,
-        portrait: false,
-        title: false,
-        speed: true,
-        transparent: false
-    }
-};
+  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
-    const video = document.querySelector("video");
-    video.src = 'https://zoro.to/embed/99nM1fPHGnSkDXBvQUAxDiop';
+  const video = document.querySelector("video");
+  const defaultOptions = {
+    title: '{{ title }}'
+  };
 
-    const player = new Plyr(video, defaultOptions);
+  // Check if there is saved current time for this episode
+  const savedTime = localStorage.getItem('{{ title }}');
+  if (savedTime !== null) {
+    video.currentTime = parseFloat(savedTime);
+  }
 
-    function updateQuality(newQuality) {
-        // Not needed for zoro.to since it doesn't support adaptive streaming
+  // Save current time when the video is paused or ended
+  video.addEventListener('pause', () => {
+    localStorage.setItem('{{ title }}', video.currentTime.toString());
+  });
+video.addEventListener('ended', () => {
+ document.exitFullscreen();
+ });
+
+video.addEventListener('webkitfullscreenchange', function() {
+  if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
+    if (screen.orientation.lock) {
+      screen.orientation.lock('landscape');
     }
+  }
 });
 
-
+if (Hls.isSupported()) {
+  const hls = new Hls({
+    autoStartLoad: true,
+    capLevelToPlayerSize: true,
+    startLevel: 'auto'
+  });
+  hls.loadSource(source);
+  hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+    const availableQualities = hls.levels.map((l) => l.height);
+    defaultOptions.quality = {
+      default: availableQualities[0],
+      options: availableQualities,
+      forced: true,
+      onChange: (e) => updateQuality(e)
+    };
+    const player = new Plyr(video, defaultOptions);
+    player.on('enterfullscreen', (event) => {
+      if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+        if (screen.orientation.lock) {
+          screen.orientation.lock('landscape');
+        }
+      }
+    });
+    // adjust buffer length dynamically
+    setInterval(() => {
+      const buf = hls.buffered;
+      if (buf.length > 0 && video.paused && video.readyState > 1) {
+        const end = buf.end(0);
+        const targetBuffer = video.currentTime + 20; // target buffer time in seconds
+        if (end < targetBuffer) {
+          const bwEstimate = hls.currentLevel > -1 ? hls.levels[hls.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
+          const bufState = end - video.currentTime; // current buffer state in seconds
+          const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
+          hls.config.maxBufferLength = newBufLength;
+        }
+      }
+    }, 5000);
+  });
+  hls.attachMedia(video);
+  window.hls = hls;
+} else {
+  const player = new Plyr(video, defaultOptions);
+  player.on('enterfullscreen', (event) => {
+    if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
+    }
+  });
+}
+  function updateQuality(newQuality) {
+    window.hls.levels.forEach((level, levelIndex) => {
+      if (level.height === newQuality) {
+        window.hls.currentLevel = levelIndex;
+      }
+    });
+  }
+});
 </script>
 </body>
 </html>
