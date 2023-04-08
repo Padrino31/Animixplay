@@ -11,7 +11,6 @@ const firebaseConfig = {
     messagingSenderId: "710961899998",
     appId: "1:710961899998:web:7f79123b6e67129bc8154f"
 };
-
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
@@ -32,7 +31,42 @@ const createacctbtn = document.getElementById("create-acct-btn");
 
 const returnBtn = document.getElementById("return-btn");
 
-var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
+const userId = auth.currentUser ? auth.currentUser.uid : null;
+
+if (userId) {
+  const watchlistRef = ref(database, 'users/' + userId + '/watchlist');
+  watchlistRef.get().then((snapshot) => {
+    const dbWatchlist = snapshot.val();
+    if (dbWatchlist) {
+      localStorage.setItem("watchlist", JSON.stringify(dbWatchlist));
+    }
+  }).finally(() => {
+    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    // Do something with the watchlist
+  });
+
+  const completedListRef = ref(database, 'users/' + userId + '/completedList');
+  completedListRef.get().then((snapshot) => {
+    const dbCompletedList = snapshot.val();
+    if (dbCompletedList) {
+      localStorage.setItem("completedList", JSON.stringify(dbCompletedList));
+    }
+  }).finally(() => {
+    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+    // Do something with the completedList
+  });
+
+  const bookmarksRef = ref(database, 'users/' + userId + '/bookmarks');
+  bookmarksRef.get().then((snapshot) => {
+    const dbBookmarks = snapshot.val();
+    if (dbBookmarks) {
+      localStorage.setItem("bookmarks", JSON.stringify(dbBookmarks));
+    }
+  }).finally(() => {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    // Do something with the bookmarks
+  });
+}
 
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
@@ -84,21 +118,6 @@ submitButton.addEventListener("click", function() {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
-      // Code to store anime data in localStorage for watchlist.html
-const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-// ... code to add anime to watchlist ...
-localStorage.setItem("watchlist", JSON.stringify(watchlist));
-
-// Code to store anime data in localStorage for complete.html
-const complete = JSON.parse(localStorage.getItem("complete")) || [];
-// ... code to add anime to complete ...
-localStorage.setItem("complete", JSON.stringify(complete));
-
-// Code to store anime data in localStorage for bookmark.html
-const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-// ... code to add anime to bookmarks ...
-localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-
       window.location.href = "/";
       
     })
