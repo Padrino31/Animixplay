@@ -129,19 +129,5 @@ createacct.style.display = "none"; // hide the create account form
 login.style.display = "block"; // display the login form
 });
 
-const setUserData = () => {
-  const userRef = database.ref("users/" + userId);
-  userRef.once("value")
-    .then((snapshot) => {
-      const data = snapshot.val();
-      watchlist = data.watchlist;
-      complete = data.complete;
-      bookmark = data.bookmark;
-      updateLocalStorage();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
 
 
