@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
 
  const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -34,6 +35,42 @@ const returnBtn = document.getElementById("return-btn");
 
 var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
 
+// Store the watchlist, bookmark, and completed-list to Firebase
+function saveListsToFirebase(userId, watchlist, bookmarks, completedList) {
+  set(ref(database, 'users/' + userId), {
+    email: email,
+    watchlist: watchlist,
+    bookmarks: bookmarks,
+    completedList: completedList
+  });
+}
+
+// Retrieve the watchlist, bookmark, and completed-list from Firebase
+function retrieveListsFromFirebase(userId) {
+  onValue(ref(database, 'users/' + userId), (snapshot) => {
+    const user = snapshot.val();
+    if (user) {
+      const watchlist = user.watchlist || [];
+      const bookmarks = user.bookmarks || [];
+      const completedList = user.completedList || [];
+      localStorage.setItem("watchlist", JSON.stringify(watchlist));
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      localStorage.setItem("completedList", JSON.stringify(completedList));
+    }
+  });
+}
+
+// Check if the user is new or existing, and save or retrieve the watchlist, bookmark, and completed-list accordingly
+function handleUserLists(user) {
+  const userId = user.uid;
+  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+  const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+  retrieveListsFromFirebase(userId); // retrieve lists from Firebase
+  saveListsToFirebase(userId, watchlist, bookmarks, completedList); // store lists to Firebase
+}
+
+
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
 
@@ -56,71 +93,41 @@ createacctbtn.addEventListener("click", function() {
     isVerified = false;
   }
   
-  if (isVerified) {
+  if(isVerified) {
   createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      const userId = user.uid;
-      const userData = {
-        email: signupEmail,
-        watchlist: JSON.parse(localStorage.getItem("watchlist")) || [],
-        bookmarks: JSON.parse(localStorage.getItem("bookmarks")) || [],
-        completedList: JSON.parse(localStorage.getItem("completedList")) || [],
-      };
-      set(ref(database, "users/" + userId), userData);
-      window.alert("Success! Account created.");
-      window.location.href = "/"; // redirect to home page
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      window.alert("Error occurred. Try again.");
-    });
-
-  submitButton.addEventListener("click", function () {
-    email = emailInput.value;
-    password = passwordInput.value;
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const userId = user.uid;
-        const userRef = ref(database, "users/" + userId);
-        get(userRef)
-          .then((snapshot) => {
-            const userData = snapshot.val();
-            if (userData) {
-              localStorage.setItem(
-                "watchlist",
-                JSON.stringify(userData.watchlist)
-              );
-              localStorage.setItem(
-                "bookmarks",
-                JSON.stringify(userData.bookmarks)
-              );
-              localStorage.setItem(
-                "completedList",
-                JSON.stringify(userData.completedList)
-              );
-            }
-            console.log("Success! Welcome back!");
-            window.location.href = "/"; // redirect to home page
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            window.alert("Error occurred. Try again.");
-          });
-      })
+  .then((userCredential) => {
+    const user = userCredential.user;
+    window.alert("Success! Account created.");
+    handleUserLists(user); // save or retrieve lists
+    window.location.href = "/"; // redirect to home page
+  })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         window.alert("Error occurred. Try again.");
       });
-  });
-}
+  }
+});
 
- 
+submitButton.addEventListener("click", function() {
+  email = emailInput.value;
+  password = passwordInput.value;
+
+ signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    const user = userCredential.user;
+    console.log("Success! Welcome back!");
+    handleUserLists(user); // save or retrieve lists
+    window.location.href = "/"; // redirect to home page
+  })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      window.alert("Error occurred. Try again.");
+    });
+});
+
+
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
     createacct.style.display = "block";
