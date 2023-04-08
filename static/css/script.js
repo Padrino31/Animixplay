@@ -35,7 +35,6 @@ const returnBtn = document.getElementById("return-btn");
 
 var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
 
-// Store the watchlist, bookmark, and completed-list to Firebase
 function saveListsToFirebase(userId, watchlist, bookmarks, completedList) {
   set(ref(database, 'users/' + userId), {
     email: email,
@@ -47,7 +46,7 @@ function saveListsToFirebase(userId, watchlist, bookmarks, completedList) {
 
 // Retrieve the watchlist, bookmark, and completed-list from Firebase
 function retrieveListsFromFirebase(userId) {
-  return get(ref(database, 'users/' + userId)).then((snapshot) => {
+  onValue(ref(database, 'users/' + userId), (snapshot) => {
     const user = snapshot.val();
     if (user) {
       const watchlist = user.watchlist || [];
@@ -66,27 +65,9 @@ function handleUserLists(user) {
   const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
   const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
-
-  // Retrieve lists from Firebase and update local storage
-  retrieveListsFromFirebase(userId)
-    .then(() => {
-      const updatedWatchlist = JSON.parse(localStorage.getItem("watchlist")) || watchlist;
-      const updatedBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || bookmarks;
-      const updatedCompletedList = JSON.parse(localStorage.getItem("completedList")) || completedList;
-
-      // Update HTML with the retrieved lists
-      updateWatchlistHtml(updatedWatchlist);
-      updateBookmarkHtml(updatedBookmarks);
-      updateCompletedHtml(updatedCompletedList);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-  // Store lists to Firebase
-  saveListsToFirebase(userId, watchlist, bookmarks, completedList);
+  retrieveListsFromFirebase(userId); // retrieve lists from Firebase
+  saveListsToFirebase(userId, watchlist, bookmarks, completedList); // store lists to Firebase
 }
-
 
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
