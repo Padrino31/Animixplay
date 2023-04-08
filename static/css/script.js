@@ -23,111 +23,53 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
+document.getElementById("loginForm").addEventListener("submit",(event)=>{
+    event.preventDefault()
+})
 
+firebase.auth().onAuthStateChanged((user)=>{
+    if(user){
+        location.replace("welcome.html")
+    }
+})
 
-const submitButton = document.getElementById("submit");
-const signupButton = document.getElementById("sign-up");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const main = document.getElementById("main");
-const createacct = document.getElementById("create-acct")
+function login(){
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .catch((error)=>{
+        document.getElementById("error").innerHTML = error.message
+    })
+}
 
-const signupEmailIn = document.getElementById("email-signup");
-const confirmSignupEmailIn = document.getElementById("confirm-email-signup");
-const signupPasswordIn = document.getElementById("password-signup");
-const confirmSignUpPasswordIn = document.getElementById("confirm-password-signup");
-const createacctbtn = document.getElementById("create-acct-btn");
+function signUp(){
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .catch((error) => {
+        document.getElementById("error").innerHTML = error.message
+    });
+}
 
-const returnBtn = document.getElementById("return-btn");
-
-var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
-
-createacctbtn.addEventListener("click", function() {
-  var isVerified = true;
-
-  signupEmail = signupEmailIn.value;
-  confirmSignupEmail = confirmSignupEmailIn.value;
-  if(signupEmail != confirmSignupEmail) {
-      window.alert("Email fields do not match. Try again.")
-      isVerified = false;
-  }
-
-  signupPassword = signupPasswordIn.value;
-  confirmSignUpPassword = confirmSignUpPasswordIn.value;
-  if(signupPassword != confirmSignUpPassword) {
-      window.alert("Password fields do not match. Try again.")
-      isVerified = false;
-  }
-  
-  if(signupEmail == null || confirmSignupEmail == null || signupPassword == null || confirmSignUpPassword == null) {
-    window.alert("Please fill out all required fields.");
-    isVerified = false;
-  }
-  
-  if(isVerified) {
-    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-      .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-      window.alert("Success! Account created.");
+function forgotPass(){
+    const email = document.getElementById("email").value
+    firebase.auth().sendPasswordResetEmail(email)
+    .then(() => {
+        alert("Reset link sent to your email id")
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-      window.alert("Error occurred. Try again.");
+        document.getElementById("error").innerHTML = error.message
     });
-  }
-});
-submitButton.addEventListener("click", function() {
-  email = emailInput.value;
-  console.log(email);
-  password = passwordInput.value;
-  console.log(password);
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log("Success! Welcome back!");
-      window.alert("Success! Welcome back!");
-      // Redirect to home screen
-      window.location.href = "https://animeflv-sc.vercel.app/";
-      // Hide login button
-      document.getElementById("login-btn").style.display = "none";
-      // Change login text to "Logged in"
-      document.getElementById("login-btn").innerText = "Logged in";
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error occurred. Try again.");
-      window.alert("Error occurred. Try again.");
-    });
-});
-
-// Check if user is logged in on page load
-auth.onAuthStateChanged(user => {
-  if (user) {
-    // User is logged in, hide login button
-    document.getElementById("login-btn").style.display = "none";
-    // Change login text to "Logged in"
-    document.getElementById("login-btn").innerText = "Logged in";
-  } else {
-    // User is not logged in, show login button
-    document.getElementById("login-btn").style.display = "block";
-  }
-});
+}
+firebase.auth().onAuthStateChanged((user)=>{
+    if(!user){
+        location.replace("index.html")
+    }else{
+        document.getElementById("user").innerHTML = "Hello, "+user.email
+    }
+})
 
 
-
-signupButton.addEventListener("click", function() {
-    main.style.display = "none";
-    createacct.style.display = "block";
-});
-
-returnBtn.addEventListener("click", function() {
-    main.style.display = "block";
-    createacct.style.display = "none";
-});
+function logout(){
+    firebase.auth().signOut()
+}
