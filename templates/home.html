@@ -57,23 +57,29 @@
 </script>
 	
 <style>
-.login-icon {
+.nav-items {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 16px;
-  color: #333;
 }
 
-.login-icon a {
-  text-decoration: none;
-  color: #333;
-  margin-left: 5px;
+.login-button {
+  margin-left: auto;
 }
+
+.login-button a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.login-button a:hover {
+  background-color: #333;
+}
+
 
 </style>
 	
@@ -107,7 +113,7 @@
                 </button>
             </form>
         </div>
-	<div class="login-icon">
+	<div class="login-button">
   <span class="fas fa-user"></span>
   <a href="#">Login</a>
 </div>
