@@ -158,32 +158,55 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
-const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
+    authDomain: "login-app-695a4.firebaseapp.com",
+    projectId: "login-app-695a4",
+    storageBucket: "login-app-695a4.appspot.com",
+    messagingSenderId: "710961899998",
+    appId: "1:710961899998:web:7f79123b6e67129bc8154f"
+};
 
-const bookmarkContainer = document.getElementById("bookmark");
-bookmarkContainer.className = "list-container"; // add the CSS class to the parent element
+firebase.initializeApp(firebaseConfig);
 
-for (let i = 0; i < bookmarks.length; i++) {
-  const bookmark = bookmarks[i];
-  const bookmarkElement = document.createElement('div'); // create a div element instead of an anchor
-  const bookmarkLink = document.createElement('a'); // create an anchor element for the bookmark link
-  bookmarkLink.href = bookmark.url;
-  bookmarkLink.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
-  bookmarkElement.appendChild(bookmarkLink);
+// Get a reference to the bookmarks collection in Firebase Realtime Database
+const bookmarksRef = firebase.database().ref("bookmarks");
 
-  const removeButton = document.createElement('button'); // create a button element for the remove button
-  removeButton.textContent = "Remove";
-  removeButton.addEventListener('click', () => {
-    if (confirm("Are you sure you want to remove this bookmark?")) {
-      bookmarks.splice(i, 1); // remove the bookmark from the array
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks)); // update the local storage
-      bookmarkElement.remove(); // remove the bookmark element from the DOM
-    }
-  });
+// Listen for value changes in the bookmarks collection
+bookmarksRef.on("value", function(snapshot) {
+  const bookmarks = snapshot.val() || []; // get the bookmarks data from the snapshot
 
-  bookmarkElement.appendChild(removeButton);
-  bookmarkContainer.appendChild(bookmarkElement);
-}
+  const bookmarkContainer = document.getElementById("bookmark");
+  bookmarkContainer.className = "list-container"; // add the CSS class to the parent element
+
+  // Clear the bookmark container before rendering the bookmarks
+  bookmarkContainer.innerHTML = "";
+
+  // Render each bookmark as a div element with an anchor element for the bookmark link and a remove button
+  for (let i = 0; i < bookmarks.length; i++) {
+    const bookmark = bookmarks[i];
+    const bookmarkElement = document.createElement('div'); // create a div element instead of an anchor
+    const bookmarkLink = document.createElement('a'); // create an anchor element for the bookmark link
+    bookmarkLink.href = bookmark.url;
+    bookmarkLink.innerHTML = `<img src="${bookmark.img}" alt="${bookmark.title}"><br><span>${bookmark.title}</span>`;
+    bookmarkElement.appendChild(bookmarkLink);
+
+    const removeButton = document.createElement('button'); // create a button element for the remove button
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener('click', () => {
+      if (confirm("Are you sure you want to remove this bookmark?")) {
+        bookmarks.splice(i, 1); // remove the bookmark from the array
+        bookmarksRef.set(bookmarks); // update the bookmarks data in Firebase Realtime Database
+        bookmarkElement.remove(); // remove the bookmark element from the DOM
+      }
+    });
+
+    bookmarkElement.appendChild(removeButton);
+    bookmarkContainer.appendChild(bookmarkElement);
+  }
+});
+
 
   </script>
 
