@@ -47,7 +47,7 @@ function saveListsToFirebase(userId, watchlist, bookmarks, completedList) {
 
 // Retrieve the watchlist, bookmark, and completed-list from Firebase
 function retrieveListsFromFirebase(userId) {
-  onValue(ref(database, 'users/' + userId), (snapshot) => {
+  return get(ref(database, 'users/' + userId)).then((snapshot) => {
     const user = snapshot.val();
     if (user) {
       const watchlist = user.watchlist || [];
@@ -66,8 +66,25 @@ function handleUserLists(user) {
   const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
   const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
   const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
-  retrieveListsFromFirebase(userId); // retrieve lists from Firebase
-  saveListsToFirebase(userId, watchlist, bookmarks, completedList); // store lists to Firebase
+
+  // Retrieve lists from Firebase and update local storage
+  retrieveListsFromFirebase(userId)
+    .then(() => {
+      const updatedWatchlist = JSON.parse(localStorage.getItem("watchlist")) || watchlist;
+      const updatedBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || bookmarks;
+      const updatedCompletedList = JSON.parse(localStorage.getItem("completedList")) || completedList;
+
+      // Update HTML with the retrieved lists
+      updateWatchlistHtml(updatedWatchlist);
+      updateBookmarkHtml(updatedBookmarks);
+      updateCompletedHtml(updatedCompletedList);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  // Store lists to Firebase
+  saveListsToFirebase(userId, watchlist, bookmarks, completedList);
 }
 
 
