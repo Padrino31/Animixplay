@@ -65,6 +65,7 @@ createacctbtn.addEventListener("click", function() {
           email: signupEmail
         });
         window.alert("Success! Account created.");
+        window.location.href = "/"; // redirect to home page
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -82,6 +83,7 @@ submitButton.addEventListener("click", function() {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
+      window.location.href = "/"; // redirect to home page
     })
     .catch((error) => {
       const errorCode = error.code;
