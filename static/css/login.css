@@ -86,32 +86,3 @@ button:hover {
   border: none;
   margin-top: 3%;
 }
-@media only screen and (max-width: 768px) {
-/* styles for screens with a maximum width of 768px (e.g. smartphones and small tablets) */
-.login-container {
-width: 80vw;
-margin-left: 10vw;
-height: 80vh;
-margin-top: 10vh;
-}
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-/* styles for screens with a minimum width of 768px and a maximum width of 1024px (e.g. large smartphones and tablets) */
-.login-container {
-width: 60vw;
-margin-left: 20vw;
-height: 80vh;
-margin-top: 10vh;
-}
-}
-
-@media only screen and (min-width: 1024px) {
-/* styles for screens with a minimum width of 1024px (e.g. laptops and desktops) */
-.login-container {
-width: 40vw;
-margin-left: 30vw;
-height: 70vh;
-margin-top: 15vh;
-}
-}
