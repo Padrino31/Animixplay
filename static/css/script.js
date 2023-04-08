@@ -96,7 +96,8 @@ submitButton.addEventListener("click", function() {
       window.location.href = "https://animeflv-sc.vercel.app/";
       // Hide login button
       document.getElementById("login-btn").style.display = "none";
-      // ...
+      // Change login text to "Logged in"
+      document.getElementById("login-btn").innerText = "Logged in";
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -111,11 +112,14 @@ auth.onAuthStateChanged(user => {
   if (user) {
     // User is logged in, hide login button
     document.getElementById("login-btn").style.display = "none";
+    // Change login text to "Logged in"
+    document.getElementById("login-btn").innerText = "Logged in";
   } else {
     // User is not logged in, show login button
     document.getElementById("login-btn").style.display = "block";
   }
 });
+
 
 
 signupButton.addEventListener("click", function() {
