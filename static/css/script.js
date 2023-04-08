@@ -34,6 +34,17 @@ const returnBtn = document.getElementById("return-btn");
 
 var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
 
+// Listen for changes in localStorage
+window.addEventListener("storage", function(event) {
+  if (event.key === "watchlist") {
+    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    const user = auth.currentUser;
+    if (user) {
+      set(ref(database, 'users/' + user.uid + '/watchlist'), watchlist);
+    }
+  }
+});
+
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
 
