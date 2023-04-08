@@ -13,30 +13,26 @@
     <span class="fas fa-bars"></span>
   </div>
   <div class="logo">
-    <a href="#"><img src="../static/img/animeflv.png"></a>
+    <a href="#"><img src="./img/animeflv.png"></a>
   </div>
   <div class="nav-items">
     <li><a href="/">Home</a></li>
-    <li><a href="../static/css/bookmark.html">Bookmark</a></li>
-    <li><a href="../static/css/watchlist.html">Watchlist</a></li>
+    <li><a href="./bookmark.html">Bookmark</a></li>
+    <li><a href="./watchlist.html">Watchlist</a></li>
     <li><a href="https://anilist.co/search/anime/next-season" onclick="window.open(this.href,'_blank','location=no'); return false;">Upcoming</a></li>
     <li><a href="https://www.livechart.me/timetable" onclick="window.open(this.href,'_blank','location=no'); return false;">Schedule</a></li>
   </div>
  <div class="login-icon" id="login-btn">
-  <a href="../static/css/login.html">Login</a>
+  <a href="./login.html">Login</a>
  </div>
 
-
   <div class="search-icon">
-    <span class="fas fa-search"></span>
+    <span class=""></span>
   </div>
   <div class="cancel-icon">
-    <span class="fas fa-times"></span>
+    <span class=""></span>
   </div>
-  <form action="/search" method="GET">
-    <input type="text" name="query" id="query" placeholder="Search Anime..." required>
-    <button type="submit"><i class="fa fa-search"></i></button>
-  </form>
+  
 </nav>
 
 <style>
@@ -93,7 +89,8 @@
       <button id = "return-btn">Return to Login</button>
     </div>
   </div>
-	<script>    
+<script type = "module" src = "script.js"></script>
+<script>    
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
 const cancelBtn = document.querySelector(".cancel-icon"); 
@@ -126,6 +123,6 @@ searchBtn.onclick = () => {
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }  
 </script>
-  <script type = "module" src = "script.js"></script>
+ 
 </body>
 </html>
