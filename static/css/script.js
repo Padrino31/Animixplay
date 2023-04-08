@@ -129,14 +129,19 @@ createacct.style.display = "none"; // hide the create account form
 login.style.display = "block"; // display the login form
 });
 
-// Function to retrieve user data from the database and update local storage
 const setUserData = () => {
-const userRef = ref(database, "users/" + userId);
-userRef.on("value", (snapshot) => {
-const data = snapshot.val();
-watchlist = data.watchlist;
-complete = data.complete;
-bookmark = data.bookmark;
-updateLocalStorage();
-});
+  const userRef = database.ref("users/" + userId);
+  userRef.once("value")
+    .then((snapshot) => {
+      const data = snapshot.val();
+      watchlist = data.watchlist;
+      complete = data.complete;
+      bookmark = data.bookmark;
+      updateLocalStorage();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
+
+
