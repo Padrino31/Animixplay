@@ -56,33 +56,19 @@ createacctbtn.addEventListener("click", function() {
     isVerified = false;
   }
   
-  if(isVerified) {
-    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const userId = user.uid;
-        set(ref(database, 'users/' + userId), {
-          email: signupEmail
-        });
-        window.alert("Success! Account created.");
-        window.location.href = "/"; // redirect to home page
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        window.alert("Error occurred. Try again.");
-      });
-  }
-});
-
-submitButton.addEventListener("click", function() {
-  email = emailInput.value;
-  password = passwordInput.value;
-
-  signInWithEmailAndPassword(auth, email, password)
+  if (isVerified) {
+  createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log("Success! Welcome back!");
+      const userId = user.uid;
+      const userData = {
+        email: signupEmail,
+        watchlist: JSON.parse(localStorage.getItem("watchlist")) || [],
+        bookmarks: JSON.parse(localStorage.getItem("bookmarks")) || [],
+        completedList: JSON.parse(localStorage.getItem("completedList")) || [],
+      };
+      set(ref(database, "users/" + userId), userData);
+      window.alert("Success! Account created.");
       window.location.href = "/"; // redirect to home page
     })
     .catch((error) => {
@@ -90,9 +76,51 @@ submitButton.addEventListener("click", function() {
       const errorMessage = error.message;
       window.alert("Error occurred. Try again.");
     });
-});
 
+  submitButton.addEventListener("click", function () {
+    email = emailInput.value;
+    password = passwordInput.value;
 
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const userId = user.uid;
+        const userRef = ref(database, "users/" + userId);
+        get(userRef)
+          .then((snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+              localStorage.setItem(
+                "watchlist",
+                JSON.stringify(userData.watchlist)
+              );
+              localStorage.setItem(
+                "bookmarks",
+                JSON.stringify(userData.bookmarks)
+              );
+              localStorage.setItem(
+                "completedList",
+                JSON.stringify(userData.completedList)
+              );
+            }
+            console.log("Success! Welcome back!");
+            window.location.href = "/"; // redirect to home page
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            window.alert("Error occurred. Try again.");
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        window.alert("Error occurred. Try again.");
+      });
+  });
+}
+
+ 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
     createacct.style.display = "block";
