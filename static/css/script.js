@@ -21,9 +21,9 @@ document.getElementById("loginForm").addEventListener("submit", (event) => {
 
 auth.onAuthStateChanged((user) => {
   if (user) {
-    location.replace("welcome.html");
+    location.replace("/");
   } else {
-    location.replace("index.html");
+    location.replace("/login.html");
   }
 });
 
