@@ -23,6 +23,19 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
+const loginContainer = document.getElementById("login-container");
+const loginBtn = document.getElementById("login-btn");
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // User is logged in
+    loginContainer.style.display = "none";
+  } else {
+    // User is not logged in
+    loginContainer.style.display = "block";
+  }
+});
+
 const submitButton = document.getElementById("submit");
 const signupButton = document.getElementById("sign-up");
 const emailInput = document.getElementById("email");
