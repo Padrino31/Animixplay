@@ -59,15 +59,48 @@ function retrieveListsFromFirebase(userId) {
   });
 }
 
-// Check if the user is new or existing, and save or retrieve the watchlist, bookmark, and completed-list accordingly
 function handleUserLists(user) {
   const userId = user.uid;
-  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-  const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
   retrieveListsFromFirebase(userId); // retrieve lists from Firebase
-  saveListsToFirebase(userId, watchlist, bookmarks, completedList); // store lists to Firebase
+
+  // Listen for changes to the watchlist, bookmarks, and completed list in Firebase
+  onValue(ref(database, 'users/' + userId), (snapshot) => {
+    const user = snapshot.val();
+    if (user) {
+      const watchlist = user.watchlist || [];
+      const bookmarks = user.bookmarks || [];
+      const completedList = user.completedList || [];
+
+      // Load watchlist to watchlist.html
+      const watchlistHtml = document.getElementById("watchlist");
+      watchlistHtml.innerHTML = "";
+      watchlist.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        watchlistHtml.appendChild(li);
+      });
+
+      // Load bookmarks to bookmark.html
+      const bookmarkHtml = document.getElementById("bookmark");
+      bookmarkHtml.innerHTML = "";
+      bookmarks.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        bookmarkHtml.appendChild(li);
+      });
+
+      // Load completed list to complete.html
+      const completedHtml = document.getElementById("complete");
+      completedHtml.innerHTML = "";
+      completedList.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        completedHtml.appendChild(li);
+      });
+    }
+  });
 }
+
 
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
