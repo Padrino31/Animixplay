@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
-
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -85,18 +84,23 @@ submitButton.addEventListener("click", function() {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
+      // Code to store anime data in localStorage for watchlist.html
+const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+// ... code to add anime to watchlist ...
+localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-      // Get data from local storage
-      const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-      const complete = JSON.parse(localStorage.getItem("complete")) || [];
-      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+// Code to store anime data in localStorage for complete.html
+const complete = JSON.parse(localStorage.getItem("complete")) || [];
+// ... code to add anime to complete ...
+localStorage.setItem("complete", JSON.stringify(complete));
 
-      // Store data in local storage
-      localStorage.setItem("watchlist", JSON.stringify(watchlist));
-      localStorage.setItem("complete", JSON.stringify(complete));
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+// Code to store anime data in localStorage for bookmark.html
+const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+// ... code to add anime to bookmarks ...
+localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
       window.location.href = "/";
+      
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -104,54 +108,6 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
-
-createacctbtn.addEventListener("click", function() {
-  var isVerified = true;
-
-  signupEmail = signupEmailIn.value;
-  confirmSignupEmail = confirmSignupEmailIn.value;
-  if(signupEmail != confirmSignupEmail) {
-      window.alert("Email fields do not match. Try again.")
-      isVerified = false;
-  }
-
-  signupPassword = signupPasswordIn.value;
-  confirmSignUpPassword = confirmSignUpPasswordIn.value;
-  if(signupPassword != confirmSignUpPassword) {
-      window.alert("Password fields do not match. Try again.")
-      isVerified = false;
-  }
-  
-  if(signupEmail == null || confirmSignupEmail == null || signupPassword == null || confirmSignUpPassword == null) {
-    window.alert("Please fill out all required fields.");
-    isVerified = false;
-  }
-  
-  if(isVerified) {
-    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const userId = user.uid;
-        set(ref(database, 'users/' + userId), {
-          email: signupEmail
-        }).then(() => {
-          // Store initial data in local storage
-          localStorage.setItem("watchlist", "[]");
-          localStorage.setItem("complete", "[]");
-          localStorage.setItem("bookmarks", "[]");
-
-          window.alert("Success! Account created.");
-          window.location.href = "./login.html";
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        window.alert("Error occurred. Try again.");
-      });
-  }
-});
-
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
     createacct.style.display = "block";
