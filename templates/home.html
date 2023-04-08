@@ -73,7 +73,7 @@
     <li><a href="https://www.livechart.me/timetable" onclick="window.open(this.href,'_blank','location=no'); return false;">Schedule</a></li>
   </div>
   <div class="login-icon">
-    <button class="login-button">Login</button>
+    <a href="#">Login</a>
   </div>
   <div class="search-icon">
     <span class="fas fa-search"></span>
@@ -88,26 +88,39 @@
 </nav>
 
 <style>
-  .login-button {
-    background-color: #f44336;
+  .login-icon a {
+    background-color: #2596be;
     color: white;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+	  
   }
 
   .login-icon {
     display: flex;
     align-items: center;
   }
+.login-icon a:hover {
+   background-color: #333;
+   color: #fff;
+}
 
-  @media only screen and (min-width: 600px) {
-    .login-icon {
-      order: 4;
-    }
+@media only screen and (min-width: 600px) {
+  .login-icon {
+    order: 4;
   }
+  .search-icon {
+    margin-right: 10px; /* change the value as needed */
+  }
+}
+.login-icon a:hover {
+   background-color: #333;
+   color: #fff;
+}
+
 </style>
 
       <section>
