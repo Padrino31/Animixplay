@@ -173,20 +173,6 @@ body {
       <!-- Watchlist items will be added dynamically with JavaScript -->
     </ul>
 	<script>
-  document.getElementById("add-btn").addEventListener("click", function() {
-  const anime = "Anime title"; // replace this with the actual anime title
-  const userId = auth.currentUser.uid;
-  const animeRef = ref(database, `users/${userId}/watchlist/${anime}`);
-
-  set(animeRef, true)
-    .then(() => {
-      console.log(`Added ${anime} to watchlist`);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
   const watchlistLink = document.getElementById("watchlist-link");
   const completedLink = document.getElementById("completed-link");
 
