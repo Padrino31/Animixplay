@@ -101,7 +101,50 @@ function handleUserLists(user) {
   });
 }
 
+function main() {
+  // Check if user is signed in or not
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      handleUserLists(user); // save or retrieve lists
 
+      // Add event listener for submitting anime to watchlist
+      const watchlistForm = document.getElementById("watchlist-form");
+      watchlistForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const animeName = document.getElementById("watchlist-input").value;
+        const userId = user.uid;
+        const watchlistRef = ref(database, `users/${userId}/watchlist`);
+        // Add the anime to the watchlist in Firebase
+        set(watchlistRef, [...watchlist, animeName]);
+      });
+
+      // Add event listener for submitting completed anime
+      const completedForm = document.getElementById("completed-form");
+      completedForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const animeName = document.getElementById("completed-input").value;
+        const userId = user.uid;
+        const completedRef = ref(database, `users/${userId}/completedList`);
+        // Add the anime to the completed list in Firebase
+        set(completedRef, [...completedList, animeName]);
+      });
+
+      // Add event listener for bookmarking an episode
+      const bookmarkButton = document.getElementById("bookmark-button");
+      bookmarkButton.addEventListener("click", (event) => {
+        const episodeName = document.getElementById("episode-name").textContent;
+        const userId = user.uid;
+        const bookmarksRef = ref(database, `users/${userId}/bookmarks`);
+        // Add the bookmark to the bookmarks list in Firebase
+        set(bookmarksRef, [...bookmarks, episodeName]);
+      });
+    } else {
+      // User is not signed in
+      main.classList.remove("hidden");
+      createacct.classList.add("hidden");
+
+    
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
 
