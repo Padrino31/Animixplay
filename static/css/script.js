@@ -58,39 +58,6 @@ function retrieveListsFromFirebase(userId) {
     }
   });
 }
-const watchlistHtml = document.getElementById("watchlist");
-const bookmarkHtml = document.getElementById("bookmark");
-const completedHtml = document.getElementById("complete");
-
-// Add event listeners for adding anime to watchlist, bookmarks, and completed list
-watchlistHtml.addEventListener("click", function(event) {
-  if (event.target.tagName === "LI") {
-    const anime = event.target.textContent;
-    const userId = auth.currentUser.uid;
-    const watchlistRef = ref(database, `users/${userId}/watchlist`);
-    set(watchlistRef, [...watchlist, anime]);
-  }
-});
-
-bookmarkHtml.addEventListener("click", function(event) {
-  if (event.target.tagName === "LI") {
-    const episode = event.target.textContent;
-    const userId = auth.currentUser.uid;
-    const bookmarksRef = ref(database, `users/${userId}/bookmarks`);
-    set(bookmarksRef, [...bookmarks, episode]);
-  }
-});
-
-completedHtml.addEventListener("click", function(event) {
-  if (event.target.tagName === "LI") {
-    const anime = event.target.textContent;
-    const userId = auth.currentUser.uid;
-    const completedRef = ref(database, `users/${userId}/completedList`);
-    set(completedRef, [...completedList, anime]);
-  }
-});
-
-
 
 function handleUserLists(user) {
   const userId = user.uid;
@@ -133,7 +100,6 @@ function handleUserLists(user) {
     }
   });
 }
-
 
 
 createacctbtn.addEventListener("click", function() {
