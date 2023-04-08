@@ -80,7 +80,6 @@ createacctbtn.addEventListener("click", function() {
     });
   }
 });
-
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
   console.log(email);
@@ -106,6 +105,18 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
+// Check if user is logged in on page load
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // User is logged in, hide login button
+    document.getElementById("login-btn").style.display = "none";
+  } else {
+    // User is not logged in, show login button
+    document.getElementById("login-btn").style.display = "block";
+  }
+});
+
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
