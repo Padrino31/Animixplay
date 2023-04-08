@@ -170,7 +170,7 @@
     <hr>
 
     <script>
-	    firebase.initializeApp(firebaseConfig);
+	  
 document.addEventListener("DOMContentLoaded", function () {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
         entries.forEach((entry) => {
@@ -215,20 +215,29 @@ function addToWatchList(link, img, title) {
     // Store the updated watchlist in local storage
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
-    // Add the anime data to Firebase
-    const db = firebase.firestore();
-    db.collection("watchlist").add({
-        link,
-        img,
-        title,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-        // Show an alert to confirm the anime was added
-        alert(`${title} has been added to your watchlist.`);
-    })
-    .catch((error) => {
-        console.error("Error adding anime to Firebase: ", error);
+    // Show an alert to confirm the anime was added
+    alert(`${title} has been added to your watchlist.`);
+}
+
+// Restore the last episode watched when the "Watch Now" button is clicked
+const watchNowBtn = document.querySelector('.watch-btn');
+watchNowBtn.addEventListener('click', function() {
+    const lastEpisode = localStorage.getItem("lastEpisode");
+    if (lastEpisode) {
+        window.location.href = lastEpisode;
+    }
+});
+
+// Add active class to the current link
+var header = document.getElementById("header");
+var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace(" active", "");
+        }
+        this.className += " active";
     });
 }
 
