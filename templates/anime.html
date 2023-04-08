@@ -185,6 +185,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 })
 
+// Initialize Firebase
+var firebaseConfig = {
+    // Your Firebase project configuration
+    apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
+    authDomain: "login-app-695a4.firebaseapp.com",
+    projectId: "login-app-695a4",
+    storageBucket: "login-app-695a4.appspot.com",
+    messagingSenderId: "710961899998",
+    appId: "1:710961899998:web:7f79123b6e67129bc8154f"
+};
+firebase.initializeApp(firebaseConfig);
+
+// Get a reference to the Firebase Realtime Database
+var database = firebase.database();
+
 function addToWatchList(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
@@ -215,32 +230,12 @@ function addToWatchList(link, img, title) {
     // Store the updated watchlist in local storage
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
+    // Store the anime data in Firebase Realtime Database
+    database.ref('watchlist').push(anime);
+
     // Show an alert to confirm the anime was added
     alert(`${title} has been added to your watchlist.`);
 }
-
-// Restore the last episode watched when the "Watch Now" button is clicked
-const watchNowBtn = document.querySelector('.watch-btn');
-watchNowBtn.addEventListener('click', function() {
-    const lastEpisode = localStorage.getItem("lastEpisode");
-    if (lastEpisode) {
-        window.location.href = lastEpisode;
-    }
-});
-
-// Add active class to the current link
-var header = document.getElementById("header");
-var links = header.getElementsByClassName("menu")[0].getElementsByTagName("a");
-for (var i = 0; i < links.length; i++) {
-    links[i].addEventListener("click", function() {
-        var current = document.getElementsByClassName("active");
-        if (current.length > 0) {
-            current[0].className = current[0].className.replace(" active", "");
-        }
-        this.className += " active";
-    });
-}
-
 
  </script>
 	<script>
