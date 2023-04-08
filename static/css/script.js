@@ -23,18 +23,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-const loginContainer = document.getElementById("login-container");
-const loginBtn = document.getElementById("login-btn");
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-    // User is logged in
-    loginContainer.style.display = "none";
-  } else {
-    // User is not logged in
-    loginContainer.style.display = "block";
-  }
-});
 
 const submitButton = document.getElementById("submit");
 const signupButton = document.getElementById("sign-up");
@@ -104,6 +93,10 @@ submitButton.addEventListener("click", function() {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
       window.alert("Success! Welcome back!");
+      // Redirect to home screen
+      window.location.href = "https://animeflv-sc.vercel.app/";
+      // Hide login button
+      document.getElementById("login-btn").style.display = "none";
       // ...
     })
     .catch((error) => {
@@ -113,6 +106,7 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
