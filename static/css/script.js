@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -62,7 +62,10 @@ createacctbtn.addEventListener("click", function() {
         const user = userCredential.user;
         const userId = user.uid;
         set(ref(database, 'users/' + userId), {
-          email: signupEmail
+          email: signupEmail,
+          watchlist: [],
+          completed: [],
+          bookmarks: []
         }).then(() => {
           window.alert("Success! Account created.");
           window.location.href = "./login.html";
@@ -75,7 +78,6 @@ createacctbtn.addEventListener("click", function() {
       });
   }
 });
-
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
   password = passwordInput.value;
