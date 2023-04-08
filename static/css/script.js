@@ -102,11 +102,10 @@ submitButton.addEventListener("click", function() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log("Error occurred. Try again.");
-      window.alert("Error occurred. Try again.");
+      console.log(errorMessage);
+      window.alert(errorMessage);
     });
 });
-
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
