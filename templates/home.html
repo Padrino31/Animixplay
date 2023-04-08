@@ -57,43 +57,29 @@
 </script>
 	
 <style>
-.nav-items {
-  display: flex;
-  align-items: center;
+.login-icon {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   margin-left: 10px;
 }
 
-.login-button {
-  margin-left: auto;
+.login-icon a {
+   display: block;
+   padding: 5px 10px;
+   background-color: #2596be;
+   border: 1px solid #ccc;
+   border-radius: 10px;
+   text-decoration: none;
+   color: #333;
+   font-weight: bold;
+   transition: all 0.3s ease;
 }
 
-.login-button a {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #2596be;
-  color: #fff;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.login-button a:hover {
-  background-color: #333;
-}
-@media only screen and (max-width: 767px) {
-.nav-items {
-display: none;
-}
-
-.login-button {
-margin: 0;
-}
-
-.login-button a {
-display: block;
-width: 100%;
-text-align: center;
-margin: 10px 0;
-}
+.login-icon a:hover {
+   background-color: #333;
+   color: #fff;
 }
 
 </style>
@@ -128,8 +114,8 @@ margin: 10px 0;
                 </button>
             </form>
         </div>
-<div class="login-button">
-  <a href="#">Login</a>
+<div class="login-icon">
+   <a href="#">Login</a>
 </div>
       </nav>
       <section>
