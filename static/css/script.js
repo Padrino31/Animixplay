@@ -17,78 +17,6 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-const watchlistContainer = document.getElementById("watchlist-container");
-
-// Function to update the Firebase database with the current watchlist
-function updateWatchlist() {
-  // Get the user ID from Firebase Auth
-  const userId = auth.currentUser.uid;
-
-  // Update the "watchlist" key in the user's data in the Firebase database
-  set(ref(database, `users/${userId}/watchlist`), watchlist);
-}
-
-// Function to add an anime to the watchlist and update the UI and Firebase database
-function addAnime(anime) {
-  watchlist.push(anime);
-  localStorage.setItem("watchlist", JSON.stringify(watchlist));
-  updateWatchlist();
-  renderWatchlist();
-}
-
-// Function to remove an anime from the watchlist and update the UI and Firebase database
-function removeAnime(anime) {
-  const index = watchlist.indexOf(anime);
-  if (index > -1) {
-    watchlist.splice(index, 1);
-  }
-  localStorage.setItem("watchlist", JSON.stringify(watchlist));
-  updateWatchlist();
-  renderWatchlist();
-}
-
-// Function to render the watchlist in the UI
-function renderWatchlist() {
-  watchlistContainer.innerHTML = "";
-
-  watchlist.forEach((anime) => {
-    const listItem = document.createElement("li");
-    const removeButton = document.createElement("button");
-    removeButton.innerText = "Remove";
-    removeButton.addEventListener("click", () => {
-      removeAnime(anime);
-    });
-    listItem.innerText = anime;
-    listItem.appendChild(removeButton);
-    watchlistContainer.appendChild(listItem);
-  });
-}
-
-// Initialize the UI with the current watchlist
-renderWatchlist();
-
-// Add event listener to the "Add Anime" button
-const addButton = document.getElementById("add-anime");
-addButton.addEventListener("click", () => {
-  const anime = prompt("Enter the name of the anime:");
-  if (anime) {
-    addAnime(anime);
-  }
-});
-
-// Add event listener to the window object to listen for changes to localStorage
-window.addEventListener("storage", () => {
-  // Check if the watchlist has changed in localStorage
-  const newWatchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-  if (JSON.stringify(newWatchlist) !== JSON.stringify(watchlist)) {
-    watchlist = newWatchlist;
-    renderWatchlist();
-    updateWatchlist();
-  }
-});
-
-
 const submitButton = document.getElementById("submit");
 const signupButton = document.getElementById("sign-up");
 const emailInput = document.getElementById("email");
@@ -105,17 +33,6 @@ const createacctbtn = document.getElementById("create-acct-btn");
 const returnBtn = document.getElementById("return-btn");
 
 var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
-
-// Listen for changes in localStorage
-window.addEventListener("storage", function(event) {
-  if (event.key === "watchlist") {
-    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-    const user = auth.currentUser;
-    if (user) {
-      set(ref(database, 'users/' + user.uid + '/watchlist'), watchlist);
-    }
-  }
-});
 
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
@@ -148,6 +65,7 @@ createacctbtn.addEventListener("click", function() {
           email: signupEmail
         });
         window.alert("Success! Account created.");
+        window.location.href = "./login.html";
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -165,6 +83,7 @@ submitButton.addEventListener("click", function() {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
+      window.location.href = "/";
     })
     .catch((error) => {
       const errorCode = error.code;
