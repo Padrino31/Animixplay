@@ -63,9 +63,10 @@ createacctbtn.addEventListener("click", function() {
         const userId = user.uid;
         set(ref(database, 'users/' + userId), {
           email: signupEmail
+        }).then(() => {
+          window.alert("Success! Account created.");
+          window.location.href = "./login.html";
         });
-        window.alert("Success! Account created.");
-        window.location.href = "./login.html";
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -91,7 +92,6 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
-
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
     createacct.style.display = "block";
