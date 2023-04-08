@@ -2,9 +2,36 @@
 <html>
 <head>
   <title>Login</title>
+  <link href="./styles.css" rel="stylesheet">
+	<link href="./home.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
   <link rel = "stylesheet" href = "login.css">
 </head>
 <body>
+  	<nav>
+         <div class="menu-icon">
+            <span class="fas fa-bars"></span>
+         </div>
+         <div class="logo">
+            <a href="#"><img src="https://od.lk/s/OTBfMzU2NDQ1MTBf/animeflv.png"></a>
+         </div>
+         <div class="nav-items">
+		 <li><a href="/">Home</a></li>
+        <li><a href="./watchlist.html">Watchlist</a></li>
+         </div>
+         <div class="search-icon">
+            <span class="fas fa-search"></span>
+         </div>
+         <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+         </div>
+                    <form action="/search" method='GET'>
+                <input type="text" name="query" id="query" placeholder="Search Anime..." required>
+                <button type="submit"><i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+      </nav>
   <div class = "login-container">
     <div id= "main">
       <h1>Sign In</h1>
