@@ -33,6 +33,26 @@ p span {
   padding:0 10px;
 }
 
+/* For Android devices with a screen width of up to 480px */
+@media only screen and (max-width: 480px) {
+.login-container {
+width: 80vw;
+margin-left: 10vw;
+height: 80vh;
+margin-top: 10vh;
+}
+}
+
+/* For iOS devices with a screen width of up to 414px */
+@media only screen and (max-width: 414px) {
+.login-container {
+width: 80vw;
+margin-left: 10vw;
+height: 80vh;
+margin-top: 10vh;
+}
+}
+
 input {
   margin-bottom: 3%;
 }
