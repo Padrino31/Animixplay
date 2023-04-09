@@ -58,40 +58,49 @@ createacctbtn.addEventListener("click", function() {
   }
   
   if(isVerified) {
-createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    const userId = user.uid;
+    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const userId = user.uid;
 
-    // Get the data from localStorage
-    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+        // Get the data from localStorage
+        const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+        const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+        const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
 
-    // Store the data in Firebase Realtime database
-    set(ref(database, `users/${userId}`), {
-      email: signupEmail,
-      watchlist,
-      bookmarks,
-      completedList,
-    }).then(() => {
-      window.alert("Success! Account created.");
-      window.location.href = "./login.html"; // redirect to homepage
-    }).catch((error) => {
-      window.alert("Error occurred while creating user. Try again.");
-    });
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    window.alert("Error occurred while creating user. Try again.");
-  });
+        // Store the data in Firebase Realtime database
+        set(ref(database, `users/${userId}`), {
+          email: signupEmail,
+          watchlist,
+          bookmarks,
+          completedList,
+        }).then(() => {
+          window.alert("Success! Account created.");
+          window.location.href = "./login.html"; // redirect to homepage
+        }).catch((error) => {
+          window.alert("Error occurred while creating user. Try again.");
+        });
 
+        // Listen for changes in the watchlist, bookmarks, and completedList and update the Firebase Realtime database accordingly
+        window.addEventListener("beforeunload", () => {
+          localStorage.setItem("watchlist", JSON.stringify(watchlist));
+          localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+          localStorage.setItem("completedList", JSON.stringify(completedList));
+
+          update(ref(database, `users/${userId}`), {
+            watchlist,
+            bookmarks,
+            completedList,
+          });
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        window.alert("Error occurred while creating user. Try again.");
+      });
   }
 });
-
-// Get a reference to the Firebase Realtime Database
-const database = firebase.database();
 
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
@@ -100,20 +109,17 @@ submitButton.addEventListener("click", function() {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log("Success! Welcome back!");
+      const userId = user.uid;
 
-      // Save the watchlist, completedList, and bookmarks to localStorage
-      localStorage.setItem("watchlist", JSON.stringify(watchlist));
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-      localStorage.setItem("completedList", JSON.stringify(completedList));
-
-      // Save the watchlist, completedList, and bookmarks to Firebase Realtime Database
-      database.ref(`users/${user.uid}`).set({
-        watchlist,
-        bookmarks,
-        completedList
+      // Get the data from Firebase Realtime database and set it in localStorage
+      onValue(ref(database, `users/${userId}`), (snapshot) => {
+        const data = snapshot.val();
+        localStorage.setItem("watchlist", JSON.stringify(data.watchlist));
+        localStorage.setItem("bookmarks", JSON.stringify(data.bookmarks));
+        localStorage.setItem("completedList", JSON.stringify(data.completedList));
       });
 
+      console.log("Success! Welcome back!");
       window.location.href = "/"; // redirect to homepage
     })
     .catch((error) => {
@@ -122,11 +128,6 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
-
-
-
-
-
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
