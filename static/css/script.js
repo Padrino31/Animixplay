@@ -84,6 +84,8 @@ createacctbtn.addEventListener("click", function() {
     const errorMessage = error.message;
     window.alert("Error occurred. Try again.");
   });
+  }
+});
       
 function restoreDataFromFirebase(user) {
   const db = getDatabase();
@@ -117,6 +119,7 @@ submitButton.addEventListener("click", function() {
     console.log("Error occurred. Try again.");
     window.alert("Error occurred. Try again.");
   });
+ });
 
 
 signupButton.addEventListener("click", function() {
