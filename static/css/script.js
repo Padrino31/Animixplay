@@ -63,14 +63,17 @@ createacctbtn.addEventListener("click", function() {
         const userId = user.uid;
         set(ref(database, 'users/' + userId), {
           email: signupEmail
+        }).then(() => {
+          window.alert("Success! Account created.");
+          window.location.href = "./login.html"; // redirect to homepage
+        }).catch((error) => {
+          window.alert("Error occurred while creating user. Try again.");
         });
-        window.alert("Success! Account created.");
-         window.location.href = "./login.html"; // redirect to homepage
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        window.alert("Error occurred. Try again.");
+        window.alert("Error occurred while creating user. Try again.");
       });
   }
 });
@@ -83,7 +86,7 @@ submitButton.addEventListener("click", function() {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
-       window.location.href = "/"; // redirect to homepage
+      window.location.href = "/"; // redirect to homepage
     })
     .catch((error) => {
       const errorCode = error.code;
