@@ -36,18 +36,6 @@ const createacctbtn = document.getElementById("create-acct-btn");
 const returnBtn = document.getElementById("return-btn");
 
 var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
-function storeDataToFirebase(user) {
-  const db = getDatabase();
-  const userRef = ref(db, "users/" + user.uid);
-  const watchlist = localStorage.getItem("watchlist");
-  const completedList = localStorage.getItem("completedList");
-  const bookmarks = localStorage.getItem("bookmarks");
-  set(userRef, {
-    watchlist: watchlist,
-    completedList: completedList,
-    bookmarks: bookmarks
-  });
-}
 
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
@@ -86,15 +74,35 @@ createacctbtn.addEventListener("click", function() {
   });
   }
 });
-      
+
+function storeDataToFirebase(user) {
+  const db = getDatabase();
+  const userRef = ref(db, "users/" + user.uid);
+  const watchlist = localStorage.getItem("watchlist");
+  const completedList = localStorage.getItem("completedList");
+  const bookmarks = localStorage.getItem("bookmarks");
+  set(userRef, {
+    watchlist: watchlist,
+    completedList: completedList,
+    bookmarks: bookmarks
+  }).then(() => {
+    console.log("Data stored to Firebase");
+  }).catch((error) => {
+    console.error("Error storing data to Firebase: ", error);
+  });
+}
+
 function restoreDataFromFirebase(user) {
   const db = getDatabase();
   const userRef = ref(db, "users/" + user.uid);
   get(userRef).then((snapshot) => {
     const data = snapshot.val();
-    localStorage.setItem("watchlist", data.watchlist);
-    localStorage.setItem("completedList", data.completedList);
-    localStorage.setItem("bookmarks", data.bookmarks);
+    localStorage.setItem("watchlist", data.watchlist || "");
+    localStorage.setItem("completedList", data.completedList || "");
+    localStorage.setItem("bookmarks", data.bookmarks || "");
+    console.log("Data restored from Firebase");
+  }).catch((error) => {
+    console.error("Error restoring data from Firebase: ", error);
   });
 }
 
