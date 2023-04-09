@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
-import JSON from "https://cdn.skypack.dev/json3";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -58,30 +58,37 @@ createacctbtn.addEventListener("click", function() {
   }
   
   if(isVerified) {
-    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const userId = user.uid;
-        set(ref(database, 'users/' + userId), {
-          email: signupEmail
-        }).then(() => {
-          set(ref(database, 'users/' + userId + '/watchlist'), JSON.stringify(watchlist));
-          set(ref(database, 'users/' + userId + '/bookmarks'), JSON.stringify(bookmarks));
-          set(ref(database, 'users/' + userId + '/completedList'), JSON.stringify(completedList));
-          window.alert("Success! Account created.");
-          window.location.href = "./login.html"; // redirect to homepage
-        }).catch((error) => {
-          window.alert("Error occurred while creating user. Try again.");
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        window.alert("Error occurred while creating user. Try again.");
-      });
+createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
+  .then((userCredential) => {
+    const user = userCredential.user;
+    const userId = user.uid;
+
+    // Get the data from localStorage
+    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+
+    // Store the data in Firebase Realtime database
+    set(ref(database, `users/${userId}`), {
+      email: signupEmail,
+      watchlist,
+      bookmarks,
+      completedList,
+    }).then(() => {
+      window.alert("Success! Account created.");
+      window.location.href = "./login.html"; // redirect to homepage
+    }).catch((error) => {
+      window.alert("Error occurred while creating user. Try again.");
+    });
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    window.alert("Error occurred while creating user. Try again.");
+  });
+
   }
 });
-
 
 
 submitButton.addEventListener("click", function() {
