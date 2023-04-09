@@ -72,11 +72,28 @@
     <li><a href="https://anilist.co/search/anime/next-season" onclick="window.open(this.href,'_blank','location=no'); return false;">Upcoming</a></li>
     <li><a href="https://www.livechart.me/timetable" onclick="window.open(this.href,'_blank','location=no'); return false;">Schedule</a></li>
   </div>
- <div class="login-icon" id="login-btn">
-  <a href="../static/css/login.html">Login</a>
- </div>
-
-
+  <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+   <div id="id01" class="modal">
+    <div class = "login-container">
+    <div id= "main">
+      <h1>Sign In</h1>
+      <input id = "email" type = "text" placeholder = "Email"></input>
+      <input id = "password" type = "password" placeholder = "Password"></input>
+      <button id = "submit">Submit</button>
+      <p><span>or</span></p>
+      <button id = "sign-up">Sign Up</button>
+    </div>
+    <div id = "create-acct">
+      <h1>Create an Account</h1>
+      <input id = "email-signup" type = "text" placeholder = "Email *"></input>
+  <input id = "confirm-email-signup" type = "email" placeholder = "Confirm Email *"></input>
+      <input id = "password-signup" type = "password" placeholder = "Password *"></input>
+      <input id = "confirm-password-signup" type = "password" placeholder = "Confirm Password *"></input>
+      <button id = "create-acct-btn">Create Account</button>
+      <button id = "return-btn">Return to Login</button>
+    </div>
+  </div>
+</div>
   <div class="search-icon">
     <span class="fas fa-search"></span>
   </div>
@@ -88,42 +105,6 @@
     <button type="submit"><i class="fa fa-search"></i></button>
   </form>
 </nav>
-
-<style>
-  .login-icon a {
-    background-color: #2596be;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-	  
-  }
-
-  .login-icon {
-    display: flex;
-    align-items: center;
-  }
-.login-icon a:hover {
-   background-color: #333;
-   color: #fff;
-}
-
-
-@media only screen and (min-width: 600px) {
-  .login-icon {
-    order: 4;
-    padding-left: 10px; /* Add a padding of 10px to the left of the login icon */
-  }
-}
-.login-icon a:hover {
-   background-color: #333;
-   color: #fff;
-}
-
-
-</style>
 
       <section>
         <div class="slideshow-container">
@@ -231,9 +212,8 @@ document.addEventListener("DOMContentLoaded", function () {
         imageObserver.observe(v);
     });
 });
+</script>
 
-    </script>
-	
 <script>    
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
@@ -266,6 +246,18 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }  
+</script>
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 </script>
 
     <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>
