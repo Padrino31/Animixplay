@@ -62,8 +62,14 @@ createacctbtn.addEventListener("click", function() {
         const user = userCredential.user;
         const userId = user.uid;
         set(ref(database, 'users/' + userId), {
-          email: signupEmail
+          email: signupEmail,
+          watchlist: JSON.stringify(watchlist),
+          bookmarks: JSON.stringify(bookmarks),
+          completedList: JSON.stringify(completedList)
         }).then(() => {
+          localStorage.setItem("watchlist", JSON.stringify(watchlist));
+          localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+          localStorage.setItem("completedList", JSON.stringify(completedList));
           window.alert("Success! Account created.");
           window.location.href = "./login.html"; // redirect to homepage
         }).catch((error) => {
@@ -77,6 +83,7 @@ createacctbtn.addEventListener("click", function() {
       });
   }
 });
+
 
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
