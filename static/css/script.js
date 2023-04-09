@@ -1,17 +1,16 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCybmXAUWgGDCMNQWvcRdaMgE31I1GkF8M",
-  authDomain: "log-in-authentication-ac1b6.firebaseapp.com",
-  projectId: "log-in-authentication-ac1b6",
-  storageBucket: "log-in-authentication-ac1b6.appspot.com",
-  messagingSenderId: "735126972855",
-  appId: "1:735126972855:web:b26c16bd1de14bf361e032",
-  measurementId: "G-3GKSESXV7S"
+    apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
+    authDomain: "login-app-695a4.firebaseapp.com",
+    projectId: "login-app-695a4",
+    storageBucket: "login-app-695a4.appspot.com",
+    messagingSenderId: "710961899998",
+    appId: "1:710961899998:web:7f79123b6e67129bc8154f"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -69,6 +68,7 @@ createacctbtn.addEventListener("click", function() {
       email: signupEmail
     });
     window.alert("Success! Account created.");
+    window.location.href = "./login.html"; // redirect to homepage
   })
   .catch((error) => {
     const errorCode = error.code;
