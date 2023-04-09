@@ -90,7 +90,6 @@ createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
   }
 });
 
-
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
   password = passwordInput.value;
@@ -98,20 +97,13 @@ submitButton.addEventListener("click", function() {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-
-      // Update the user's data when they log in
-      const watchlist = /* retrieve watchlist from the page */;
-      const completedlist = /* retrieve completedlist from the page */;
-      const bookmarks = /* retrieve bookmarks from the page */;
-
-      // Save the changes to the user's data
-      firebase.database().ref('users/' + user.uid).set({
-        watchlist: watchlist,
-        completedlist: completedlist,
-        bookmarks: bookmarks
-      });
-
       console.log("Success! Welcome back!");
+
+      // Store changes in local storage
+      localStorage.setItem("watchlist", JSON.stringify(watchlist));
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      localStorage.setItem("completedList", JSON.stringify(completedList));
+
       window.location.href = "/"; // redirect to homepage
     })
     .catch((error) => {
@@ -120,6 +112,8 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
+
 
 
 
