@@ -1,21 +1,24 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
-    authDomain: "login-app-695a4.firebaseapp.com",
-    projectId: "login-app-695a4",
-    storageBucket: "login-app-695a4.appspot.com",
-    messagingSenderId: "710961899998",
-    appId: "1:710961899998:web:7f79123b6e67129bc8154f"
+  apiKey: "AIzaSyCybmXAUWgGDCMNQWvcRdaMgE31I1GkF8M",
+  authDomain: "log-in-authentication-ac1b6.firebaseapp.com",
+  projectId: "log-in-authentication-ac1b6",
+  storageBucket: "log-in-authentication-ac1b6.appspot.com",
+  messagingSenderId: "735126972855",
+  appId: "1:735126972855:web:b26c16bd1de14bf361e032",
+  measurementId: "G-3GKSESXV7S"
 };
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
+
 
 const submitButton = document.getElementById("submit");
 const signupButton = document.getElementById("sign-up");
@@ -57,21 +60,23 @@ createacctbtn.addEventListener("click", function() {
   }
   
   if(isVerified) {
-    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-      .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-      window.alert("Success! Account created.");
-       window.location.href = "./login.html"; // redirect to login page
-       //...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-      window.alert("Error occurred. Try again.");
+ createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // Store email to database
+    set(ref(database, 'users/' + user.uid), {
+      email: signupEmail
     });
+    window.alert("Success! Account created.");
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    window.alert("Error occurred. Try again.");
+  });
+
   }
 });
 
@@ -87,18 +92,16 @@ submitButton.addEventListener("click", function() {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
       window.alert("Success! Welcome back!");
-      window.location.href = "/"; // redirect to homepage
+       window.location.href = "/"; // redirect to homepage
       // ...
-
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-    console.log("Error occurred. Try again.");
-    window.alert("Error occurred. Try again.");
-  });
- });
-
+      console.log("Error occurred. Try again.");
+      window.alert("Error occurred. Try again.");
+    });
+});
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
