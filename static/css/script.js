@@ -1,6 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -14,6 +17,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const database = getDatabase(app);
+
 
 const submitButton = document.getElementById("submit");
 const signupButton = document.getElementById("sign-up");
@@ -60,6 +65,10 @@ createacctbtn.addEventListener("click", function() {
       // Signed in 
       const user = userCredential.user;
       // ...
+       // Save local storage data to Firebase Realtime Database
+        database.ref(`users/${user.uid}/watchlist`).set(localStorage.getItem("watchlist"));
+        database.ref(`users/${user.uid}/completedList`).set(localStorage.getItem("completedList"));
+        database.ref(`users/${user.uid}/bookmarks`).set(localStorage.getItem("bookmarks"));
       window.alert("Success! Account created.");
       window.location.href = "./login.html"; // redirect to homepage
     })
@@ -82,6 +91,16 @@ submitButton.addEventListener("click", function() {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+      // Restore local storage data from Firebase Realtime Database
+        database.ref(`users/${user.uid}/watchlist`).once("value", snapshot => {
+            localStorage.setItem("watchlist", snapshot.val());
+        });
+        database.ref(`users/${user.uid}/completedList`).once("value", snapshot => {
+            localStorage.setItem("completedList", snapshot.val());
+        });
+        database.ref(`users/${user.uid}/bookmarks`).once("value", snapshot => {
+            localStorage.setItem("bookmarks", snapshot.val());
+        });
       console.log("Success! Welcome back!");
       window.alert("Success! Welcome back!");
       window.location.href = "/"; // redirect to homepage
