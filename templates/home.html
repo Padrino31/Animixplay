@@ -73,7 +73,7 @@
     <li><a href="https://anilist.co/search/anime/next-season" target="_blank">Upcoming</a></li>
     <li><a href="https://www.livechart.me/timetable" target="_blank">Schedule</a></li>
   </ul>
-  <button id="refresh-btn" onclick="refreshData()">Login</button>
+  <button id="refresh-btn" onclick="openLoginPage()">Login</button>
 
   <div class="search-icon">
     <span class="fas fa-search"></span>
@@ -107,7 +107,7 @@
   @media only screen and (min-width: 600px) {
     #refresh-btn {
       order: 4;
-      padding-left: 10px; /* Add a padding of 10px to the left of the login icon */
+      padding-left: 20px; /* Add a padding of 10px to the left of the login icon */
     }
   }
 </style>
@@ -203,6 +203,34 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
   </div>
 </footer>
 <hr>
+<script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js"></script>
+<script>
+  // Initialize Firebase app
+  var firebaseConfig = {
+    apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
+    authDomain: "login-app-695a4.firebaseapp.com",
+    projectId: "login-app-695a4",
+    storageBucket: "login-app-695a4.appspot.com",
+    messagingSenderId: "710961899998",
+    appId: "1:710961899998:web:7f79123b6e67129bc8154f"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  function openLoginPage() {
+    // Open login.html page
+    window.location.href = "login.html";
+  }
+
+  function refreshData() {
+    // Update Firebase Realtime Database
+    var database = firebase.database();
+    database.ref("data").set(Date.now());
+    // Change the button to a refresh icon
+    var refreshBtn = document.getElementById("refresh-btn");
+    refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+  }
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
