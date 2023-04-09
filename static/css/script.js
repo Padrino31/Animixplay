@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getDatabase, ref, set, update} from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
 
 const firebaseConfig = {
@@ -80,19 +80,6 @@ createacctbtn.addEventListener("click", function() {
         }).catch((error) => {
           window.alert("Error occurred while creating user. Try again.");
         });
-
-        // Listen for changes in the watchlist, bookmarks, and completedList and update the Firebase Realtime database accordingly
-        window.addEventListener("beforeunload", () => {
-          localStorage.setItem("watchlist", JSON.stringify(watchlist));
-          localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-          localStorage.setItem("completedList", JSON.stringify(completedList));
-
-          update(ref(database, `users/${userId}`), {
-            watchlist,
-            bookmarks,
-            completedList,
-          });
-        });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -111,16 +98,22 @@ submitButton.addEventListener("click", function() {
       const user = userCredential.user;
       const userId = user.uid;
 
-      // Get the data from Firebase Realtime database and set it in localStorage
-      onValue(ref(database, `users/${userId}`), (snapshot) => {
-        const data = snapshot.val();
-        localStorage.setItem("watchlist", JSON.stringify(data.watchlist));
-        localStorage.setItem("bookmarks", JSON.stringify(data.bookmarks));
-        localStorage.setItem("completedList", JSON.stringify(data.completedList));
-      });
+      // Get the data from localStorage
+      const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+      const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
 
-      console.log("Success! Welcome back!");
-      window.location.href = "/"; // redirect to homepage
+      // Store the data in Firebase Realtime database
+      update(ref(database, `users/${userId}`), {
+        watchlist,
+        bookmarks,
+        completedList,
+      }).then(() => {
+        console.log("Success! Welcome back!");
+        window.location.href = "/"; // redirect to homepage
+      }).catch((error) => {
+        window.alert("Error occurred. Try again.");
+      });
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -128,6 +121,7 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
