@@ -73,9 +73,8 @@
     <li><a href="https://anilist.co/search/anime/next-season" target="_blank">Upcoming</a></li>
     <li><a href="https://www.livechart.me/timetable" target="_blank">Schedule</a></li>
   </ul>
-  <div class="login-icon" id="login-btn">
-  <a href="../static/css/login.html">Login</a>
-  </div>
+  <button id="refresh-btn" onclick="refreshData()">Login</button>
+
   <div class="search-icon">
     <span class="fas fa-search"></span>
   </div>
@@ -88,7 +87,7 @@
   </form>
 </nav>
 <style>
-  .login-icon a {
+  #refresh-btn a {
     background-color: #2596be;
     color: white;
     padding: 10px 20px;
@@ -99,23 +98,23 @@
 
   }
 
-  .login-icon {
+  #refresh-btn {
     display: flex;
     align-items: center;
   }
-.login-icon a:hover {
+#refresh-btn a:hover {
    background-color: #333;
    color: #fff;
 }
 
 
 @media only screen and (min-width: 600px) {
-  .login-icon {
+  #refresh-btn {
     order: 4;
     padding-left: 10px; /* Add a padding of 10px to the left of the login icon */
   }
 }
-.login-icon a:hover {
+#refresh-btn a:hover {
    background-color: #333;
    color: #fff;
 }
