@@ -110,7 +110,7 @@ submitButton.addEventListener("click", function() {
         completedList,
       }).then(() => {
         console.log("Success! Welcome back!");
-        window.location.href = "/"; // redirect to homepage
+        document.getElementById("refresh-btn").innerHTML = "<i class='fa fa-refresh'></i>"; // change the button to refresh icon
       }).catch((error) => {
         window.alert("Error occurred. Try again.");
       });
@@ -121,6 +121,27 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
+function refreshData() {
+  const user = auth.currentUser;
+  const userId = user.uid;
+
+  // Get the data from localStorage
+  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+  const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+
+  // Store the data in Firebase Realtime database
+  update(ref(database, `users/${userId}`), {
+    watchlist,
+    bookmarks,
+    completedList,
+  }).then(() => {
+    console.log("Data refreshed!");
+  }).catch((error) => {
+    window.alert("Error occurred while refreshing data. Try again.");
+  });
+}
 
 
 signupButton.addEventListener("click", function() {
