@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import JSON from "https://cdn.skypack.dev/json3";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -62,14 +63,11 @@ createacctbtn.addEventListener("click", function() {
         const user = userCredential.user;
         const userId = user.uid;
         set(ref(database, 'users/' + userId), {
-          email: signupEmail,
-          watchlist: JSON.stringify(watchlist),
-          bookmarks: JSON.stringify(bookmarks),
-          completedList: JSON.stringify(completedList)
+          email: signupEmail
         }).then(() => {
-          localStorage.setItem("watchlist", JSON.stringify(watchlist));
-          localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-          localStorage.setItem("completedList", JSON.stringify(completedList));
+          set(ref(database, 'users/' + userId + '/watchlist'), JSON.stringify(watchlist));
+          set(ref(database, 'users/' + userId + '/bookmarks'), JSON.stringify(bookmarks));
+          set(ref(database, 'users/' + userId + '/completedList'), JSON.stringify(completedList));
           window.alert("Success! Account created.");
           window.location.href = "./login.html"; // redirect to homepage
         }).catch((error) => {
@@ -83,6 +81,7 @@ createacctbtn.addEventListener("click", function() {
       });
   }
 });
+
 
 
 submitButton.addEventListener("click", function() {
