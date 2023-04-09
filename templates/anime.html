@@ -184,38 +184,31 @@ document.addEventListener("DOMContentLoaded", function () {
         imageObserver.observe(v);
     });
 })
-// Get the currently signed-in user's ID
-const userId = firebase.auth().currentUser.uid;
-
 function addToWatchList(link, img, title) {
-  // Get the data from the database
-  const watchlistRef = firebase.database().ref(`users/${userId}/watchlist`);
-  watchlistRef.once('value', (snapshot) => {
-    let watchlist = snapshot.val() || [];
+    // Create an object with the anime data
+    const anime = { link, img, title };
 
-    // Add the new item to the watchlist
-    watchlist.push({
-      link: link,
-      img: img,
-      title: title
-    });
+    // Get the current watchlist from local storage or create an empty array
+    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-    // Store the updated watchlist in the database and local storage
-    watchlistRef.set(watchlist);
+    // Check if the anime already exists in the watchlist
+    const exists = watchlist.some((item) => item.link === link);
+
+    // If the anime exists, show an alert and return
+    if (exists) {
+        alert(`${title} is already in your watchlist.`);
+        return;
+    }
+
+    // Add the anime to the watchlist
+    watchlist.push(anime);
+
+    // Store the updated watchlist in local storage
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
-  });
+
+    // Show an alert to confirm the anime was added
+    alert(`${title} has been added to your watchlist.`);
 }
-
-// Add an event listener to the "add to watchlist" button
-addToWatchlistButton.addEventListener("click", function() {
-  const link = // get the link of the item being added;
-  const img = // get the image of the item being added;
-  const title = // get the title of the item being added;
-  
-  // Call the addToWatchList function with the necessary arguments
-  addToWatchList(link, img, title);
-});
-
 
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
