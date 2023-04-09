@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
 
 
 
@@ -17,7 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const database = getDatabase(app);
 
 
 const submitButton = document.getElementById("submit");
@@ -36,6 +36,18 @@ const createacctbtn = document.getElementById("create-acct-btn");
 const returnBtn = document.getElementById("return-btn");
 
 var email, password, signupEmail, signupPassword, confirmSignupEmail, confirmSignUpPassword;
+function storeDataToFirebase(user) {
+  const db = getDatabase();
+  const userRef = ref(db, "users/" + user.uid);
+  const watchlist = localStorage.getItem("watchlist");
+  const completedList = localStorage.getItem("completedList");
+  const bookmarks = localStorage.getItem("bookmarks");
+  set(userRef, {
+    watchlist: watchlist,
+    completedList: completedList,
+    bookmarks: bookmarks
+  });
+}
 
 createacctbtn.addEventListener("click", function() {
   var isVerified = true;
@@ -60,26 +72,30 @@ createacctbtn.addEventListener("click", function() {
   }
   
   if(isVerified) {
-    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-      .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-       // Save local storage data to Firebase Realtime Database
-        database.ref(`users/${user.uid}/watchlist`).set(localStorage.getItem("watchlist"));
-        database.ref(`users/${user.uid}/completedList`).set(localStorage.getItem("completedList"));
-        database.ref(`users/${user.uid}/bookmarks`).set(localStorage.getItem("bookmarks"));
-      window.alert("Success! Account created.");
-      window.location.href = "./login.html"; // redirect to homepage
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-      window.alert("Error occurred. Try again.");
-    });
-  }
-});
+   createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
+  .then((userCredential) => {
+    const user = userCredential.user;
+    storeDataToFirebase(user);
+    window.alert("Success! Account created.");
+    window.location.href = "./login.html"; // redirect to homepage
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    window.alert("Error occurred. Try again.");
+  });
+      
+function restoreDataFromFirebase(user) {
+  const db = getDatabase();
+  const userRef = ref(db, "users/" + user.uid);
+  get(userRef).then((snapshot) => {
+    const data = snapshot.val();
+    localStorage.setItem("watchlist", data.watchlist);
+    localStorage.setItem("completedList", data.completedList);
+    localStorage.setItem("bookmarks", data.bookmarks);
+  });
+}
+
 
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
@@ -88,31 +104,20 @@ submitButton.addEventListener("click", function() {
   console.log(password);
 
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // Restore local storage data from Firebase Realtime Database
-        database.ref(`users/${user.uid}/watchlist`).once("value", snapshot => {
-            localStorage.setItem("watchlist", snapshot.val());
-        });
-        database.ref(`users/${user.uid}/completedList`).once("value", snapshot => {
-            localStorage.setItem("completedList", snapshot.val());
-        });
-        database.ref(`users/${user.uid}/bookmarks`).once("value", snapshot => {
-            localStorage.setItem("bookmarks", snapshot.val());
-        });
-      console.log("Success! Welcome back!");
-      window.alert("Success! Welcome back!");
-      window.location.href = "/"; // redirect to homepage
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error occurred. Try again.");
-      window.alert("Error occurred. Try again.");
-    });
-});
+  .then((userCredential) => {
+    const user = userCredential.user;
+    restoreDataFromFirebase(user);
+    console.log("Success! Welcome back!");
+    window.alert("Success! Welcome back!");
+    window.location.href = "/"; // redirect to homepage
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log("Error occurred. Try again.");
+    window.alert("Error occurred. Try again.");
+  });
+
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
