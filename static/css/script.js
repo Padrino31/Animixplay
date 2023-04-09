@@ -1,10 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
-
-
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -18,7 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
-
+const database = getDatabase(app);
 
 const submitButton = document.getElementById("submit");
 const signupButton = document.getElementById("sign-up");
@@ -60,52 +57,22 @@ createacctbtn.addEventListener("click", function() {
   }
   
   if(isVerified) {
-   createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    storeDataToFirebase(user);
-    window.alert("Success! Account created.");
-    window.location.href = "./login.html"; // redirect to homepage
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    window.alert("Error occurred. Try again.");
-  });
+    createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
+      .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      // ...
+      window.alert("Success! Account created.");
+       window.location.href = "./login.html"; // redirect to login page
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+      window.alert("Error occurred. Try again.");
+    });
   }
 });
-
-function storeDataToFirebase(user) {
-  const db = getDatabase();
-  const userRef = ref(db, "users/" + user.uid);
-  const watchlist = localStorage.getItem("watchlist");
-  const completedList = localStorage.getItem("completedList");
-  const bookmarks = localStorage.getItem("bookmarks");
-  set(userRef, {
-    watchlist: watchlist,
-    completedList: completedList,
-    bookmarks: bookmarks
-  }).then(() => {
-    console.log("Data stored to Firebase");
-  }).catch((error) => {
-    console.error("Error storing data to Firebase: ", error);
-  });
-}
-
-function restoreDataFromFirebase(user) {
-  const db = getDatabase();
-  const userRef = ref(db, "users/" + user.uid);
-  get(userRef).then((snapshot) => {
-    const data = snapshot.val();
-    localStorage.setItem("watchlist", data.watchlist || "");
-    localStorage.setItem("completedList", data.completedList || "");
-    localStorage.setItem("bookmarks", data.bookmarks || "");
-    console.log("Data restored from Firebase");
-  }).catch((error) => {
-    console.error("Error restoring data from Firebase: ", error);
-  });
-}
-
 
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
@@ -114,16 +81,17 @@ submitButton.addEventListener("click", function() {
   console.log(password);
 
   signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    restoreDataFromFirebase(user);
-    console.log("Success! Welcome back!");
-    window.alert("Success! Welcome back!");
-    window.location.href = "/"; // redirect to homepage
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      console.log("Success! Welcome back!");
+      window.alert("Success! Welcome back!");
+      window.location.href = "/"; // redirect to homepage
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
     console.log("Error occurred. Try again.");
     window.alert("Error occurred. Try again.");
   });
