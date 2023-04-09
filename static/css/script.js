@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
@@ -64,6 +64,7 @@ createacctbtn.addEventListener("click", function() {
       // ...
       window.alert("Success! Account created.");
        window.location.href = "./login.html"; // redirect to login page
+       //...
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -88,6 +89,7 @@ submitButton.addEventListener("click", function() {
       window.alert("Success! Welcome back!");
       window.location.href = "/"; // redirect to homepage
       // ...
+
     })
     .catch((error) => {
       const errorCode = error.code;
