@@ -168,8 +168,8 @@
         </div>
     </footer>
     <hr>
-<script>
-	
+   <script type = "module" src = "../static/css/script.js"></script>
+<script>	
 document.addEventListener("DOMContentLoaded", function () {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
         entries.forEach((entry) => {
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
         imageObserver.observe(v);
     });
 })
- function addToWatchList(link, img, title) {
+function addToWatchList(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
 
@@ -206,9 +206,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // Store the updated watchlist in local storage
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
+    // Get the current user ID
+    const userId = auth.currentUser.uid;
+
+    // Update the watchlist in Firebase Realtime database
+    update(ref(database, `users/${userId}`), {
+      watchlist,
+    }).then(() => {
+      console.log("Success! Anime added to watchlist.");
+    }).catch((error) => {
+      window.alert("Error occurred while adding anime to watchlist. Try again.");
+    });
+
     // Show an alert to confirm the anime was added
     alert(`${title} has been added to your watchlist.`);
 }
+
 
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
