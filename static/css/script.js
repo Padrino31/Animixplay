@@ -89,30 +89,56 @@ createacctbtn.addEventListener("click", function() {
   }
 });
 
+// Save the data to Firebase Realtime Database when the page is refreshed or closed
+window.onbeforeunload = function() {
+  const user = auth.currentUser;
+  if (user) {
+    const userId = user.uid;
+    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+    
+    update(ref(database, `users/${userId}`), {
+      watchlist,
+      bookmarks,
+      completedList,
+    })
+    .then(() => {
+      console.log("Data saved to Firebase Realtime Database");
+    })
+    .catch((error) => {
+      console.error("Error occurred while saving data to Firebase Realtime Database:", error);
+    });
+  }
+};
+
+// Sign in and save the data to Firebase Realtime Database on button click
 submitButton.addEventListener("click", function() {
-  email = emailInput.value;
-  password = passwordInput.value;
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      console.log("Signed in as", user.email);
       const userId = user.uid;
 
-      // Get the data from localStorage
-      const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-      const completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+      // Get the data from Firebase Realtime Database
+      onValue(ref(database, `users/${userId}`), (snapshot) => {
+        const data = snapshot.val();
+        const watchlist = data.watchlist || [];
+        const bookmarks = data.bookmarks || [];
+        const completedList = data.completedList || [];
 
-      // Store the data in Firebase Realtime database
-      update(ref(database, `users/${userId}`), {
-        watchlist,
-        bookmarks,
-        completedList,
-      }).then(() => {
-        console.log("Success! Welcome back!");
-        window.location.href = "/"; // redirect to homepage
-      }).catch((error) => {
-        window.alert("Error occurred. Try again.");
+        // Store the data in localStorage
+        localStorage.setItem("watchlist", JSON.stringify(watchlist));
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+        localStorage.setItem("completedList", JSON.stringify(completedList));
+
+        console.log("Data retrieved from Firebase Realtime Database");
+        window.location.href = "/"; // Redirect to homepage
+      }, {
+        onlyOnce: true // Listen for the value only once to avoid memory leaks
       });
     })
     .catch((error) => {
@@ -121,6 +147,7 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
 
 signupButton.addEventListener("click", function() {
     main.style.display = "none";
