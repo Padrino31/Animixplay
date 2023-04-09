@@ -90,6 +90,9 @@ createUserWithEmailAndPassword(auth, signupEmail, signupPassword)
   }
 });
 
+// Get a reference to the Firebase Realtime Database
+const database = firebase.database();
+
 submitButton.addEventListener("click", function() {
   email = emailInput.value;
   password = passwordInput.value;
@@ -99,10 +102,17 @@ submitButton.addEventListener("click", function() {
       const user = userCredential.user;
       console.log("Success! Welcome back!");
 
-      // Store changes in local storage
+      // Save the watchlist, completedList, and bookmarks to localStorage
       localStorage.setItem("watchlist", JSON.stringify(watchlist));
       localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
       localStorage.setItem("completedList", JSON.stringify(completedList));
+
+      // Save the watchlist, completedList, and bookmarks to Firebase Realtime Database
+      database.ref(`users/${user.uid}`).set({
+        watchlist,
+        bookmarks,
+        completedList
+      });
 
       window.location.href = "/"; // redirect to homepage
     })
@@ -112,6 +122,7 @@ submitButton.addEventListener("click", function() {
       window.alert("Error occurred. Try again.");
     });
 });
+
 
 
 
