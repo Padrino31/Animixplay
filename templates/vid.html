@@ -26,10 +26,11 @@
             height: 100%;
         }
     </style>
-
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
-   <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
-    <script src="https://unpkg.com/hls.js@latest"></script>
+	
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.css">
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
+    <script src="https://unpkg.com/plyr@3"></script>
 
 </head>
 <body>
@@ -44,9 +45,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
-  const defaultOptions = {
-    title: '{{ title }}'
-  };
+   const defaultOptions = {
+        title: '{{ title }}',
+        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
+    };
+
 
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
