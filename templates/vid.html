@@ -41,9 +41,11 @@
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
-  const defaultOptions = {
-    title: '{{ title }}'
-  };
+   const defaultOptions = {
+        title: '{{ title }}',
+        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
+    };
+
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
   if (savedTime !== null) {
