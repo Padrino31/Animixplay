@@ -43,19 +43,12 @@ const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
-    title: '{{ title }}',
+      title: '{{ title }}',
     controls: [
       'play-large',
       'rewind', 
       'play', 
-      {
-        // Custom fast-forward control
-        title: 'Fast forward 25s',
-        icon: 'fast-forward',
-        onClick: () => {
-          video.currentTime += 25;
-        }
-      },
+      'fast-forward', 
       'progress', 
       'current-time', 
       'duration', 
@@ -63,14 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
       'settings', 
       'pip', 
       'airplay',
-      {
-        // Custom restart control
-        title: 'Restart',
-        icon: 'restart',
-        onClick: () => {
-          video.currentTime += 25;
-        }
-      },
       'fullscreen'
     ]
   };
@@ -107,7 +92,10 @@ if (Hls.isSupported()) {
     capLevelToPlayerSize: true,
     startLevel: 'auto'
   });
+
   hls.loadSource(source);
+  hls.attachMedia(video);
+
   hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
     const availableQualities = hls.levels.map((l) => l.height);
     defaultOptions.quality = {
@@ -116,7 +104,9 @@ if (Hls.isSupported()) {
       forced: true,
       onChange: (e) => updateQuality(e)
     };
+
     const player = new Plyr(video, defaultOptions);
+
     player.on('enterfullscreen', (event) => {
       if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
         if (screen.orientation.lock) {
@@ -124,12 +114,14 @@ if (Hls.isSupported()) {
         }
       }
     });
-    // adjust buffer length dynamically
-    setInterval(() => {
+
+    let bufferAdjustmentInterval = setInterval(() => {
       const buf = hls.buffered;
-      if (buf.length > 0 && video.paused && video.readyState > 1) {
+
+      if (buf.length > 0 && video.paused && video.readyState > 1 && video.playbackRate === 1) {
         const end = buf.end(0);
         const targetBuffer = video.currentTime + 20; // target buffer time in seconds
+
         if (end < targetBuffer) {
           const bwEstimate = hls.currentLevel > -1 ? hls.levels[hls.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
           const bufState = end - video.currentTime; // current buffer state in seconds
@@ -137,12 +129,17 @@ if (Hls.isSupported()) {
           hls.config.maxBufferLength = newBufLength;
         }
       }
-    }, 1000);
+    }, 500);
+
+    hls.on(Hls.Events.DESTROYING, function() {
+      clearInterval(bufferAdjustmentInterval);
+    });
   });
-  hls.attachMedia(video);
+
   window.hls = hls;
 } else {
   const player = new Plyr(video, defaultOptions);
+
   player.on('enterfullscreen', (event) => {
     if ((document.fullscreenElement !== null || document.webkitFullscreenElement !== null) && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       if (screen.orientation.lock) {
@@ -151,13 +148,14 @@ if (Hls.isSupported()) {
     }
   });
 }
-  function updateQuality(newQuality) {
-    window.hls.levels.forEach((level, levelIndex) => {
-      if (level.height === newQuality) {
-        window.hls.currentLevel = levelIndex;
-      }
-    });
-  }
+
+function updateQuality(newQuality) {
+  window.hls.levels.forEach((level, levelIndex) => {
+    if (level.height === newQuality) {
+      window.hls.currentLevel = levelIndex;
+    }
+  });
+}
 });
 </script>
 </body>
