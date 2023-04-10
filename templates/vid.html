@@ -58,22 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   video.addEventListener('ended', () => {
     localStorage.removeItem("video_current_time_{{ episode_id }}");
-     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+    if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       document.exitFullscreen();
-     }
+    }
   });
   video.addEventListener('seeked', () => {
     localStorage.setItem("video_current_time_{{ episode_id }}", video.currentTime);
   });
- 
-   const player = new Plyr(video, defaultOptions);
-  if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-    player.on('enterfullscreen', () => {
-      if (screen.orientation.lock) {
-        screen.orientation.lock('landscape');
-      }
-    });
-  }
 
   if (Hls.isSupported()) {
     const hls = new Hls();
@@ -88,11 +79,25 @@ document.addEventListener("DOMContentLoaded", () => {
         onChange: (e) => updateQuality(e),
       };
       const player = new Plyr(video, defaultOptions);
+      if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
+      player.on('enterfullscreen', () => {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
+    });
+  }
     });
     hls.attachMedia(video);
     window.hls = hls;
   } else {
     const player = new Plyr(video, defaultOptions);
+    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
+    player.on('enterfullscreen', () => {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
+    });
+  }
   };
 
   function updateQuality(newQuality) {
@@ -102,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-}); 
+});
+
 </script>
 </body>
 </html>
