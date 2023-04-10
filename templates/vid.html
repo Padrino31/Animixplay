@@ -45,8 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const defaultOptions = {
         title: '{{ title }}',
-        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'], // Default controls provided by Plyr library
-        settings: ['quality', 'speed'], // Settings options provided by Plyr library
+        controls: true // add default controls
     };
 
     if (Hls.isSupported()) {
@@ -77,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
 
 </script>
 </body>
