@@ -52,12 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
     video.currentTime = savedTime;
   }
 
-  // add event listeners for pause and ended events
+  // add event listeners for pause, ended, rewind, and fast-forward events
   video.addEventListener('pause', () => {
     localStorage.setItem("video_current_time_{{ episode_id }}", video.currentTime);
   });
   video.addEventListener('ended', () => {
     localStorage.removeItem("video_current_time_{{ episode_id }}");
+  });
+  video.addEventListener('seeked', () => {
+    localStorage.setItem("video_current_time_{{ episode_id }}", video.currentTime);
   });
 
   if (Hls.isSupported()) {
@@ -88,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 </script>
 </body>
 </html>
