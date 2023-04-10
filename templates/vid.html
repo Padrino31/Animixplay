@@ -27,50 +27,52 @@
         }
     </style>
 	
- <link rel="stylesheet" href="https://cdn.jwplayer.com/players/v8.31.2/skins/six.css"/>
-<script src="https://cdn.jwplayer.com/libraries/hlsjs/1.0.4/hlsjs.light.min.js"></script>
-<script src="https://cdn.jwplayer.com/libraries/7hLduyJd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jwplayer.com/lib/14.5.0/skins/five.min.css">
+    <script src="https://cdn.jwplayer.com/lib/14.5.0/jwplayer.js"></script>
 </head>
 
 <body>
 
-    <div id="player"></div>
+   <div id="player">
+ <video controls crossorigin playsinline>
+            <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
+        </video>
+   </div>
+
 
     <script>
         const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
         document.addEventListener("DOMContentLoaded", () => {
             const player = jwplayer("player");
+
             const defaultOptions = {
-                title: '{{ title }}',
-                autostart: false
+                title: '{{ title }}'
             };
 
             player.setup({
-                playlist: [{
-                    sources: [{
-                        file: source
-                    }]
-                }],
-                hlsjsdefault: true,
-                hlsjsConfig: {
-                    xhrSetup: function (xhr, url) {
-                        xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
-                        xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
-                        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-                    }
-                },
-                ...defaultOptions
+                file: source,
+                autostart: false,
+                playbackRateControls: true,
+                controls: true,
+                displaytitle: true,
+                width: "100%",
+                height: "auto",
+                skin: {
+                    name: "five"
+                }
             });
 
-            player.on('levelsChanged', function (event) {
-                const availableQualities = event.levels.map((l) => l.label);
+            player.on("levelsChanged", function () {
+                const availableQualities = player.getQualityLevels().map((l) => l.label);
+
                 defaultOptions.quality = {
                     default: availableQualities[0],
                     options: availableQualities,
                     forced: true,
                     onChange: (e) => updateQuality(e),
                 };
-                player.updateConfig(defaultOptions);
+
+                player.setConfig(defaultOptions);
             });
 
             function updateQuality(newQuality) {
@@ -79,4 +81,5 @@
         });
     </script>
 </body>
+
 </html>
