@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
     title: "{{ title }}",
-    controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
+    controls: ['rewind', 'play-large', 'play', 'fast-forward', 'progress', 'current-time', 'pip', 'airplay', 'settings', 'fullscreen']
   };
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
