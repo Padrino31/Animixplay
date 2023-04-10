@@ -39,13 +39,35 @@
     <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
     <script src="https://unpkg.com/hls.js@latest"></script>
 <script>
-const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+	const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+
 document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector("video");
 
     const defaultOptions = {
         title: '{{ title }}',
-        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
+        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen'],
+        // Add skip button to control bar
+        // Define the button behavior to seek to 30 seconds into the video
+        // You can adjust the time as needed
+        html: `
+            <div class="plyr__controls">
+                <button type="button" class="plyr__control" data-plyr="skip-intro">
+                    Skip Intro
+                </button>
+            </div>
+        `,
+        // Define the behavior of the skip button
+        // Seek to 30 seconds into the video
+        // You can adjust the time as needed
+        listeners: {
+            // Listen to the click event on the skip button
+            seek: (event) => {
+                if (event.detail.plyr.control === 'skip-intro') {
+                    video.currentTime = 30;
+                }
+            },
+        },
     };
 
     if (Hls.isSupported()) {
