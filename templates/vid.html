@@ -39,64 +39,64 @@
     <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
     <script src="https://unpkg.com/hls.js@latest"></script>
 <script>
-	const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
-    const video = document.querySelector("video");
+  const video = document.querySelector("video");
 
-    const defaultOptions = {
-        title: '{{ title }}',
-        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen'],
-        // Add skip button to control bar
-        // Define the button behavior to seek to 30 seconds into the video
-        // You can adjust the time as needed
-        html: `
-            <div class="plyr__controls">
-                <button type="button" class="plyr__control" data-plyr="skip-intro">
-                    Skip Intro
-                </button>
-            </div>
-        `,
-        // Define the behavior of the skip button
-        // Seek to 30 seconds into the video
-        // You can adjust the time as needed
-        listeners: {
-            // Listen to the click event on the skip button
-            seek: (event) => {
-                if (event.detail.plyr.control === 'skip-intro') {
-                    video.currentTime = 30;
-                }
-            },
+  const defaultOptions = {
+    title: '{{ title }}',
+    controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen'],
+    // Add skip intro button
+    buttons: {
+      skipIntro: {
+        element: () => {
+          const button = document.createElement('button');
+          button.classList.add('plyr__control', 'plyr__skip-intro');
+          button.type = 'button';
+          button.title = 'Skip Intro';
+          button.setAttribute('aria-label', 'Skip Intro');
+          button.innerHTML = '<svg><use xlink:href="#plyr-skip-forward"></use></svg>';
+          return button;
         },
-    };
-
-    if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(source);
-        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-            const availableQualities = hls.levels.map((l) => l.height);
-
-            defaultOptions.quality = {
-                default: availableQualities[0],
-                options: availableQualities,
-                forced: true,
-                onChange: (e) => updateQuality(e),
-            };
-            const player = new Plyr(video, defaultOptions);
-        });
-        hls.attachMedia(video);
-        window.hls = hls;
-    } else {
-        const player = new Plyr(video, defaultOptions);
-    };
-
-    function updateQuality(newQuality) {
-        window.hls.levels.forEach((level, levelIndex) => {
-            if (level.height === newQuality) {
-                window.hls.currentLevel = levelIndex;
-            }
-        });
+        // Attach an event listener to the button
+        on: {
+          click: (event) => {
+            event.preventDefault();
+            video.currentTime = 30; // Set the time to skip to
+          }
+        }
+      }
     }
+  };
+
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(source);
+    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+      const availableQualities = hls.levels.map((l) => l.height);
+
+      defaultOptions.quality = {
+        default: availableQualities[0],
+        options: availableQualities,
+        forced: true,
+        onChange: (e) => updateQuality(e),
+      };
+      const player = new Plyr(video, defaultOptions);
+    });
+    hls.attachMedia(video);
+    window.hls = hls;
+  } else {
+    const player = new Plyr(video, defaultOptions);
+  };
+
+  function updateQuality(newQuality) {
+    window.hls.levels.forEach((level, levelIndex) => {
+      if (level.height === newQuality) {
+        window.hls.currentLevel = levelIndex;
+      }
+    });
+  }
 });
 
 </script>
