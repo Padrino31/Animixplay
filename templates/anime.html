@@ -87,17 +87,19 @@
         <span class="dot"></span>
         <span class="year">{{ TYPE }}</span>
     </div>
-   <div id="watchh" class="mid">
+<div id="watchh" class="mid">
     <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
         <i class="fa fa-play"></i> Watch Now
     </a>
-    <div class="dropdown" style="display: inline-block;">
-        <button class="dropbtn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">Add to List</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="showDropdown()">Add to List</a>
-            <a href="#" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Watchlist</a>
-            <a href="#" onclick="addToCompletedList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Completed List</a>
-        </div>
+    <button id="addToListBtn" onclick="showDropDown()" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
+        Add to my list
+    </button>
+    <div id="listDropDown" style="display: none;">
+        <select id="listOptions">
+            <option value="watchlist">Watchlist</option>
+            <option value="completedList">Completed</option>
+        </select>
+        <button onclick="addToSelectedList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Add</button>
     </div>
 </div>
 
@@ -189,60 +191,48 @@ document.addEventListener("DOMContentLoaded", function () {
         imageObserver.observe(v);
     });
 })
-  document.addEventListener("DOMContentLoaded", function () {
-        const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const lazyImage = entry.target;
-                    lazyImage.src = lazyImage.dataset.src;
-                }
-            })
-        });
-        const arr = document.querySelectorAll('img.lzy_img');
-        arr.forEach((v) => {
-            imageObserver.observe(v);
-        });
-    })
 
-    function addToWatchList(link, img, title) {
-        addToList(link, img, title, "watchlist");
+function showDropDown() {
+    const dropDown = document.getElementById("listDropDown");
+    dropDown.style.display = "block";
+}
+
+function addToSelectedList(link, img, title) {
+    const listOptions = document.getElementById("listOptions");
+    const selectedList = listOptions.options[listOptions.selectedIndex].value;
+    
+    // Create an object with the anime data
+    const anime = { link, img, title };
+
+    // Get the current watchlist and completedList from local storage or create an empty array
+    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+
+    // Check if the anime already exists in the watchlist or completedList
+    const watchlistExists = watchlist.some((item) => item.link === link);
+    const completedListExists = completedList.some((item) => item.link === link);
+
+    // If the anime is already in the selected list, show an alert and return
+    if (selectedList === "watchlist" && watchlistExists) {
+        alert(`${title} is already in your watchlist.`);
+        return;
+    } else if (selectedList === "completedList" && completedListExists) {
+        alert(`${title} is already in your completed list.`);
+        return;
     }
 
-    function addToCompletedList(link, img, title) {
-        addToList(link, img, title, "completedList");
+    // Add the anime to the selected list
+    if (selectedList === "watchlist") {
+        watchlist.push(anime);
+        localStorage.setItem("watchlist", JSON.stringify(watchlist));
+    } else if (selectedList === "completedList") {
+        completedList.push(anime);
+        localStorage.setItem("completedList", JSON.stringify(completedList));
     }
 
-    function addToList(link, img, title, listName) {
-        // Create an object with the anime data
-        const anime = { link, img, title };
-
-        // Get the current watchlist and completedList from local storage or create an empty array
-        let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-        let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
-
-        // Check if the anime already exists in the watchlist or completedList
-        const watchlistExists = watchlist.some((item) => item.link === link);
-        const completedListExists = completedList.some((item) => item.link === link);
-
-        // If the anime is already in the completedList or watchlist, show an alert and return
-        if (completedListExists || watchlistExists) {
-            alert(`${title} is already in your ${listName === "watchlist" ? "watchlist" : "completed list"}.`);
-            return;
-        }
-
-        // Add the anime to the specified list
-        if (listName === "watchlist") {
-            watchlist.push(anime);
-        } else {
-            completedList.push(anime);
-        }
-
-        // Store the updated list in local storage
-        localStorage.setItem(listName, JSON.stringify(listName === "watchlist" ? watchlist : completedList));
-
-        // Show an alert to confirm the anime was added
-        alert(`${title} has been added to your ${listName === "watchlist" ? "watchlist" : "completed list"}.`);
-    }
+    // Show an alert to confirm the anime was added
+    alert(`${title} has been added to your ${selectedList}.`);
+}
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
 watchNowBtn.addEventListener('click', function() {
@@ -266,23 +256,7 @@ for (var i = 0; i < links.length; i++) {
 }
 
  </script>
-<script>
-function showDropdown() {
-    document.getElementsByClassName("dropdown-content")[0].classList.toggle("show");
-}
 
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    for (var i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
 	<script>
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
