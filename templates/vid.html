@@ -45,7 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const defaultOptions = {
         title: '{{ title }}',
-        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'skip', 'pip', 'airplay', 'settings', 'fullscreen']
+        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'skip', 'pip', 'airplay', 'settings', 'fullscreen'],
+        skip: {
+            seconds: 25,
+            clickBehavior: 'jump',
+            addEventListener: (instance, container, util) => {
+                container.addEventListener('click', () => {
+                    const currentTime = instance.getCurrentTime();
+                    instance.setCurrentTime(currentTime + 25);
+                });
+            },
+        },
     };
 
     if (Hls.isSupported()) {
@@ -61,19 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 onChange: (e) => updateQuality(e),
             };
             const player = new Plyr(video, defaultOptions);
-
-            player.on('skip', () => {
-                video.currentTime = {{ 25 }}; // Replace this with the actual end time of your intro
-            });
         });
         hls.attachMedia(video);
         window.hls = hls;
     } else {
         const player = new Plyr(video, defaultOptions);
-
-        player.on('skip', () => {
-            video.currentTime = {{ 25 }}; // Replace this with the actual end time of your intro
-        });
     };
 
     function updateQuality(newQuality) {
