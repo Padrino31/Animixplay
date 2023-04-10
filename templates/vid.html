@@ -26,57 +26,50 @@
             height: 100%;
         }
     </style>
-	
-    <link rel="stylesheet" href="https://cdn.jwplayer.com/lib/14.5.0/skins/five.min.css">
-    <script src="https://cdn.jwplayer.com/lib/14.5.0/jwplayer.js"></script>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
 </head>
-
 <body>
-
-   <div id="player">
- <video controls crossorigin playsinline>
+	<div class="container">
+	 <div class="container">
+        <video id="player" playsinline controls crossorigin>
             <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
         </video>
-   </div>
+    </div>
 
-
+    <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+    <script src="https://unpkg.com/hls.js@latest"></script>
     <script>
-        const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
-        document.addEventListener("DOMContentLoaded", () => {
-            const player = jwplayer("player");
-
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('#player');
+            const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
             const defaultOptions = {
-                title: '{{ title }}'
-            };
-
-            player.setup({
-                file: source,
-                autostart: false,
-                playbackRateControls: true,
-                controls: true,
-                displaytitle: true,
-                width: "100%",
-                height: "auto",
-                skin: {
-                    name: "five"
-                }
-            });
-
-            player.on("levelsChanged", function () {
-                const availableQualities = player.getQualityLevels().map((l) => l.label);
-
-                defaultOptions.quality = {
-                    default: availableQualities[0],
-                    options: availableQualities,
+                controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'fullscreen'],
+                captions: { active: true, language: 'en', update: true },
+                settings: ['quality'],
+                quality: {
+                    default: 720,
+                    options: [720, 480, 360],
                     forced: true,
-                    onChange: (e) => updateQuality(e),
-                };
-
-                player.setConfig(defaultOptions);
-            });
-
-            function updateQuality(newQuality) {
-                player.setCurrentQuality(newQuality);
+                    onChange: (quality) => {
+                        console.log(`Quality changed to ${quality}p`);
+                        if (Hls.isSupported()) {
+                            window.hls.levels.forEach((level, levelIndex) => {
+                                if (level.height === quality) {
+                                    window.hls.currentLevel = levelIndex;
+                                }
+                            });
+                        }
+                    }
+                }
+            };
+            const player = new Plyr(video, defaultOptions);
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(source);
+                hls.attachMedia(video);
+                window.hls = hls;
+            } else {
+                video.src = source;
             }
         });
     </script>
