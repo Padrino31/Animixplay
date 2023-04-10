@@ -66,13 +66,17 @@ document.addEventListener("DOMContentLoaded", () => {
     video.currentTime = parseFloat(savedTime);
   }
 
-  // Save current time when the video is paused or ended
-  video.addEventListener('pause', () => {
+  // Save current time when the video is paused, seeked or ended
+video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 video.addEventListener('ended', () => {
  document.exitFullscreen();
  });
+ video.addEventListener('seeked', () => {
+    localStorage.setItem('{{ title }}', video.currentTime.toString());
+  });
+
 
 video.addEventListener('webkitfullscreenchange', function() {
   if (document.webkitFullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i))) {
