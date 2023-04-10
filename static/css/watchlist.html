@@ -220,6 +220,7 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }
+
 // Get the watchlist from local storage
 const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
@@ -307,7 +308,6 @@ watchlist.forEach((anime, index) => {
   li.appendChild(btnContainer);
   document.getElementById("watchlist").appendChild(li);
 });
-
 
 
   </script>
