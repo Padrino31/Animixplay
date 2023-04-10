@@ -58,12 +58,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   video.addEventListener('ended', () => {
     localStorage.removeItem("video_current_time_{{ episode_id }}");
-    exitFullScreen();
-    setPortraitOrientation();
+     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
+      document.exitFullscreen();
+     }
   });
   video.addEventListener('seeked', () => {
     localStorage.setItem("video_current_time_{{ episode_id }}", video.currentTime);
   });
+ 
+   const player = new Plyr(video, defaultOptions);
+  if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
+    player.on('enterfullscreen', () => {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
+    });
+  }
 
   if (Hls.isSupported()) {
     const hls = new Hls();
@@ -92,45 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-  
-  function enterFullScreen() {
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) {
-      video.msRequestFullscreen();
-    }
-  }
-  
-  function exitFullScreen() {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  }
-  
-  function setLandscapeOrientation() {
-    screen.orientation.lock('landscape');
-  }
-  
-  function setPortraitOrientation() {
-    screen.orientation.lock('portrait');
-  }
-  
-  const fullScreenButton = document.querySelector('.plyr__control--fullscreen');
-  fullScreenButton.addEventListener('click', () => {
-    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-      setPortraitOrientation();
-    } else {
-      setLandscapeOrientation();
-    }
-  });
-  
-});
+}); 
 </script>
 </body>
 </html>
