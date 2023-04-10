@@ -88,23 +88,13 @@
         <span class="year">{{ TYPE }}</span>
     </div>
 <div id="watchh" class="mid">
-    <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
-        <i class="fa fa-play"></i> Watch Now
-    </a>
-    <button id="addToListBtn" onclick="showListOptions('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
-        Add to my list
-    </button>
-</div>
-
-<div id="listOptionsModal" class="modal">
-    <div class="modal-content">
-        <span class="close" style="color: white;">&times;</span>
-        <h3 style="color: white;">Add to list</h3>
-        <p style="color: white;">Choose the list you want to add this anime to:</p>
-        <button id="addToWatchlistBtn" style="width: 50%; background-color: blue; color: white;">Watchlist</button>
-        <button id="addToCompletedListBtn" style="width: 50%; background-color: blue; color: white;">Completed List</button>
-    </div>
-</div>
+        <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
+         <i class="fa fa-play"></i> Watch Now
+        </a>
+        <button id="addToListBtn" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
+         <i class="fa fa-plus"></i> Add to List
+        </button>
+    </div>           
 
 
     <div id="overview3" class="synopsis">
@@ -180,7 +170,6 @@
     </footer>
     <hr>
 <script>	
-	
 document.addEventListener("DOMContentLoaded", function () {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
         entries.forEach((entry) => {
@@ -195,69 +184,46 @@ document.addEventListener("DOMContentLoaded", function () {
         imageObserver.observe(v);
     });
 })
+function addToWatchList(link, img, title) {
+    try {
+        // Create an object with the anime data
+        const anime = { link, img, title };
 
-function showListOptions(link, img, title) {
-    // Get the list options modal
-    const modal = document.getElementById("listOptionsModal");
+        // Get the current watchlist and completedList from local storage or create an empty array
+        let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+        let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
 
-    // Get the buttons for adding to the watchlist and completedList
-    const addToWatchlistBtn = document.getElementById("addToWatchlistBtn");
-    const addToCompletedListBtn = document.getElementById("addToCompletedListBtn");
+        // Check if the anime already exists in the watchlist or completedList
+        const watchlistExists = watchlist.some((item) => item.link === link);
+        const completedListExists = completedList.some((item) => item.link === link);
 
-    // Show the modal
-    modal.style.display = "block";
-
-    // When the user clicks the "Watchlist" button, add the anime to the watchlist
-    addToWatchlistBtn.onclick = function() {
-        addToList(link, img, title, "watchlist");
-        modal.style.display = "none";
-    }
-
-    // When the user clicks the "Completed List" button, add the anime to the completedList
-    addToCompletedListBtn.onclick = function() {
-        addToList(link, img, title, "completedList");
-        modal.style.display = "none";
-    }
-
-    // When the user clicks the close button or anywhere outside the modal, close the modal
-    const closeBtn = modal.getElementsByClassName("close")[0];
-    window.onclick = function(event) {
-        if (event.target == modal || event.target == closeBtn) {
-            modal.style.display = "none";
+        // If the anime is already in the completedList, show an alert and return
+        if (completedListExists) {
+            alert(`${title} is already in your completed list.`);
+            return;
         }
+
+        // If the anime is already in the watchlist, show an alert and return
+        if (watchlistExists) {
+            alert(`${title} is already in your watchlist.`);
+            return;
+        }
+
+        // Add the anime to the watchlist
+        watchlist.push(anime);
+
+        // Store the updated watchlist in local storage
+        localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+        // Show an alert to confirm the anime was added
+        alert(`${title} has been added to your watchlist.`);
+    } catch (error) {
+        // Handle any errors that may occur
+        console.error(`Error adding ${title} to watchlist: ${error}`);
+        alert(`Error adding ${title} to watchlist. Please try again later.`);
     }
 }
-
-function addToList(link, img, title, list) {
-    // Create an object with the anime data
-    const anime = { link, img, title };
-
-    // Get the current watchlist and completedList from local storage or create an empty array
-    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
-
-    // Check if the anime already exists in the watchlist or completedList
-    const watchlistExists = watchlist.some((item) => item.link === link);
-    const completedListExists = completedList.some((item) => item.link === link);
-
-    // If the anime is already in the completedList or watchlist, show an alert
-if (watchlistExists || completedListExists) {
-alert("This anime is already in your list!");
-return;
-}
-	// If the anime is not in the watchlist or completedList, add it to the selected list
-if (list === "watchlist") {
-    watchlist.push(anime);
-    localStorage.setItem("watchlist", JSON.stringify(watchlist));
-} else if (list === "completedList") {
-    completedList.push(anime);
-    localStorage.setItem("completedList", JSON.stringify(completedList));
-}
-
-// Show a success message
-alert("Anime added to your " + list + "!");
-}	    
-	   	    
+   
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
 watchNowBtn.addEventListener('click', function() {
