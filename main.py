@@ -26,7 +26,7 @@ TechZApi = TechZApi(API_KEY)
 @app.route("/favicon.ico")
 def favicon():
     return redirect(
-        "https://animixplay.to/icon.png"
+        "https://od.lk/s/OTBfMzU2NDQ1MTBf/animeflv.png"
     )
 
 # Serve the manifest.json file
