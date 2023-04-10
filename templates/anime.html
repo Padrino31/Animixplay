@@ -87,18 +87,20 @@
         <span class="dot"></span>
         <span class="year">{{ TYPE }}</span>
     </div>
-    <div id="watchh" class="mid">
+   <div id="watchh" class="mid">
     <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
         <i class="fa fa-play"></i> Watch Now
     </a>
     <div class="dropdown" style="display: inline-block;">
         <button class="dropbtn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">Add to List</button>
         <div class="dropdown-content">
+            <a href="#" onclick="showDropdown()">Add to List</a>
             <a href="#" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Watchlist</a>
-            <a href="#" onclick="addToCompletedList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Completed</a>
+            <a href="#" onclick="addToCompletedList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Completed List</a>
         </div>
     </div>
 </div>
+
 
     <div id="overview3" class="synopsis">
         SYNOPSIS
@@ -264,6 +266,23 @@ for (var i = 0; i < links.length; i++) {
 }
 
  </script>
+<script>
+function showDropdown() {
+    document.getElementsByClassName("dropdown-content")[0].classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
 	<script>
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
