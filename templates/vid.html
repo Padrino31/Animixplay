@@ -62,7 +62,12 @@
                     forced: true,
                     onChange: (e) => updateQuality(e),
                 };
+		const defaultOptions = new Plyr(video, player);
             });
+		hls.attachMedia(video);
+                window.hls = hls;
+            } else {
+                const defaultOptions = new Plyr(video, player);
         });
 
         function updateQuality(newQuality) {
