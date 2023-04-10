@@ -185,6 +185,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 })
 function addToWatchList(link, img, title) {
+    // Check if all arguments are valid
+    if (!link || !img || !title) {
+        alert("Missing argument. Please provide a link, image, and title for the anime.");
+        return;
+    }
+
     // Create an object with the anime data
     const anime = { link, img, title };
 
@@ -217,13 +223,6 @@ function addToWatchList(link, img, title) {
     // Show an alert to confirm the anime was added
     alert(`${title} has been added to your watchlist.`);
 }
-
-try {
-    addToWatchList(link, img, title);
-} catch (error) {
-    console.error(error);
-}
-
    
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
