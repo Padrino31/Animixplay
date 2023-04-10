@@ -187,14 +187,22 @@ function addToWatchList(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
 
-    // Get the current watchlist from local storage or create an empty array
+    // Get the current watchlist and completedList from local storage or create an empty array
     let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
 
-    // Check if the anime already exists in the watchlist
-    const exists = watchlist.some((item) => item.link === link);
+    // Check if the anime already exists in the watchlist or completedList
+    const watchlistExists = watchlist.some((item) => item.link === link);
+    const completedListExists = completedList.some((item) => item.link === link);
 
-    // If the anime exists, show an alert and return
-    if (exists) {
+    // If the anime is already in the completedList, show an alert and return
+    if (completedListExists) {
+        alert(`${title} is already in your completed list.`);
+        return;
+    }
+
+    // If the anime is already in the watchlist, show an alert and return
+    if (watchlistExists) {
         alert(`${title} is already in your watchlist.`);
         return;
     }
