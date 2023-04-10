@@ -42,7 +42,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
   const defaultOptions = {
-    title: '{{ title }}'
+    title: "{{ title }}",
+    controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
   };
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
@@ -53,11 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
   video.addEventListener('pause', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
+
   video.addEventListener('ended', () => {
     localStorage.removeItem('{{ title }}');
     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       document.exitFullscreen();
     }
+  });
+   video.addEventListener('seeked', () => {
+    localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 
   if (Hls.isSupported()) {
