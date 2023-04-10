@@ -38,80 +38,59 @@
   </video>
 </div>
 <script>
-  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
-   const defaultOptions = {
-        title: '{{ title }}',
-        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
-    };
+  const m3u8 = "{{ m3u8 }}";
+  const defaultOptions = {
+    title: "{{ title }}",
+    controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
+  };
 
   // Check if there is saved current time for this episode
-  const savedTime = localStorage.getItem('{{ title }}');
+  const savedTime = localStorage.getItem("{{ title }}");
   if (savedTime !== null) {
     video.currentTime = parseFloat(savedTime);
   }
   // Save current time when the video is paused or ended
   video.addEventListener('pause', () => {
-    localStorage.setItem('{{ title }}', video.currentTime.toString());
+    localStorage.setItem("{{ title }}", video.currentTime.toString());
   });
   video.addEventListener('ended', () => {
-    localStorage.removeItem('{{ title }}');
+    localStorage.removeItem("{{ title }}");
     if (document.fullscreenElement !== null && (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null)) {
       document.exitFullscreen();
     }
   });
 
-  if (Hls.isSupported()) {
-    const hls = new Hls({
-      autoStartLoad: true, // enable automatic start of video download
-      capLevelToPlayerSize: true, // limit video quality to player size
-      startLevel: 'auto' // start playing at the optimal level based on internet speed
+  const player = new Plyr(video, defaultOptions);
+  if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
+    player.on('enterfullscreen', () => {
+      if (screen.orientation.lock) {
+        screen.orientation.lock('landscape');
+      }
     });
-    hls.loadSource(source);
+  }
+
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(m3u8);
     hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
       const availableQualities = hls.levels.map((l) => l.height);
+
       defaultOptions.quality = {
         default: availableQualities[0],
         options: availableQualities,
         forced: true,
-        onChange: (e) => updateQuality(e)
+        onChange: (newQuality) => updateQuality(newQuality),
       };
       const player = new Plyr(video, defaultOptions);
-      if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-        player.on('enterfullscreen', () => {
-          if (screen.orientation.lock) {
-            screen.orientation.lock('landscape');
-          }
-        });
-      }
-      // adjust buffer length dynamically
-      setInterval(() => {
-        const buf = hls.buffered;
-        if (buf.length > 0 && video.paused && video.readyState > 1) {
-          const end = buf.end(0);
-          const targetBuffer = video.currentTime + 20; // target buffer time in seconds
-          if (end < targetBuffer) {
-            const bwEstimate = hls.currentLevel > -1 ? hls.levels[hls.currentLevel].bitrate / 8 : NaN; // current bandwidth estimate in bytes/sec
-            const bufState = end - video.currentTime; // current buffer state in seconds
-            const newBufLength = Math.max(Math.min((bwEstimate * 2 + bufState) / bwEstimate, targetBuffer - video.currentTime), bufState); // calculate new buffer length in seconds
-            hls.config.maxBufferLength = newBufLength;
-          }
-        }
-      }, 1000);
     });
     hls.attachMedia(video);
     window.hls = hls;
   } else {
     const player = new Plyr(video, defaultOptions);
-    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) !== null) {
-      player.on('enterfullscreen', () => {
-        if (screen.orientation.lock) {
-          screen.orientation.lock('landscape');
-        }
-      });
-    }
   }
+
   function updateQuality(newQuality) {
     window.hls.levels.forEach((level, levelIndex) => {
       if (level.height === newQuality) {
@@ -120,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 </script>
 </body>
 </html>
