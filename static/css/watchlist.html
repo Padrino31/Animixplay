@@ -282,7 +282,7 @@ watchlist.forEach((anime, index) => {
       const confirmed = confirm(`Are you sure you want to add ${anime.title} to the completed list?`);
       if (confirmed) {
         // Add the anime to completed.html
-        completedList.push(anime);
+        completedList.unshift(anime);
         localStorage.setItem("completedList", JSON.stringify(completedList));
 
         // Remove the anime from the watchlist
@@ -308,6 +308,7 @@ watchlist.forEach((anime, index) => {
   li.appendChild(btnContainer);
   document.getElementById("watchlist").appendChild(li);
 });
+
 
 
   </script>
