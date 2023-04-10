@@ -185,44 +185,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 })
 function addToWatchList(link, img, title) {
-    try {
-        // Create an object with the anime data
-        const anime = { link, img, title };
+    // Create an object with the anime data
+    const anime = { link, img, title };
 
-        // Get the current watchlist and completedList from local storage or create an empty array
-        let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-        let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+    // Get the current watchlist and completedList from local storage or create an empty array
+    let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
 
-        // Check if the anime already exists in the watchlist or completedList
-        const watchlistExists = watchlist.some((item) => item.link === link);
-        const completedListExists = completedList.some((item) => item.link === link);
+    // Check if the anime already exists in the watchlist or completedList
+    const watchlistExists = watchlist.some((item) => item.link === link);
+    const completedListExists = completedList.some((item) => item.link === link);
 
-        // If the anime is already in the completedList, show an alert and return
-        if (completedListExists) {
-            alert(`${title} is already in your completed list.`);
-            return;
-        }
-
-        // If the anime is already in the watchlist, show an alert and return
-        if (watchlistExists) {
-            alert(`${title} is already in your watchlist.`);
-            return;
-        }
-
-        // Add the anime to the watchlist
-        watchlist.push(anime);
-
-        // Store the updated watchlist in local storage
-        localStorage.setItem("watchlist", JSON.stringify(watchlist));
-
-        // Show an alert to confirm the anime was added
-        alert(`${title} has been added to your watchlist.`);
-    } catch (error) {
-        // Handle any errors that may occur
-        console.error(`Error adding ${title} to watchlist: ${error}`);
-        alert(`Error adding ${title} to watchlist. Please try again later.`);
+    // If the anime is already in the completedList, show an alert and return
+    if (completedListExists) {
+        alert(`${title} is already in your completed list.`);
+        return;
     }
+
+    // If the anime is already in the watchlist, show an alert and return
+    if (watchlistExists) {
+        alert(`${title} is already in your watchlist.`);
+        return;
+    }
+
+    // Add the anime to the watchlist
+    watchlist.push(anime);
+
+    // Store the updated watchlist in local storage
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+    // Show an alert to confirm the anime was added
+    alert(`${title} has been added to your watchlist.`);
 }
+
+try {
+    addToWatchList(link, img, title);
+} catch (error) {
+    console.error(error);
+}
+
    
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
