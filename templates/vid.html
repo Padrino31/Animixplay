@@ -42,20 +42,11 @@
 const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector("video");
+    video.autoplay = true;
 
     const defaultOptions = {
         title: '{{ title }}',
-        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'skip', 'pip', 'airplay', 'settings', 'fullscreen'],
-        skip: {
-            seconds: 25,
-            clickBehavior: 'jump',
-            addEventListener: (instance, container, util) => {
-                container.addEventListener('click', () => {
-                    const currentTime = instance.getCurrentTime();
-                    instance.setCurrentTime(currentTime + 25);
-                });
-            },
-        },
+        controls: ['play-large', 'play', 'progress', 'current-time', 'rewind', 'fast-forward', 'pip', 'airplay', 'settings', 'fullscreen']
     };
 
     if (Hls.isSupported()) {
@@ -86,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
 </script>
 </body>
 
