@@ -91,16 +91,17 @@
     <a href="{{ WATCHNOW }}" class="watch-btn" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
         <i class="fa fa-play"></i> Watch Now
     </a>
-    <div class="dropdown" style="display: inline-block">
-        <button id="addToListBtn" onclick="showListOptions(event)" class="dropbtn" style="padding: 10px 20px; font-size: 20px; border-radius: 5px;">
-            Add to my list
-        </button>
-        <div id="listOptions" class="dropdown-content">
-            <a href="#" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}', 'watchlist')">Watchlist</a>
-            <a href="#" onclick="addToWatchList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}', 'completedList')">CompletedList</a>
-        </div>
-    </div>
+    <button id="addToListBtn" onclick="showOptionMenu('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')" style="display: inline-block; padding: 10px 20px; font-size: 20px; border-radius: 5px;">
+        Add to list
+    </button>
 </div>
+
+<div id="optionMenu" style="display: none; position: absolute; top: 50px; left: 50px; background-color: #fff; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+    <p>Add to:</p>
+    <button onclick="addToWatchlist('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Watchlist</button>
+    <button onclick="addToCompletedList('{{ WATCHNOW }}', '{{ IMG }}', '{{ TITLE }}')">Completed</button>
+</div>
+
 
     <div id="overview3" class="synopsis">
         SYNOPSIS
@@ -189,30 +190,26 @@ document.addEventListener("DOMContentLoaded", function () {
         imageObserver.observe(v);
     });
 })
-	
-function showListOptions(event) {
-    event.preventDefault();
-    const listOptions = document.getElementById("listOptions");
-    listOptions.classList.toggle("show");
+function showOptionMenu(link, img, title) {
+    // Show the option menu
+    const optionMenu = document.getElementById("optionMenu");
+    optionMenu.style.display = "block";
+
+    // Store the anime data in the option menu
+    optionMenu.dataset.link = link;
+    optionMenu.dataset.img = img;
+    optionMenu.dataset.title = title;
 }
 
-function addToWatchList(link, img, title, listType) {
+function addToWatchlist(link, img, title) {
     // Create an object with the anime data
     const anime = { link, img, title };
 
-    // Get the current watchlist and completedList from local storage or create an empty array
+    // Get the current watchlist from local storage or create an empty array
     let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
 
-    // Check if the anime already exists in the watchlist or completedList
+    // Check if the anime already exists in the watchlist
     const watchlistExists = watchlist.some((item) => item.link === link);
-    const completedListExists = completedList.some((item) => item.link === link);
-
-    // If the anime is already in the completedList, show an alert and return
-    if (completedListExists) {
-        alert(`${title} is already in your completed list.`);
-        return;
-    }
 
     // If the anime is already in the watchlist, show an alert and return
     if (watchlistExists) {
@@ -220,24 +217,50 @@ function addToWatchList(link, img, title, listType) {
         return;
     }
 
-    // Add the anime to the watchlist or completedList based on the selected option
-    if (listType === "watchlist") {
-        watchlist.push(anime);
-    } else if (listType === "completedList") {
-        completedList.push(anime);
-    }
+    // Add the anime to the watchlist
+    watchlist.push(anime);
 
-    // Store the updated watchlist or completedList in local storage
+    // Store the updated watchlist in local storage
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
-    localStorage.setItem("completedList", JSON.stringify(completedList));
 
     // Show an alert to confirm the anime was added
-    alert(`${title} has been added to your ${listType === "watchlist" ? "watchlist" : "completed list"}.`);
+    alert(`${title} has been added to your watchlist.`);
 
-    // Close the list options dropdown menu
-    const listOptions = document.getElementById("listOptions");
-    listOptions.classList.remove("show");
+    // Hide the option menu
+    const optionMenu = document.getElementById("optionMenu");
+    optionMenu.style.display = "none";
 }
+
+function addToCompletedList(link, img, title) {
+    // Create an object with the anime data
+    const anime = { link, img, title };
+
+    // Get the current completedList from local storage or create an empty array
+    let completedList = JSON.parse(localStorage.getItem("completedList")) || [];
+
+    // Check if the anime already exists in the completedList
+    const completedListExists = completedList.some((item) => item.link === link);
+
+    // If the anime is already in the completedList, show an alert and return
+    if (completedListExists) {
+        alert(`${title} is already in your completed list.`);
+	    return;
+}
+	// Add the anime to the completedList
+completedList.push(anime);
+
+// Store the updated completedList in local storage
+localStorage.setItem("completedList", JSON.stringify(completedList));
+
+// Show an alert to confirm the anime was added
+alert(`${title} has been added to your completed list.`);
+
+// Hide the option menu
+const optionMenu = document.getElementById("optionMenu");
+optionMenu.style.display = "none";
+}
+	    
+	   	    
 // Restore the last episode watched when the "Watch Now" button is clicked
 const watchNowBtn = document.querySelector('.watch-btn');
 watchNowBtn.addEventListener('click', function() {
