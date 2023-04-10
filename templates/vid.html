@@ -27,60 +27,60 @@
         }
     </style>
 	
-    <link rel="stylesheet" href="https://cdn.jwplayer.com/lib/8.18.2/skins/skin.min.css">
-    <script src="https://cdn.jwplayer.com/lib/8.18.2/jwplayer.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jwplayer@8.25.0/jwplayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jwplayer@8.25.0/jwplayer.min.js"></script>
+
 </head>
 <body>
 <div class="container">
-  <div id="player"></div>
+  <video id="player" controls>
+    <source src="https://corsbypass.herokuapp.com/{{ m3u8 }}" type="application/x-mpegURL">
+  </video>
 </div>
+
 
 <script>
  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
-    const playerElement = document.getElementById("player");
-    const player = jwplayer(playerElement);
+  const defaultOptions = {
+    title: '{{ title }}',
+    playbackRateControls: true,
+    aspectRatio: '16:9',
+    autostart: false,
+    displaytitle: true,
+    stretching: 'uniform',
+    hlshtml: true,
+    hlsjsdefault: true,
+    hlsjsConfig: {
+      xhrSetup: function (xhr, url) {
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+      }
+    }
+  };
 
-    player.setup({
-        file: source,
-        title: '{{ title }}',
-        skin: {
-            name: "bekle",
-            active: "#FF6100",
-            inactive: "#DDD",
-            background: "#1A1A1A"
-        },
-        autostart: false,
-        hlslabels: {
-            // Set custom label names for quality levels
-            "144": "Low",
-            "240": "Medium",
-            "480": "High",
-            "720": "HD",
-            "1080": "Full HD",
-            "default": "Auto"
-        },
-        events: {
-            onReady: function() {
-                const availableQualities = player.getQualityLevels().map((l) => l.label);
+  const player = jwplayer('player');
+  player.setup({
+    file: source,
+    ...defaultOptions
+  });
 
-                player.setCurrentQuality(availableQualities[0]);
-                player.setupQualityLevels(availableQualities);
-            },
-            onQualityLevels: function(levels) {
-                // Update the quality selector dropdown
-                const qualityLevels = levels.levels.map((l) => l.label);
-                player.setControls({
-                    quality: qualityLevels
-                });
-            },
-            onQualityChange: function(event) {
-                // Update the current quality level
-                console.log("Quality changed to: " + event.quality);
-            }
-        }
-    });
+  player.on('levelsChanged', function (event) {
+    const availableQualities = event.levels.map((l) => l.label);
+
+    defaultOptions.qualityLabel = {
+      default: availableQualities[0],
+      options: availableQualities,
+      forced: true,
+      onChange: (e) => updateQuality(e),
+    };
+    player.updateConfig(defaultOptions);
+  });
+
+  function updateQuality(newQuality) {
+    const level = player.getQualityLevels().filter((l) => l.label === newQuality)[0];
+    player.setCurrentQuality(level.index);
+  }
 });
 
 </script>
