@@ -58,6 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   video.addEventListener('ended', () => {
     localStorage.removeItem("video_current_time_{{ episode_id }}");
+    const player = video.parentElement;
+    if (player.fullscreen.active) {
+      player.exitFullscreen();
+    }
+    Screen.orientation.unlock();
   });
   video.addEventListener('seeked', () => {
     localStorage.setItem("video_current_time_{{ episode_id }}", video.currentTime);
@@ -76,11 +81,23 @@ document.addEventListener("DOMContentLoaded", () => {
         onChange: (e) => updateQuality(e),
       };
       const player = new Plyr(video, defaultOptions);
+      player.on('enterfullscreen', () => {
+        Screen.orientation.lock('landscape');
+      });
+      player.on('exitfullscreen', () => {
+        Screen.orientation.unlock();
+      });
     });
     hls.attachMedia(video);
     window.hls = hls;
   } else {
     const player = new Plyr(video, defaultOptions);
+    player.on('enterfullscreen', () => {
+      Screen.orientation.lock('landscape');
+    });
+    player.on('exitfullscreen', () => {
+      Screen.orientation.unlock();
+    });
   };
 
   function updateQuality(newQuality) {
@@ -90,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-}); 
+});
 </script>
 </body>
 </html>
