@@ -27,62 +27,56 @@
         }
     </style>
 	
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jwplayer@8.25.0/jwplayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jwplayer@8.25.0/jwplayer.min.js"></script>
-
+ <link rel="stylesheet" href="https://cdn.jwplayer.com/players/v8.31.2/skins/six.css"/>
+<script src="https://cdn.jwplayer.com/libraries/hlsjs/1.0.4/hlsjs.light.min.js"></script>
+<script src="https://cdn.jwplayer.com/libraries/7hLduyJd.js"></script>
 </head>
+
 <body>
-<div class="container">
-  <video id="player" controls>
-    <source src="https://corsbypass.herokuapp.com/{{ m3u8 }}" type="application/x-mpegURL">
-  </video>
-</div>
 
+    <div id="player"></div>
 
-<script>
- const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+    <script>
+        const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+        document.addEventListener("DOMContentLoaded", () => {
+            const player = jwplayer("player");
+            const defaultOptions = {
+                title: '{{ title }}',
+                autostart: false
+            };
 
-document.addEventListener("DOMContentLoaded", () => {
-  const defaultOptions = {
-    title: '{{ title }}',
-    playbackRateControls: true,
-    aspectRatio: '16:9',
-    autostart: false,
-    displaytitle: true,
-    stretching: 'uniform',
-    hlshtml: true,
-    hlsjsdefault: true,
-    hlsjsConfig: {
-      xhrSetup: function (xhr, url) {
-        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-      }
-    }
-  };
+            player.setup({
+                playlist: [{
+                    sources: [{
+                        file: source
+                    }]
+                }],
+                hlsjsdefault: true,
+                hlsjsConfig: {
+                    xhrSetup: function (xhr, url) {
+                        xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
+                        xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+                        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                    }
+                },
+                ...defaultOptions
+            });
 
-  const player = jwplayer('player');
-  player.setup({
-    file: source,
-    ...defaultOptions
-  });
+            player.on('levelsChanged', function (event) {
+                const availableQualities = event.levels.map((l) => l.label);
+                defaultOptions.quality = {
+                    default: availableQualities[0],
+                    options: availableQualities,
+                    forced: true,
+                    onChange: (e) => updateQuality(e),
+                };
+                player.updateConfig(defaultOptions);
+            });
 
-  player.on('levelsChanged', function (event) {
-    const availableQualities = event.levels.map((l) => l.label);
-
-    defaultOptions.qualityLabel = {
-      default: availableQualities[0],
-      options: availableQualities,
-      forced: true,
-      onChange: (e) => updateQuality(e),
-    };
-    player.updateConfig(defaultOptions);
-  });
-
-  function updateQuality(newQuality) {
-    const level = player.getQualityLevels().filter((l) => l.label === newQuality)[0];
-    player.setCurrentQuality(level.index);
-  }
-});
-
-</script>
+            function updateQuality(newQuality) {
+                player.setCurrentQuality(newQuality);
+            }
+        });
+    </script>
 </body>
 </html>
