@@ -92,39 +92,37 @@ if (Hls.isSupported()) {
       onChange: (e) => updateQuality(e)
     };
     const player = new Plyr(video, defaultOptions);
-	// Fullscreen enter and exit event listeners
-            player.on('enterfullscreen', () => {
-                // Rotate to landscape if on mobile device
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    if (screen.orientation) {
-                        screen.orientation.lock('landscape');
-                    } else if (screen.lockOrientation) {
-                        screen.lockOrientation('landscape');
-                    } else if (screen.mozLockOrientation) {
-                        screen.mozLockOrientation('landscape');
-                    } else if (screen.msLockOrientation) {
-                        screen.msLockOrientation('landscape');
-                    }
-                }
-            });
+    // Fullscreen enter and exit event listeners
+    player.on('enterfullscreen', () => {
+      // Rotate to landscape if on mobile device
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (screen.orientation) {
+          screen.orientation.lock('landscape');
+        } else if (screen.lockOrientation) {
+          screen.lockOrientation('landscape');
+        } else if (screen.mozLockOrientation) {
+          screen.mozLockOrientation('landscape');
+        } else if (screen.msLockOrientation) {
+          screen.msLockOrientation('landscape');
+        }
+      }
+    });
 
-            player.on('exitfullscreen', () => {
-                // Rotate to portrait if on mobile device
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    if (screen.orientation) {
-                        screen.orientation.lock('portrait');
-                    } else if (screen.lockOrientation) {
-                        screen.lockOrientation('portrait');
-                    } else if (screen.mozLockOrientation) {
-                        screen.mozLockOrientation('portrait');
-                    } else if (screen.msLockOrientation) {
-                        screen.msLockOrientation('portrait');
-                    }
-                }
-            });
-        });
-	
-   
+    player.on('exitfullscreen', () => {
+      // Rotate to portrait if on mobile device
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (screen.orientation) {
+          screen.orientation.lock('portrait');
+        } else if (screen.lockOrientation) {
+          screen.lockOrientation('portrait');
+        } else if (screen.mozLockOrientation) {
+          screen.mozLockOrientation('portrait');
+        } else if (screen.msLockOrientation) {
+          screen.msLockOrientation('portrait');
+        }
+      }
+    });
+
     // adjust buffer length dynamically
     setInterval(() => {
       const buf = hls.buffered;
@@ -139,20 +137,20 @@ if (Hls.isSupported()) {
         }
       }
     }, 1000);
-  };
+  });
   hls.attachMedia(video);
   window.hls = hls;
- } else {
+} else {
   const player = new Plyr(video, defaultOptions);
- };
- 
-  function updateQuality(newQuality) {
-    window.hls.levels.forEach((level, levelIndex) => {
-      if (level.height === newQuality) {
-        window.hls.currentLevel = levelIndex;
-      }
-    });
-  }
+}
+
+function updateQuality(newQuality) {
+  window.hls.levels.forEach((level, levelIndex) => {
+    if (level.height === newQuality) {
+      window.hls.currentLevel = levelIndex;
+    }
+  });
+}
 });
 </script>
 </body>
