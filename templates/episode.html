@@ -448,7 +448,7 @@ function saveBookmark() {
     return;
   }
 
-  bookmarks.push({ title, url, img });
+  bookmarks.unshift({ title, url, img });
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
   // alert when bookmark is added
