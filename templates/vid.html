@@ -107,7 +107,21 @@ video.addEventListener('ended', () => {
                     }
                 });
             }
-        });
+
+	// detect full screen change and rotate device to landscape
+    video.addEventListener("fullscreenchange", () => {
+        if (document.fullscreenElement) {
+            screen.orientation.lock("landscape");
+        } else {
+            screen.orientation.unlock();
+        }
+    });
+
+    // detect video end and rotate device back to portrait
+    video.addEventListener("ended", () => {
+        screen.orientation.lock("portrait");
+    });
+});
 </script>
 </body>
 </html>
