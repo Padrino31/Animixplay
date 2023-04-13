@@ -5,7 +5,7 @@
 :root{--fa-style-family-brands:"Font Awesome 6 Brands";--fa-font-brands:normal 400 1em/1 "Font Awesome 6 Brands";}
 :root{--fa-font-regular:normal 400 1em/1 "Font Awesome 6 Free";}
 :root{--fa-style-family-classic:"Font Awesome 6 Free";--fa-font-solid:normal 900 1em/1 "Font Awesome 6 Free";}
-html,body{background-color:#282828;}
+html,body{background-color:#000000;}
 header{width:100%;}
 footer{background:#2596be;display:flex;flex-wrap:nowrap;align-content:center;justify-content:center;align-items:center;height:50px;}
 footer div{text-align:center;}
