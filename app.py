@@ -66,7 +66,16 @@ def recent_release():
         "<title>Recent Release</title>"
         "</head>"
         "<body>"
-        f"{div2}"
+        "<section>"
+        '<div class="divox">'
+            '<h2 id="latest">Recent Release</h2>'
+           ' <div id="latest2" class="recento">'
+              f'{div2}'
+           ' </div>'
+       ' </div>'
+    '</section>'
+    '<div id="load"><img src="https://media.tenor.com/G7LfW0O5qb8AAAAi/loading-gif.gif"'
+          '  alt="Loading..."></div>'
         "</body>"
         "<script>"
         "document.addEventListener('DOMContentLoaded', function() {"
@@ -88,7 +97,6 @@ def recent_release():
     )
     update_views("release")
     return html
-
 
 @app.route("/anime/<anime>")
 def get_anime(anime):
