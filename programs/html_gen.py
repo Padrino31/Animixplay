@@ -5,41 +5,31 @@ from programs.anilist import Anilist
 from programs.techzapi import TechZApi
 
 
-def get_genre_html(li):
-    x = """<a>{}</a>"""
-    html = ""
-
-    for i in li:
-        html += x.format(i.strip())
-
-    return html
-
-
 def get_eps_html(data=None, api: TechZApi = None, anime=None):
     if not data:
         anime = api.gogo_search(anime)[0].get("id").strip()
         data = api.gogo_anime(anime).get("episodes")
-
-    x = """<a class="ep-btn" href="#" onclick="toggleActiveClass(this); return false;" data-episode="{}">{}</a>"""
+    x = """<a class="ep-btn" href="{}">{}</a>"""
     html = ""
     pos = 1
 
     for i in data:
         i = i.replace("-episode-", "/")
-        html += x.format(i, str(pos))
+        html += x.format(f"/episode/{i}", str(pos))
         pos += 1
 
     if api:
         return html, anime
     return html
 
+
 def get_eps_html2(data):
-    x = """<a class="ep-btn" href="#" onclick="toggleActiveClass(this); return false;" data-episode="{}">{}</a>"""
+    x = """<a class="ep-btn" href="{}">{}</a>"""
     html = ""
     pos = 1
     for i in data:
         i = i.replace("-episode-", "/")
-        html += x.format(i, str(pos))
+        html += x.format(f"/episode/{i}", str(pos))
         pos += 1
     return html
 
