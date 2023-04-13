@@ -73,10 +73,10 @@
     <li><a href="https://www.livechart.me/timetable" target="_blank">Schedule</a></li>
   </ul>
 
-  <div class="notification-bell">
+ <div class="notification-bell">
     <span class="fas fa-bell"></span>
-    <span class="badge">1</span> <!-- Add this line to add a badge when there's a new episode -->
-    <div class="recent-releases">
+    <span class="badge" style="display:none;"></span>
+    <div class="recent-releases" style="display:none;">
       <ul>
         RECENT_RELEASE
       </ul>
@@ -228,7 +228,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+<script>
+  let recentReleases = ['Anime1', 'Anime2', 'Anime3']; //Replace with your recent releases
+  let badge = document.querySelector('.badge');
+  let releases = document.querySelector('.recent-releases');
 
+  // Show recent releases when notification bell is clicked
+  document.querySelector('.notification-bell').addEventListener('click', () => {
+    releases.style.display = 'block';
+    badge.style.display = 'none'; // Hide badge when notification bell is clicked
+  });
+
+  // Update badge and show it when new episode is released
+  function updateBadge(num) {
+    badge.innerText = num;
+    badge.style.display = 'block';
+  }
+
+  // Check for new releases every 5 seconds and update badge if necessary
+  setInterval(() => {
+    // Replace this logic with your own to check for new releases
+    if (recentReleases.length > 0) {
+      updateBadge(recentReleases.length);
+      releases.querySelector('ul').innerHTML = recentReleases.map(r => `<li>${r}</li>`).join('');
+    } else {
+      badge.style.display = 'none';
+    }
+  }, 5000);
+</script>
 <script>    
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
