@@ -1,9 +1,27 @@
 import requests
 import random
+import json
 from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
 from programs.anilist import Anilist
 from programs.techzapi import TechZApi
 
+def send_notification(title, message, token):
+    url = "https://fcm.googleapis.com/fcm/send"
+    payload = {
+        "notification": {
+            "title": title,
+            "body": message,
+            "sound": "default",
+            "badge": "1"
+        },
+        "to": token
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "key=AAAAzMnGtjk:APA91bEw8-lpnT3ugkvxIZBtuJ6OzcjHOeRc32fVDyExx0jC0Qttv84k01JL1YV1MMY8S2JhVWpVnUkMm3LVtyYwIQPmDeY38-ZgXNOWYMpxn-fMdJSmR_7a8tuy7S_jF8MphX9DQ7gY"
+    }
+    response = requests.post(url, data=json.dumps(payload), headers=headers)
+    return response.json()
 
 def get_genre_html(li):
     x = """<a>{}</a>"""
@@ -154,7 +172,7 @@ def get_search_html(data):
     return html
 
 
-def get_recent_html(data):
+def get_recent_html(data, android_tokens=[], ios_tokens=[]):
     html = ""
 
     for i in data:
@@ -169,6 +187,15 @@ def get_recent_html(data):
             "HD",
         )
         html += x
+
+        # Check if episode was released within the last hour
+        if i.get("release_time") >= datetime.datetime.now() - datetime.timedelta(hours=1):
+            message = f"New episode of {i.get('title')} ({i.get('lang')}) is now available!"
+            title = "New Anime Episode Release"
+            for token in android_tokens:
+                send_notification(title, message, token)
+            for token in ios_tokens:
+                send_notification(title, message, token)
 
     return html
 
