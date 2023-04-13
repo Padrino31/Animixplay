@@ -132,7 +132,9 @@ nav button[type="submit"] {
     height: 100%;
     padding: 10px 50px 0 50px;
     text-align: center;
-    background: #14181f;
+    background-color: #14181f;
+    backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px); /* For Safari */
     display: inline-block;
     transition: left 0.3s ease;
 overflow-y: hidden;
