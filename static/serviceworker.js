@@ -11,14 +11,42 @@ workbox.routing.registerRoute(
   new workbox.strategies.NetworkFirst()
 );
 
-self.addEventListener('install', function(event) {
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    self.registration.showNotification('Animeflv', {
-      body: 'Do you want to receive notifications from Animeflv?',
+    self.registration.showNotification("Animeflv", {
+      body: "Do you want to receive notifications from Animeflv?",
       actions: [
-        {action: 'yes', title: 'Yes'},
-        {action: 'no', title: 'No'}
-      ]
+        { action: "yes", title: "Yes" },
+        { action: "no", title: "No" },
+      ],
     })
   );
+});
+
+self.addEventListener("notificationclose", function (event) {
+  console.log("Notification was closed");
+});
+
+self.addEventListener("notificationclick", function (event) {
+  console.log("Notification was clicked");
+
+  event.notification.close();
+
+  if (event.action === "yes") {
+    console.log("User clicked yes");
+  } else {
+    console.log("User clicked no");
+  }
+});
+
+self.addEventListener("push", function (event) {
+  console.log("Push received");
+
+  const title = "Animeflv";
+  const options = {
+    body: "New anime episode is available!",
+    icon: "/path/to/icon.png",
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
 });
