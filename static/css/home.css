@@ -20,7 +20,7 @@ footer a{color:white;font-family:'Montserrat', sans-serif;font-size:11px;font-we
 @media (prefers-color-scheme: dark) {
   /* Specify the colors to use for dark mode */
   body {
-    background-color: #333333;
+    background-color: #000000;
     color: #ffffff;
   }
 }
