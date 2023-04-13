@@ -70,5 +70,11 @@
         "title": "Dismiss"
       }
     ]
-  }
+  },
+  "permissions": [
+    {
+      "name": "notifications",
+      "description": "Receive notifications for new Animeflv episodes."
+    }
+  ]
 }
