@@ -30,7 +30,8 @@
     "NOTIFICATION_RECEIVE"
   ],
   "service_worker": {
-    "src": "service-worker.js"
+    "src": "service-worker.js",
+    "oninstall": "onInstallEventHandler"
   },
   "navigation": {
     "external": "useless"
@@ -70,11 +71,6 @@
         "title": "Dismiss"
       }
     ]
-  },
-  "permissions": [
-    {
-      "name": "notifications",
-      "description": "Receive notifications for new Animeflv episodes."
-    }
-  ]
+  }
 }
+
