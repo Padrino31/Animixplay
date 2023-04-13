@@ -71,6 +71,8 @@
         "title": "Dismiss"
       }
     ]
-  }
+  },
+  "background_color": "#000000",
+  "offline_page": "offline.html"
 }
 
