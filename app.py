@@ -56,39 +56,42 @@ def home():
     update_views("home-animedex")
     return html
 
+from flask import Flask
+
+app = Flask(__name__)
+
 @app.route('/recent-release')
 def recent_release():
     div2 = get_recent_html(TechZApi.gogo_latest())
     html = (
         "<html>"
         "<head>"
-        "<link href=\"../static/css/home.css\" rel=\"stylesheet\">"
+        '<link href="../static/css/home.css" rel="stylesheet">'
         "<title>Recent Release</title>"
         "</head>"
         "<body>"
-        "{}"
+        f"{div2}"
         "</body>"
-        "<script>
-document.addEventListener(\"DOMContentLoaded\", function () {
-    const imageObserver = new IntersectionObserver((entries, imgObserver) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const lazyImage = entry.target;
-                lazyImage.src = lazyImage.dataset.src;
-            }
-        });
-    });
-    const arr = document.querySelectorAll('img.lzy_img');
-    arr.forEach((v) => {
-        imageObserver.observe(v);
-    });
-});
-</script>"
+        "<script>"
+        "document.addEventListener('DOMContentLoaded', function() {"
+        "const imageObserver = new IntersectionObserver((entries, imgObserver) => {"
+        "entries.forEach((entry) => {"
+        "if (entry.isIntersecting) {"
+        "const lazyImage = entry.target;"
+        "lazyImage.src = lazyImage.dataset.src;"
+        "}"
+        "});"
+        "});"
+        "const arr = document.querySelectorAll('img.lzy_img');"
+        "arr.forEach((v) => {"
+        "imageObserver.observe(v);"
+        "});"
+        "});"
+        "</script>"
         "</html>"
-    ).format(div2)
+    )
     update_views("release")
     return html
-
 
 
 @app.route("/anime/<anime>")
