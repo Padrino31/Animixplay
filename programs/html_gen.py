@@ -20,29 +20,39 @@ def get_eps_html(data=None, api: TechZApi = None, anime=None):
         anime = api.gogo_search(anime)[0].get("id").strip()
         data = api.gogo_anime(anime).get("episodes")
 
-    x = """<a class="ep-btn" href="{}">{}</a>"""
+    x = """<a class="ep-btn" href="#" onclick="toggleActiveClass(this); return false;" data-episode="{}">{}</a>"""
     html = ""
     pos = 1
 
     for i in data:
         i = i.replace("-episode-", "/")
-        html += x.format(f"/episode/{i}", str(pos))
+        html += x.format(i, str(pos))
         pos += 1
 
     if api:
         return html, anime
     return html
 
-
 def get_eps_html2(data):
-    x = """<a class="ep-btn" href="{}">{}</a>"""
+    x = """<a class="ep-btn" href="#" onclick="toggleActiveClass(this); return false;" data-episode="{}">{}</a>"""
     html = ""
     pos = 1
     for i in data:
         i = i.replace("-episode-", "/")
-        html += x.format(f"/episode/{i}", str(pos))
+        html += x.format(i, str(pos))
         pos += 1
     return html
+
+<script>
+function toggleActiveClass(element) {
+    var episode = element.getAttribute("data-episode");
+    var buttons = document.querySelectorAll("[data-episode='" + episode + "']");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.toggle("ep-active");
+    }
+}
+</script>
+
 
 
 ANIME_POS = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div><div class="dubb dubb2">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.dribbble.com/users/303363/screenshots/2505716/media/51a757785579b2042ede381d9dd1fd82.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> <span class="dot"></span> <span>{}</span> </div></div></div></a>"""
