@@ -72,17 +72,6 @@
     <li><a href="https://anilist.co/search/anime/next-season" target="_blank">Upcoming</a></li>
     <li><a href="https://www.livechart.me/timetable" target="_blank">Schedule</a></li>
   </ul>
-
- <div class="notification-bell">
-    <span class="fas fa-bell"></span>
-    <span class="badge" style="display:none;"></span>
-    <div class="recent-releases" style="display:none;">
-      <ul>
-        RECENT_RELEASE
-      </ul>
-    </div>
-  </div>
-
   <div class="search-icon">
     <span class="fas fa-search"></span>
   </div>
@@ -94,53 +83,8 @@
     <button type="submit"><i class="fa fa-search"></i></button>
   </form>
 </nav>
-
-<style>
- .notification-bell {
-  position: relative;
-  display: inline-block;
-  margin-left: 20px;
-}
-
-.notification-bell .badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  padding: 5px;
-  border-radius: 50%;
-}
-
-.notification-bell:hover .recent-releases {
-  display: block;
-}
-
-.recent-releases {
-  display: none;
-  position: absolute;
-  top: 30px;
-  right: -20px;
-  background-color: white;
-  border: 1px solid gray;
-  padding: 10px;
-  min-width: 200px;
-  z-index: 100;
-}
-
-.recent-releases ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.recent-releases li {
-  margin: 5px 0;
-}
-
-</style>
-
-      <section>
+	
+<section>
         <div class="slideshow-container">
 
             <div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">#1 Spotlight</p><h1>The Angel Next Door Spoils Me Rotten</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>ANIME</span> <span class="year year2"><i class="fa fa-calendar"></i>RELEASING</span> <span class="cbox cbox1">Romance</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">Amane lives alone in an apartment, and the most beautiful girl in school, Mahiru, lives just next door. They've almost never spoken-until the day he sees her in distress on a rainy day and lends her his umbrella. To return the favor, she offers him help around the house, and a relationship slowly begins to blossom as the distance between them closes...<br>
@@ -228,34 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-<script>
-  let recentReleases = ['Anime1', 'Anime2', 'Anime3']; //Replace with your recent releases
-  let badge = document.querySelector('.badge');
-  let releases = document.querySelector('.recent-releases');
 
-  // Show recent releases when notification bell is clicked
-  document.querySelector('.notification-bell').addEventListener('click', () => {
-    releases.style.display = 'block';
-    badge.style.display = 'none'; // Hide badge when notification bell is clicked
-  });
-
-  // Update badge and show it when new episode is released
-  function updateBadge(num) {
-    badge.innerText = num;
-    badge.style.display = 'block';
-  }
-
-  // Check for new releases every 5 seconds and update badge if necessary
-  setInterval(() => {
-    // Replace this logic with your own to check for new releases
-    if (recentReleases.length > 0) {
-      updateBadge(recentReleases.length);
-      releases.querySelector('ul').innerHTML = recentReleases.map(r => `<li>${r}</li>`).join('');
-    } else {
-      badge.style.display = 'none';
-    }
-  }, 5000);
-</script>
 <script>    
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
