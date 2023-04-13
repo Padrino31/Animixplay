@@ -13,17 +13,12 @@ workbox.routing.registerRoute(
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    Notification.requestPermission().then(function(permission) {
-      if (permission === 'granted') {
-        return self.registration.showNotification('Animeflv', {
-          body: 'Do you want to receive notifications for new episodes?',
-          actions: [
-            {action: 'yes', title: 'Yes'},
-            {action: 'no', title: 'No'}
-          ]
-        });
-      }
+    self.registration.showNotification('Animeflv', {
+      body: 'Do you want to receive notifications from Animeflv?',
+      actions: [
+        {action: 'yes', title: 'Yes'},
+        {action: 'no', title: 'No'}
+      ]
     })
   );
 });
-
