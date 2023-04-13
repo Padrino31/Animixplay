@@ -74,8 +74,6 @@ def recent_release():
            ' </div>'
        ' </div>'
     '</section>'
-    '<div id="load"><img src="https://media.tenor.com/G7LfW0O5qb8AAAAi/loading-gif.gif"'
-          '  alt="Loading..."></div>'
         "</body>"
         "<script>"
         "document.addEventListener('DOMContentLoaded', function() {"
