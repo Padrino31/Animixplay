@@ -56,10 +56,6 @@ def home():
     update_views("home-animedex")
     return html
 
-from flask import Flask
-
-app = Flask(__name__)
-
 @app.route('/recent-release')
 def recent_release():
     div2 = get_recent_html(TechZApi.gogo_latest())
