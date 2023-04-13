@@ -56,6 +56,23 @@ def home():
     update_views("home-animedex")
     return html
 
+@app.route('/recent-release')
+def recent_release():
+    div2 = get_recent_html(TechZApi.gogo_latest())
+    html = (
+        "<html>"
+        "<head>"
+        "<title>Recent Release</title>"
+        "</head>"
+        "<body>"
+        "RECENT_RELEASE"
+        "</body>"
+        "</html>"
+    )
+    html = html.replace("RECENT_RELEASE", div2)
+    update_views("release")
+    return html
+
 
 @app.route("/anime/<anime>")
 def get_anime(anime):
