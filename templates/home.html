@@ -72,7 +72,16 @@
     <li><a href="https://anilist.co/search/anime/next-season" target="_blank">Upcoming</a></li>
     <li><a href="https://www.livechart.me/timetable" target="_blank">Schedule</a></li>
   </ul>
- 
+
+  <div class="notification-bell">
+    <span class="fas fa-bell"></span>
+    <span class="badge">1</span> <!-- Add this line to add a badge when there's a new episode -->
+    <div class="recent-releases">
+      <ul>
+        RECENT_RELEASE
+      </ul>
+    </div>
+  </div>
 
   <div class="search-icon">
     <span class="fas fa-search"></span>
@@ -85,30 +94,50 @@
     <button type="submit"><i class="fa fa-search"></i></button>
   </form>
 </nav>
+
 <style>
-  #refresh-btn {
-    display: flex;
-    align-items: center;
-    background-color: #2596be;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
+ .notification-bell {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
 
-  #refresh-btn:hover {
-    background-color: #333;
-    color: #fff;
-  }
+.notification-bell .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+}
 
-  @media only screen and (min-width: 600px) {
-    #refresh-btn {
-      order: 4;
-      padding-left: 20px; /* Add a padding of 10px to the left of the login icon */
-    }
-  }
+.notification-bell:hover .recent-releases {
+  display: block;
+}
+
+.recent-releases {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: -20px;
+  background-color: white;
+  border: 1px solid gray;
+  padding: 10px;
+  min-width: 200px;
+  z-index: 1;
+}
+
+.recent-releases ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recent-releases li {
+  margin: 5px 0;
+}
+
 </style>
 
       <section>
