@@ -184,34 +184,6 @@ The best offense is a great defense, and for VRMMO gamer Kaede Honjo, her defens
   </div>
 </footer>
 <hr>
-<script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js"></script>
-<script>
-  // Initialize Firebase app
-  var firebaseConfig = {
-    apiKey: "AIzaSyAn7QiOmZcOkdCXS9Ugp0S6gGMx7x-cDIk",
-    authDomain: "login-app-695a4.firebaseapp.com",
-    projectId: "login-app-695a4",
-    storageBucket: "login-app-695a4.appspot.com",
-    messagingSenderId: "710961899998",
-    appId: "1:710961899998:web:7f79123b6e67129bc8154f"
-  };
-  firebase.initializeApp(firebaseConfig);
-
-  function openLoginPage() {
-    // Open login.html page
-    window.location.href = "../static/css/login.html";
-  }
-
-  function refreshData() {
-    // Update Firebase Realtime Database
-    var database = firebase.database();
-    database.ref("data").set(Date.now());
-    // Change the button to a refresh icon
-    var refreshBtn = document.getElementById("refresh-btn");
-    refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
-  }
-</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
@@ -229,11 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<script>
-function redirectToLogin() {
-  window.location.href = "../static/css/login.html";
-}
-</script>
 <script>    
 const menuBtn = document.querySelector(".menu-icon span"); 
 const searchBtn = document.querySelector(".search-icon"); 
@@ -266,18 +233,6 @@ searchBtn.onclick = () => {
   cancelBtn.classList.add("show"); 
   document.body.style.overflow = "hidden"; // prevent scrolling 
 }  
-</script>
-
-  <script>
-// Get the modal
-var modal = document.getElementById('id01');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
 </script>
 
     <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>
