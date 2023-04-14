@@ -180,28 +180,35 @@ def get_selector_btns(url, current, episodes):
     selector = ""
 
     if current == 1:
-        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x =  """<a id="next-episode-link" class="btns" href="{{ url }}">
+  <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
+    Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
+  </button>
+</a>"""
 
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
 
     elif current == episodes:
-        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode PREV<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
         selector += x.replace("usrl", url + str(current - 1)).replace(
             "PREV", str(current - 1)
         )
 
     else:
-        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode PREV<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
         selector += x.replace("usrl", url + str(current - 1)).replace(
             "PREV", str(current - 1)
         )
 
-        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
-
+        x =  """<a id="next-episode-link" class="btns" href="{{ url }}">
+  <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
+    Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
+  </button>
+</a>"""
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
