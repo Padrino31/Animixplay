@@ -76,7 +76,7 @@ video.addEventListener('seeked', () => {
   });
 video.addEventListener('ended', () => {
   const nextEpisodeUrl = url + (current + 1); // calculate the URL of the next episode
-  const nextEpisodeButton = document.querySelector('.btns'); // select the button element
+  const nextEpisodeButton = document.querySelector('.ep-btn'); // select the button element
   nextEpisodeButton.href = nextEpisodeUrl; // set the href attribute of the button to the URL of the next episode
   nextEpisodeButton.click(); // simulate a click on the button to start playing the next episode
 });
