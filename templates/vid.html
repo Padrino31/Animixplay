@@ -33,7 +33,7 @@
 </head>
 <body>
 <div class="container">
-  <video controls crossorigin playsinline autoplay>
+  <video id="my-video" controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
 </div>
@@ -75,9 +75,12 @@ video.addEventListener('seeked', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 	
-video.addEventListener('ended', () => {
- document.exitFullscreen();
- });
+const video = document.getElementById('my-video');
+  const nextEpisodeLink = document.getElementById('next-episode-link');
+  video.addEventListener('ended', () => {
+    document.exitFullscreen();
+    nextEpisodeLink.click();
+  });
 
 
 	
