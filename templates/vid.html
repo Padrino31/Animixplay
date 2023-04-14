@@ -76,13 +76,13 @@ video.addEventListener('seeked', () => {
   });
 	
 const url = window.location.href;
-  let current = {{ current }};
+  let current = parseInt(url.split('/').pop());
   video.addEventListener('ended', () => {
-    const nextEpisode = url + (current + 1);
-    document.getElementById('video-source').setAttribute('src', "https://corsbypass.herokuapp.com/" + nextEpisode);
+    const nextEpisode = url.replace(current, current + 1);
+    const source = document.getElementById('video-source');
+    source.setAttribute('src', 'https://corsbypass.herokuapp.com/' + nextEpisode);
     video.load();
     video.play();
-    current++;
   });
 });
 
