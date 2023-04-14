@@ -20,8 +20,7 @@ def get_eps_html(data=None, api: TechZApi = None, anime=None):
         anime = api.gogo_search(anime)[0].get("id").strip()
         data = api.gogo_anime(anime).get("episodes")
 
-    x = """<a class="ep-btn sactive" onclick="selectEpisode(this)" data-value="{}" href="#">{}</a>
-"""
+    x = """<a class="ep-btn sactive" onclick="selectEpisode(this)" href="{}">{}</a>"""
     html = ""
     pos = 1
 
@@ -36,7 +35,7 @@ def get_eps_html(data=None, api: TechZApi = None, anime=None):
 
 
 def get_eps_html2(data):
-    x = """<a class="ep-btn sactive" onclick="selectEpisode(this)" data-value="{}" href="#">{}</a>"""
+    x = """<a class="ep-btn sactive" onclick="selectEpisode(this)" href="{}">{}</a>"""
     html = ""
     pos = 1
     for i in data:
