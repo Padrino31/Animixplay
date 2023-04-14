@@ -1,6 +1,5 @@
 import requests
 import random
-
 from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
 from programs.anilist import Anilist
 from programs.techzapi import TechZApi
@@ -204,7 +203,7 @@ def get_selector_btns(url, current, episodes):
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
-    return 
+    return selector
 
 
 SLIDER_HTML = """<div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">{}</p><h1>{}</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>{}</span> <span class="year year2"><i class="fa fa-calendar"></i>{}</span> <span class="cbox cbox1">{}</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">{}</p><div id="watchh"> <a href="{}" class="watch-btn"> <i class="fa fa-play-circle"></i> Watch Now </a> <a href="{}" class="watch-btn watch-btn2"> <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i> </a> </div></div><div class="shado"> <a href="{}"></a> </div><img src="{}"> </div>"""
