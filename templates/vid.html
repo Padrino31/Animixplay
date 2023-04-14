@@ -75,16 +75,9 @@ video.addEventListener('seeked', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 	
-const url = window.location.href;
-  let current = parseInt(url.split('/').pop());
-  video.addEventListener('ended', () => {
-    const nextEpisode = url.replace(current, current + 1);
-    const source = document.getElementById('video-source');
-    source.setAttribute('src', 'https://corsbypass.herokuapp.com/' + nextEpisode);
-    video.load();
-    video.play();
-  });
-});
+video.addEventListener('ended', () => {
+ document.exitFullscreen();
+ });
 
 
 	
