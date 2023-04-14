@@ -173,46 +173,38 @@ def get_recent_html(data):
 
 
 def get_selector_btns(url, current, episodes):
-    
     if episodes < 2:
         return ""
 
     selector = ""
 
     if current == 1:
-        x =  """<a id="next-episode-link" class="btns" href="{{ url }}">
-  <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
-    Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
-  </button>
-</a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
 
     elif current == episodes:
-        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode PREV<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
 
         selector += x.replace("usrl", url + str(current - 1)).replace(
             "PREV", str(current - 1)
         )
 
     else:
-        x =  """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode PREV<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
 
         selector += x.replace("usrl", url + str(current - 1)).replace(
             "PREV", str(current - 1)
         )
 
-        x =  """<a id="next-episode-link" class="btns" href="{{ url }}">
-  <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
-    Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
-  </button>
-</a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
-    return selector
+    return 
 
 
 SLIDER_HTML = """<div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">{}</p><h1>{}</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>{}</span> <span class="year year2"><i class="fa fa-calendar"></i>{}</span> <span class="cbox cbox1">{}</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">{}</p><div id="watchh"> <a href="{}" class="watch-btn"> <i class="fa fa-play-circle"></i> Watch Now </a> <a href="{}" class="watch-btn watch-btn2"> <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i> </a> </div></div><div class="shado"> <a href="{}"></a> </div><img src="{}"> </div>"""
