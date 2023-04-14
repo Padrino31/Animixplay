@@ -519,9 +519,9 @@ function saveBookmark() {
         };
 	    
        function selectEpisode(btn) {
-         const buttons = document.getElementsByClassName('ep-btn');
-         const iframe = document.getElementById('AnimeDexFrame');
-  iframe.src = btn.href;
+  const buttons = document.getElementsByClassName('ep-btn');
+  const iframe = document.getElementById('AnimeDexFrame');
+  iframe.src = btn.getAttribute('data-value');
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].className = "ep-btn";
   }
