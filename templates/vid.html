@@ -76,11 +76,14 @@ video.addEventListener('seeked', () => {
   });
 	
 const url = window.location.href;
-const video = document.getElementById('video'); // assuming the video element has an id of "video"
-video.addEventListener('ended', () => {
-  const current = parseInt(url.substring(url.lastIndexOf('/') + 1));
-  const nextEpisode = url.substring(0, url.lastIndexOf('/') + 1) + (current + 1);
-  window.location.href = nextEpisode;
+  let current = {{ current }};
+  video.addEventListener('ended', () => {
+    const nextEpisode = url + (current + 1);
+    document.getElementById('video-source').setAttribute('src', "https://corsbypass.herokuapp.com/" + nextEpisode);
+    video.load();
+    video.play();
+    current++;
+  });
 });
 
 
