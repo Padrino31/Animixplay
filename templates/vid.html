@@ -75,13 +75,20 @@ video.addEventListener('seeked', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 video.addEventListener('ended', () => {
-  const nextEpisodeUrl = url + (current + 1); // calculate the URL of the next episode
-  const nextEpisodeButton = document.querySelector('.ep-btn'); // select the button element
-  nextEpisodeButton.href = nextEpisodeUrl; // set the href attribute of the button to the URL of the next episode
-  nextEpisodeButton.click(); // simulate a click on the button to start playing the next episode
+  // Extract the URL of the next episode from the `href` attribute
+  const nextUrl = selector.querySelector('a').getAttribute('href');
+
+  // Create a new `video` element and set its `src` attribute
+  const nextVideo = document.createElement('video');
+  nextVideo.src = nextUrl;
+
+  // Replace the existing `video` element with the new one
+  const currentVideo = document.querySelector('video');
+  currentVideo.parentNode.replaceChild(nextVideo, currentVideo);
+
+  // Play the new `video` element
+  nextVideo.play();
 });
-
-
 	
 if (Hls.isSupported()) {
   const hls = new Hls({
