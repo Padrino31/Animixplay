@@ -172,34 +172,50 @@ def get_recent_html(data):
 
 
 def get_selector_btns(url, current, episodes):
+    # find the episode number and URL using regular expressions
+episode_number = int(re.search(r'"episode_number":(\d+)', html).group(1))
+episode_url = re.search(r'"episode_url":"([^"]+)"', html).group(1)
+
     if episodes < 2:
         return ""
 
     selector = ""
 
     if current == 1:
-        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
-
+        x =f"""<a class="btns" href="{episode_url.replace(str(episode_number), str(episode_number + 1))}">
+                <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
+                  Episode {episode_number + 1}<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
+                </button>
+              </a>"""
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
 
     elif current == episodes:
-        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
-
+        x = f"""<a class="btns" href="{episode_url.replace(str(episode_number), str(episode_number + 1))}">
+                <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
+                  Episode {episode_number + 1}<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
+                </button>
+              </a>"""
         selector += x.replace("usrl", url + str(current - 1)).replace(
             "PREV", str(current - 1)
         )
 
     else:
-        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
-
+        x = f"""<a class="btns" href="{episode_url.replace(str(episode_number), str(episode_number + 1))}">
+                <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
+                  Episode {episode_number + 1}<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
+                </button>
+              </a>"""
         selector += x.replace("usrl", url + str(current - 1)).replace(
             "PREV", str(current - 1)
         )
 
-        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
-
+        x = f"""<a class="btns" href="{episode_url.replace(str(episode_number), str(episode_number + 1))}">
+                <button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">
+                  Episode {episode_number + 1}<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i>
+                </button>
+              </a>"""
         selector += x.replace("usrl", url + str(current + 1)).replace(
             "NEXT", str(current + 1)
         )
