@@ -518,14 +518,14 @@ function saveBookmark() {
             btn.className = "sobtn sactive";
         };
 	    
-       function selectEpisode(btn) {
-  const buttons = document.getElementsByClassName('ep-btn');
-  const iframe = document.getElementById('AnimeDexFrame');
-  iframe.src = btn.getAttribute('data-value');
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].className = "ep-btn";
-  }
-  btn.className = "ep-btn sactive";
+     function selectEpisode(btn) {
+    const buttons = document.getElementsByClassName('ep-btn');
+    const iframe = document.getElementById('AnimeDexFrame');
+    iframe.src = btn.getAttribute('href');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("sactive");
+    }
+    btn.classList.add("sactive");
 };
 
 
