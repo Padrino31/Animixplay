@@ -75,22 +75,22 @@ video.addEventListener('seeked', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
 
-  // Start playing the next episode after the current one finishes
   video.addEventListener('ended', () => {
-    if (nextUrl) {
-      const nextEpisode = document.createElement('a');
-      nextEpisode.setAttribute('href', nextUrl);
-      nextEpisode.innerHTML = '<button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button>';
-      document.body.appendChild(nextEpisode);
-      nextEpisode.addEventListener('click', () => {
-        document.body.removeChild(nextEpisode);
-        video.removeEventListener('ended', onEnded);
-        video.load();
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  });
+  if (nextUrl) {
+    const x = '<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>';
+    const selector = document.createElement('div');
+    selector.innerHTML = x.replace("usrl", nextUrl).replace("NEXT", nextEpisodeNumber);
+    document.body.appendChild(selector);
+    selector.addEventListener('click', () => {
+      document.body.removeChild(selector);
+      video.removeEventListener('ended', onEnded);
+      video.load();
+    });
+  } else {
+    document.exitFullscreen();
+  }
+});
+
 	
 if (Hls.isSupported()) {
   const hls = new Hls({
