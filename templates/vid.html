@@ -74,22 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
 video.addEventListener('seeked', () => {
     localStorage.setItem('{{ title }}', video.currentTime.toString());
   });
-
-  video.addEventListener('ended', () => {
-  if (nextUrl) {
-    const x = '<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>';
-    const selector = document.createElement('div');
-    selector.innerHTML = x.replace("usrl", nextUrl).replace("NEXT", nextEpisodeNumber);
-    document.body.appendChild(selector);
-    selector.addEventListener('click', () => {
-      document.body.removeChild(selector);
-      video.removeEventListener('ended', onEnded);
-      video.load();
-    });
-  } else {
-    document.exitFullscreen();
-  }
+video.addEventListener('ended', () => {
+  const nextEpisodeUrl = url + (current + 1); // calculate the URL of the next episode
+  const nextEpisodeButton = document.querySelector('.btns'); // select the button element
+  nextEpisodeButton.href = nextEpisodeUrl; // set the href attribute of the button to the URL of the next episode
+  nextEpisodeButton.click(); // simulate a click on the button to start playing the next episode
 });
+
 
 	
 if (Hls.isSupported()) {
