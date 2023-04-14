@@ -178,7 +178,6 @@ overflow-y: hidden;
     content: '';
     height: 60px;
     padding: 2px;
-    background: #1e232b;
     border-radius: 2px;
     min-width: calc(100% + 20px);
     z-index: -2;
