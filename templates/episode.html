@@ -348,6 +348,10 @@ font-size: 16px;
     color: #111;
     background-color: #2596be;
 }
+.ep-btn.active {
+    color: #111;
+    background-color: #2596be;
+    }
 .scontent b {
     color: #2596be;
     display: block;
@@ -518,16 +522,38 @@ function saveBookmark() {
             btn.className = "sobtn sactive";
         };
 	    
-     function selectEpisode(btn) {
-  const buttons = document.getElementsByClassName('ep-btn');
-  const iframe = document.getElementById('AnimeDexFrame');
-  iframe.src = btn.getAttribute('href');
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].classList.remove('sactive');
-  }
-  btn.classList.add('sactive');
-  event.preventDefault();
-};
+    // get the current episode number from the URL
+    const currentEpisode = window.location.href.split('/').pop();
+
+    // find all episode buttons on the page
+    const episodeButtons = document.querySelectorAll('.ep-btn');
+
+    // loop through each episode button
+    episodeButtons.forEach((button) => {
+        // get the episode number from the button's href attribute
+        const episodeNumber = button.href.split('/').pop();
+
+        // if this button corresponds to the current episode, add the active class
+        if (episodeNumber === currentEpisode) {
+            button.classList.add('active');
+        }
+
+        // add a click event listener to each button
+        button.addEventListener('click', (event) => {
+            event.preventDefault(); // prevent the default link behavior
+
+            // remove the active class from all buttons
+            episodeButtons.forEach((button) => {
+                button.classList.remove('active');
+            });
+
+            // add the active class to the clicked button
+            button.classList.add('active');
+
+            // navigate to the clicked button's href attribute
+            window.location.href = button.href;
+        });
+    });
 
 
 
