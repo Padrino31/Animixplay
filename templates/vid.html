@@ -78,6 +78,17 @@ video.addEventListener('seeked', () => {
 video.addEventListener('ended', () => {
  document.exitFullscreen();
  });
+	
+// Create a button and add it to the controls
+const skipButton = document.createElement('button');
+skipButton.type = 'button';
+skipButton.className = 'plyr__control';
+skipButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.312 13.369l-9.913 5.305C8.979 19.219 8 18.676 8 17.785V6.216C8 5.324 8.979 4.781 9.399 5.365l9.913 5.305a.5.5 0 0 1 0 .93z"/></svg>';
+skipButton.addEventListener('click', () => {
+    video.currentTime += 85;
+});
+const controls = defaultOptions.controls.map(control => control === 'fast-forward' ? skipButton.outerHTML + control : control);
+defaultOptions.controls = controls;
 
 	
 if (Hls.isSupported()) {
