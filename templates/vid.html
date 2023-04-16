@@ -33,33 +33,83 @@
 </head>
 <body>
 <div class="container">
-  <video id="my-video" controls crossorigin playsinline autoplay>
+  <video controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
-  <button id="skip-button" style="position: absolute; right: 10px; top: 10px; z-index: 1;">Skip 85s</button>
 </div>
 <script> 
-  const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
+const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
 
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector("video");
+  const skipButton = {
+    // Create a custom button with a skip icon
+    element: 'button',
+    className: 'plyr__control plyr__skip',
+    attributes: {
+      'aria-label': 'Skip 85s'
+    },
+    // On click, skip forward 85 seconds
+    onClick: () => {
+      video.currentTime += 85;
+    }
+  };
+  
   const defaultOptions = {
-       title: '{{ title }}',
-       controls: [
-		'play-large',
-		'rewind', 
-		'play', 
-		'fast-forward', 
-		'progress', 
-		'current-time', 
-		'duration',  
-		'pip', 
-		'airplay',
-	        'settings',
-		'fullscreen'
-		  ]
-            };
-
+    title: '{{ title }}',
+    controls: [
+      'play-large',
+      'rewind', 
+      'play', 
+      'fast-forward', 
+      'progress', 
+      'current-time', 
+      'duration',  
+      'pip', 
+      'airplay',
+      'settings',
+      'fullscreen',
+      skipButton // Add the skip button to the controls array
+    ],
+    // Display the skip button above the controls
+    controlBar: {
+      children: [
+        'skipButton',
+        'play',
+        'rewind',
+        'fast-forward',
+        'progress',
+        'current-time',
+        'duration',
+        'mute',
+        'volume',
+        'fullscreen'
+      ],
+      // The skip button should always be visible
+      static: true
+    },
+    // Display the skip button in fullscreen mode
+    fullscreen: {
+      iosNative: false,
+      fallback: true,
+      options: {
+        controls: [
+          'play-large',
+          'skipButton',
+          'rewind',
+          'play',
+          'fast-forward',
+          'progress',
+          'current-time',
+          'duration',
+          'mute',
+          'volume',
+          'fullscreen'
+        ]
+      }
+    }
+  };
+	
   // Check if there is saved current time for this episode
   const savedTime = localStorage.getItem('{{ title }}');
   if (savedTime !== null) {
