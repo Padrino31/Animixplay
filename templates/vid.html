@@ -33,9 +33,10 @@
 </head>
 <body>
 <div class="container">
-  <video controls crossorigin playsinline autoplay>
+  <video id="my-video" controls crossorigin playsinline autoplay>
     <source type="application/x-mpegURL" src="https://corsbypass.herokuapp.com/{{ m3u8 }}">
   </video>
+  <button id="skip-button" style="position: absolute; right: 10px; top: 10px; z-index: 1;">Skip 85s</button>
 </div>
 <script> 
   const source = 'https://corsbypass.herokuapp.com/{{ m3u8 }}';
@@ -126,25 +127,6 @@ if (Hls.isSupported()) {
         }
       }
     });
-       // add skip button to player
-      const skipButton = document.createElement('button');
-      skipButton.classList.add('plyr__controls__item', 'skip-button');
-      skipButton.setAttribute('aria-label', 'Skip 85 seconds');
-      skipButton.innerHTML = '<svg><path d="M5 5 L20 12.5 L5 20 z"></path></svg>';
-      const skipInterval = 85;
-      skipButton.addEventListener('click', () => {
-        video.currentTime += skipInterval;
-      });
-     player.on('ready', () => {
-const controls = player.getControls();
-const progressControl = controls.find(control => control instanceof Plyr.ProgressControl);
-if (progressControl) {
-const progress = progressControl.progress;
-const progressBar = progress.querySelector('.plyr__progress__bar');
-progressBar.appendChild(skipButton);
-}
-});
-
     // adjust buffer length dynamically
     setInterval(() => {
       const buf = hls.buffered;
